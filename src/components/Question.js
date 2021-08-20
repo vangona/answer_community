@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
+import { dbService } from "../fBase";
 
 const Container = styled.div`
     display: flex;
@@ -23,8 +24,15 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
+    display: flex;
     transition: 0.3s all ease-in-out;
     margin-bottom: 20px;
+    width: 80%;
+    line-height: 25px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    word-break: keep-all;
     font-family: Jeju Myeongjo;
     :hover {
         cursor: pointer;
@@ -66,11 +74,25 @@ const AnswerBtn = styled.button`
 
 const Question = ({question}) => {
     const history = useHistory();
+    const [isPrivate, setIsPrivate] = useState(false);
+    const [answer, setAnswer] = useState('');
 
     const onClickQuestion = (e) => {
         history.push({
             pathname: `/question/${e.target.getAttribute('name')}`,
         })
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+    }
+
+    const onChange = (e) => {
+        setAnswer(e.target.value)
+    }
+
+    const onChangeCheckbox = (e) => {
+        setIsPrivate(!isPrivate)
     }
 
     return (
@@ -79,11 +101,11 @@ const Question = ({question}) => {
                 {question.question}
             </Title>
             <AnswerContainer>
-                <AnswerInput name={question.question} type="text" />
-                <AnswerBtn>답변</AnswerBtn>
+                <AnswerInput onChange={onChange} value={answer} name={question.question} type="text" />
+                <AnswerBtn onClick={onSubmit}>답변</AnswerBtn>
             </AnswerContainer>
             <AnswerContainer style={{marginBottom: "0"}}>
-                <AnswerInput type="checkbox" />
+                <AnswerInput onChange={onChangeCheckbox} type="checkbox" />
                 <PrivateLabel>답변 비공개하기</PrivateLabel>
             </AnswerContainer>
         </Container>

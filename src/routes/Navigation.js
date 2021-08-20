@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { useSpring, animated } from "react-spring"
+import { useSpring, animated, config } from "react-spring"
 
 const Container = styled(animated.div)`
     position: fixed;
@@ -12,18 +12,17 @@ const Container = styled(animated.div)`
     display: flex;
     flex-direction: column;
     height: auto;
-    width: 80px;
+    width: 50px;
     z-index: 9;
 `;
 
 const NavComponent = styled.div`
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     width: 100%;
     height: 60px;
     color: white;
-    padding-left: 20px;
     background-color: rgba(0,0,0, 0.2);
     opacity: 1;
     z-index: 9;
@@ -59,9 +58,19 @@ const NavCloseBtn = styled.div`
 const Navigation = () => {
     const [navState, setNavState] = useState(false);
 
-    const animation = useSpring({ opacity: navState ? 1 : 0 })
+    const animation = useSpring({
+        opacity : navState ? 1 : 0, 
+        x: navState ? 0 : 100,
+        reverse: !navState,
+        config: config.gentle,
+    })
 
-    const reverseAnimation = useSpring({ opacity: navState ? 0 : 1 })
+    const reverseAnimation = useSpring({
+        opacity : navState ? 0 : 1, 
+        x: navState ? 100 : 0,
+        reverse: navState,
+        config: config.gentle,
+    })
 
     const onNavClick = () => {
         setNavState(!navState)
@@ -73,14 +82,14 @@ const Navigation = () => {
             <Container style={animation}>
                 <Link to={"/"} style={{textDecoration: "none"}}>
                     <NavComponent>
-                        <FontAwesomeIcon icon={faHome} />__
+                        <FontAwesomeIcon icon={faHome} />
                     </NavComponent>
                 </Link>
                 <Link to={"/questions"} style={{textDecoration: "none"}}>
-                    <NavComponent>Q __</NavComponent>
+                    <NavComponent>Q</NavComponent>
                 </Link>
                 <Link to={"/myanswers"} style={{textDecoration: "none"}}>
-                    <NavComponent>A __</NavComponent>
+                    <NavComponent>A</NavComponent>
                 </Link> 
                 <NavCloseBtn style onClick={onNavClick}>
                     <FontAwesomeIcon icon={faChevronRight} />

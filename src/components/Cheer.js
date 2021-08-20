@@ -1,32 +1,53 @@
 import React from "react";
 import styled from "styled-components";
+import { animated, useSpring } from "react-spring";
 
-const Container = styled.div`
-    width: 60%;
-    height: 100px;
+const Container = styled(animated.div)`
+    position: relative;
+    top: 50px;
+    width: 80%; 
+    height: 130px;
     background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
+    opacity: 50%;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.75);
 `;
 
 const CheerPhrase = styled.div`
     display: flex;
     align-items: center;
+    justify-content: center;
     text-align: center;
-    width: 100%;
+    width: 80%;
     height: 100%;
     word-break: keep-all;
+    line-height: 25px;
+    font-size: 18px;
+    font-family: Kyobo Handwriting;
 `;
 
 const Cheer = ({cheer}) => {
+    const animation = useSpring({
+        from: {
+            opacity: 0,
+            y: 10
+        },
+        to: {
+            opacity: 0.5,
+            y: 0
+        }
+    })
     return (
-        <Container>
+        <Container style={animation}>
             <CheerPhrase>
                 {cheer.cheer}
             </CheerPhrase>
         </Container>
-        
     )
 }
 
