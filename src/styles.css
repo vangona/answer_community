@@ -1,0 +1,20 @@
+:root {
+  --main-color: rgb(63, 69, 103);
+  --gold: rgb(192, 173, 93);
+}
+
+#root {
+  min-width: 100%;
+  min-height: 100vh;
+  background-color: var(--main-color);
+}
+
+@font-face {
+  font-family: "Kyobo Handwriting";
+  src: url("../src/fonts/KyoboHandwriting2020pdy.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Jeju Myeongjo";
+  src: url("../src/fonts/JejuMyeongjo.ttf") format("truetype");
+}

@@ -6,9 +6,11 @@ import { dbService } from "../fBase";
 
 const Container = styled.div`
     display: flex;
+    width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 130px;
 `;
 
 const Questions = () => {
@@ -33,19 +35,19 @@ const Questions = () => {
     }, [])
 
     return (
-        <>
-        {isLoading ? "Loading..."
-        : (
-            <Container>
+        <Container>
+            {isLoading? "Loading..." 
+            : (
+            <>
                 {questions.map(question => (
-                    question.question.includes(searchWord) ?
-                    <Question question={question}/>
-                    : null
+                question.question.includes(searchWord) 
+                ? <Question question={question}/>
+                : null 
                 )) }
                 <Search searchWord={searchWord} setSearchWord={setSearchWord}/>
-            </Container> )
-            }
-        </>
+            </>
+            )}
+        </Container>
     );
   }
   

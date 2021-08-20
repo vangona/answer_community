@@ -8,6 +8,7 @@ import QuestionDetail from "../routes/QuestionDetail";
 import QuestionRegister from "../routes/QuestionRegister";
 import Questions from "../routes/Questions";
 import Navigation from "../routes/Navigation";
+import CheerRegister from "../routes/CheerRegister";
 
 const AppRouter = () => {
     return (
@@ -36,6 +37,9 @@ const AppRouter = () => {
             <Switch>
                 <Route exact path="/questionregister" >
                     <QuestionRegister />
+                </Route>
+                <Route exact path="/cheerregister" >
+                    <CheerRegister />
                 </Route>
             </Switch>
         </Router>
