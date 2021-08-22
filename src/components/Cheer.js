@@ -7,6 +7,8 @@ const Container = styled(animated.div)`
     top: 50px;
     width: 80%; 
     height: 130px;
+    padding: 30px 0;
+    box-sizing: border-box;
     background-color: white;
     display: flex;
     justify-content: center;
@@ -24,7 +26,6 @@ const CheerPhrase = styled.div`
     justify-content: center;
     text-align: center;
     width: 80%;
-    height: 100%;
     word-break: keep-all;
     line-height: 25px;
     font-size: 18px;

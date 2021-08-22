@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { dbService } from "../fBase";
+import { v4 as uuidv4} from "uuid";
 
 const Container = styled.div`
     display: flex;
@@ -9,7 +10,8 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     width: 90%;
-    height: 200px;
+    padding: 30px;
+    box-sizing: border-box;
     border: 1px solid black;
     box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.75);
     -webkit-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.75);
@@ -27,7 +29,6 @@ const Title = styled.div`
     display: flex;
     transition: 0.3s all ease-in-out;
     margin-bottom: 20px;
-    width: 80%;
     line-height: 25px;
     justify-content: center;
     align-items: center;
@@ -41,7 +42,7 @@ const Title = styled.div`
 
 const AnswerContainer = styled.div`
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
     margin-bottom: 15px;
 `;
@@ -52,6 +53,8 @@ const AnswerInput = styled.input`
       border-radius: 10px;
     }    
 `;
+
+const AnswerTextarea = styled.textarea``;
 
 const PrivateLabel = styled.label`
     transition: 0.3s all ease-in-out;
@@ -72,10 +75,11 @@ const AnswerBtn = styled.button`
     }
 `;
 
-const Question = ({question}) => {
+const Question = ({userObj, question}) => {
     const history = useHistory();
     const [isPrivate, setIsPrivate] = useState(false);
     const [answer, setAnswer] = useState('');
+    const [longAnswer, setLongAnswer] = useState(false);
 
     const onClickQuestion = (e) => {
         history.push({
@@ -85,14 +89,37 @@ const Question = ({question}) => {
 
     const onSubmit = (e) => {
         e.preventDefault()
+        if (answer) {
+            const answerId = uuidv4();
+            const answerObj = {
+            question: question.question,
+            questionId: question.questionId,
+            userId: userObj.uid,
+            userName: userObj.displayName,
+            answerId,
+            answer,
+            createdAt: Date.now(),
+            isPrivate,
+        }
+        dbService.collection("answers").doc(`${answerId}`).set(answerObj).then(
+            console.log("Submit Success")
+        ).catch((error) => {
+            console.error("Submit Error : ", error)
+        });
+        setAnswer("");}
     }
 
     const onChange = (e) => {
-        setAnswer(e.target.value)
+        const answerValue = e.target.value
+        setAnswer(answerValue)
     }
 
-    const onChangeCheckbox = (e) => {
+    const onChangeCheckbox = () => {
         setIsPrivate(!isPrivate)
+    }
+
+    const onChangeAnswerType = () => {
+        setLongAnswer(!longAnswer)
     }
 
     return (
@@ -101,10 +128,16 @@ const Question = ({question}) => {
                 {question.question}
             </Title>
             <AnswerContainer>
+                {longAnswer 
+                ? ( <AnswerTextarea onChange={onChange} value={answer} name={question.question} autoFocus />
+                ) : (
                 <AnswerInput onChange={onChange} value={answer} name={question.question} type="text" />
+                )}
                 <AnswerBtn onClick={onSubmit}>답변</AnswerBtn>
             </AnswerContainer>
             <AnswerContainer style={{marginBottom: "0"}}>
+                <AnswerInput onChange={onChangeAnswerType} type="checkbox"/>
+                <PrivateLabel>길게 쓰기</PrivateLabel>
                 <AnswerInput onChange={onChangeCheckbox} type="checkbox" />
                 <PrivateLabel>답변 비공개하기</PrivateLabel>
             </AnswerContainer>

@@ -3,6 +3,10 @@
   --gold: rgb(192, 173, 93);
 }
 
+html {
+  background-color: var(--main-color);
+}
+
 #root {
   min-width: 100%;
   min-height: 100vh;

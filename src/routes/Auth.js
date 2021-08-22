@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useSprings, animated } from "react-spring";
+import { animated, useSpring } from "react-spring";
 import Login from "../components/Login";
+import { config } from "@fortawesome/fontawesome-svg-core";
 
 const Container = styled.div`
   display: flex;
@@ -22,9 +23,8 @@ const Background = styled.div`
   }
 `;
 
-const Title = styled.h1`
+const Title = styled(animated.h1)`
   position: absolute;
-  top: 120px;
   color: var(--gold);
   margin-bottom: 20px;
   font-size: 25px;
@@ -36,6 +36,11 @@ const Welcome = styled.div``;
 const Auth = () => {
     const [authState, setAuthState] = useState(false);
 
+    const animation = useSpring({
+      top: authState ? "120px" : "170px",
+      config: config.molasses
+    })
+
     const onClick = e => {
       setAuthState(!authState)
     }
@@ -43,7 +48,7 @@ const Auth = () => {
     return (
       <Container>
         <Background onClick={onClick} />
-        <Title>누군가의 서랍장</Title>
+        <Title style={animation}>누군가의 서랍장</Title>
         {authState 
         ? <Login />
         : <Welcome></Welcome>}

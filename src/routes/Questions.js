@@ -13,7 +13,7 @@ const Container = styled.div`
     margin-top: 130px;
 `;
 
-const Questions = () => {
+const Questions = ({userObj}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [questions, setQuestions] = useState([]);
     const [searchWord, setSearchWord] = useState("");
@@ -41,7 +41,7 @@ const Questions = () => {
             <>
                 {questions.map(question => (
                 question.question.includes(searchWord) 
-                ? <Question question={question}/>
+                ? <Question userObj={userObj} question={question}/>
                 : null 
                 )) }
                 <Search searchWord={searchWord} setSearchWord={setSearchWord}/>

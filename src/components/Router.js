@@ -24,10 +24,10 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
                         <Auth />
                     </Route>
                     <Route exact path="/myanswers" >
-                        <MyAnswers />
+                        <MyAnswers userObj={userObj} />
                     </Route>
                     <Route exact path="/questions" >
-                        <Questions />
+                        <Questions userObj={userObj} />
                     </Route>
                     <Route exact path="/question/:id" >
                         <QuestionDetail />

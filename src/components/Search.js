@@ -11,12 +11,10 @@ const Container = styled.div`
   height: 120px;
   width: 100%;
   padding: 10px 0;
-  filter: brightness(90%);
   transition: 0.3s all ease-in-out;
   background-color: var(--main-color);
   :hover, :focus-within {
     font-style: italic;
-    filter: brightness(100%);
   }
 `;
 
