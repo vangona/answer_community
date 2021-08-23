@@ -4,7 +4,8 @@ import { animated, useSpring } from "react-spring";
 
 const Container = styled(animated.div)`
     position: relative;
-    top: 50px;
+    margin-top: 50px;
+    margin-bottom: 15px;
     width: 80%; 
     height: 130px;
     padding: 30px 0;

@@ -12,6 +12,13 @@ const Container = styled.div`
     align-items: center;
 `;
 
+const ProfileContainer = styled.div`
+    width: 100%;
+    height: 150px;
+    background-color: rgba(255,255,255,0.7);
+    margin-bottom: 20px;
+`;
+
 const Title = styled.div`
     margin: 20px;
     display: flex;
@@ -58,6 +65,9 @@ const MyAnswers = ({userObj}) => {
                 <Title>
                     나의 답변들
                 </Title>
+                <ProfileContainer>
+
+                </ProfileContainer>
                 <LogOutBtn onClick={onLogOut}>LogOut</LogOutBtn>
                 {myAnswers.map(myAnswer => <Answer answer={myAnswer} />)}
             </>

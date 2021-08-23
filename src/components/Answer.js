@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 const Container = styled.div`
   position: relative;
-  top: 80px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -54,11 +53,18 @@ const Content = styled.div`
 
 const Answer = ({answer}) => {
   const lastTime = (Date.now() - answer.createdAt) / 1000 / 60
-  const lastMinute = Math.round(lastTime)
+  const lastMinutes = Math.round(lastTime)
+  const lastHours = Math.round(lastTime / 60)
+  const lastDays = Math.round(lastHours / 24)
   return (
     <Container>
       <Question>{answer.question}</Question>
-      <CreatedAt>{lastMinute}분 전</CreatedAt>
+      <CreatedAt>{lastMinutes < 60 
+      ? `${lastMinutes}분 전` 
+      : lastHours < 24 
+        ? `${lastHours}시간 전`
+        : `${lastDays}일 전`
+      }</CreatedAt>
       <Writer>{answer.userName}</Writer>
       <Content>{answer.answer}</Content>
     </Container>

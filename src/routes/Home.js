@@ -1,3 +1,5 @@
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Answer from "../components/Answer";
@@ -12,11 +14,20 @@ const Container = styled.div`
   background-color: var(--main-color);
 `;
 
+const AddBtn = styled.button``;
+
 const Home = () => {
   const [isLoading, setISLoading] = useState(true);
   const [cheerList, setCheerList] = useState([]);
   const [randNum, setRandNum] = useState(null);
   const [answers, setAnswers] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const currentPosts = (posts) => {
+    let currentPosts = 0;
+    currentPosts = posts.slice(0, currentPage * 5)
+    return currentPosts
+  }
 
   const getRandNum = () => {
     const number = Math.floor(Math.random() * 5);
@@ -48,6 +59,10 @@ const Home = () => {
     });
   };
 
+  const addBtn = e => {
+    setCurrentPage(currentPage + 1)
+  }
+
   useEffect(() => {
     getData();
     getRandNum();
@@ -58,14 +73,15 @@ const Home = () => {
         {isLoading ? "Loading..." 
         : (
           <>
-            {cheerList && <Cheer cheer={cheerList[randNum]} />}
-            {answers && answers.map(answer => (
-              <Answer answer={answer} />
+            {cheerList && <Cheer key={cheerList[randNum].cheerId} cheer={cheerList[randNum]} />}
+            {answers && currentPosts(answers).map(answer => (
+              <Answer key={answer.answerId} answer={answer} />
             ))
             }
           </>
         )
         }
+        {currentPosts(answers) > 5 && <AddBtn onClick={addBtn}></AddBtn>}
       </Container>
     );
   }
