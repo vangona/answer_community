@@ -1,5 +1,7 @@
 import React from "react";
+import { useEffect } from "react/cjs/react.development";
 import styled from "styled-components";
+import { authService } from "../fBase";
 
 const Container = styled.div`
   position: relative;
@@ -7,7 +9,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 80%;
+  width: 90%;
   padding: 25px 30px 20px 30px;
   box-sizing: border-box;
   border: 1px solid black;
@@ -56,6 +58,10 @@ const Answer = ({answer}) => {
   const lastMinutes = Math.round(lastTime)
   const lastHours = Math.round(lastTime / 60)
   const lastDays = Math.round(lastHours / 24)
+
+  useEffect(() => {
+  })
+
   return (
     <Container>
       <Question>{answer.question}</Question>

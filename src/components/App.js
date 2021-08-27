@@ -22,17 +22,31 @@ function App() {
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
-        setUserObj(user)
+        setUserObj({
+          uid: user.uid,
+          displayName: user.displayName,
+          updateProfile: (args) => user.updateProfile(args),
+        })
       } else {
         setUserObj(null)
       }
       setInit(true)
     })
-  })
+  }, [])
+
+  const refreshUser = () => {
+    const user = authService.currentUser;
+    setUserObj({
+      displayName:user.displayName,
+      uid:user.uid,
+      updateProfile: (args) => user.updateProfile(args),
+    });
+  };
+
   return (
     <Container>
       <GlobalStyle />
-      {init ? <AppRouter isLoggedIn={Boolean(userObj)} userObj={userObj} />
+      {init ? <AppRouter isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser = {refreshUser} />
       : "Loading..."
         }
     </Container>

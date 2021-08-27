@@ -10,7 +10,7 @@ import Questions from "../routes/Questions";
 import Navigation from "../routes/Navigation";
 import CheerRegister from "../routes/CheerRegister";
 
-const AppRouter = ({ isLoggedIn, userObj }) => {
+const AppRouter = ({ isLoggedIn, userObj, refreshUser }) => {
     return (
         <Router>
             {isLoggedIn ? 
@@ -24,7 +24,7 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
                         <Auth />
                     </Route>
                     <Route exact path="/myanswers" >
-                        <MyAnswers userObj={userObj} />
+                        <MyAnswers refreshUser={refreshUser} userObj={userObj} />
                     </Route>
                     <Route exact path="/questions" >
                         <Questions userObj={userObj} />
