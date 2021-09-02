@@ -24,7 +24,7 @@ box-sizing: border-box;
   height: 100vh;
 `;
 
-const Home = () => {
+const Home = ({ userObj }) => {
   const [isLoading, setISLoading] = useState(true);
   const [cheerList, setCheerList] = useState([]);
   const [randNum, setRandNum] = useState(null);
@@ -83,7 +83,7 @@ const Home = () => {
           <>
             {cheerList && <Cheer key={cheerList[randNum].cheerId} cheer={cheerList[randNum]} />}
             {answers && currentPosts(answers).map(answer => (
-              <Answer key={answer.answerId} answer={answer} />
+              <Answer key={answer.answerId} userObj={userObj} answer={answer} />
             ))
             }
           </>

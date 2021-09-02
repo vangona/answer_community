@@ -20,7 +20,7 @@ const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser }) => {
                 <Navigation />
                 <Switch>
                     <Route exact path="/" >
-                        <Home />
+                        <Home userObj={userObj} />
                     </Route>
                     <Route exact path="/auth" >
                         <Auth />

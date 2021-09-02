@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useSpring, animated, config } from "react-spring"
+import { authService } from "../fBase";
 
 const Container = styled(animated.div)`
     position: fixed;
@@ -26,6 +27,9 @@ const NavComponent = styled.div`
     background-color: rgba(0,0,0, 0.2);
     opacity: 1;
     z-index: 9;
+    :hover {
+        cursor: pointer;
+    }
 `;
 
 const NavBtn = styled(animated.button)`
@@ -76,6 +80,10 @@ const Navigation = () => {
         setNavState(!navState)
     }
 
+    const onClickLogout = () => {
+        authService.signOut();
+    }
+
     return(
         <>
             {navState ?(
@@ -97,6 +105,7 @@ const Navigation = () => {
                 <Link to={"/settings"} style={{textDecoration: "none"}}>
                     <NavComponent>S</NavComponent>
                 </Link> 
+                <NavComponent onClick={onClickLogout}>O</NavComponent>
                 <NavCloseBtn style onClick={onNavClick}>
                     <FontAwesomeIcon icon={faChevronRight} />
                 </NavCloseBtn>

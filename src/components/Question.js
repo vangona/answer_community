@@ -74,7 +74,7 @@ const AnswerBtn = styled.div`
     }
     :active {
         background-color: var(--main-color);
-        transform: scale(0.98);
+        transform: scale(0.9) rotateZ(45deg);
     }
 `;
 
@@ -102,6 +102,7 @@ const Question = ({userObj, question}) => {
             answerId,
             answer,
             createdAt: Date.now(),
+            editedAt: null,
             isPrivate,
         }
         dbService.collection("answers").doc(`${answerId}`).set(answerObj).then(

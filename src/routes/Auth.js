@@ -32,17 +32,33 @@ const Title = styled(animated.h1)`
   font-family: Jeju Myeongjo;
 `;
 
-const Welcome = styled.div``;
+const Notice = styled.span`
+  color: var(--gold);
+  margin-bottom: 20px;
+  font-size: 14px;
+`;
+
+const Welcome = styled(animated.div)`
+  color: white;
+  font-size: 14px;
+  opacity: 0;
+  transition: 1s all ease-in-out;
+`;
 
 const Auth = () => {
     const [authState, setAuthState] = useState(false);
 
     const animation = useSpring({
-      top: authState ? "120px" : "170px",
+      top: authState ? "150px" : "200px",
       config: config.molasses
     })
 
-    const onClick = e => {
+    const welcomeAni = useSpring({
+      opacity: !authState && 1,
+      config: config.molasses
+    })
+
+    const onClick = () => {
       setAuthState(!authState)
     }
 
@@ -51,8 +67,12 @@ const Auth = () => {
         <Background onClick={onClick} />
         <Title style={animation}>누군가의 서랍장</Title>
         {authState 
-        ? <Login />
-        : <Welcome></Welcome>}
+        ? (
+        <>
+        <Notice>코드를 입력해주세요.</Notice>
+        <Login />
+        </>
+        ) : <Welcome style={welcomeAni}>입장하시려면 터치해주세요.</Welcome>}
       </Container>
     );
   }

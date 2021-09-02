@@ -1,7 +1,8 @@
 import React from "react";
-import { useEffect } from "react/cjs/react.development";
 import styled from "styled-components";
 import { MailIcon } from "@heroicons/react/outline"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencilAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled.div`
   position: relative;
@@ -62,7 +63,7 @@ const Content = styled.div`
   color: black;
 `;
 
-const Answer = ({answer}) => {
+const Answer = ({answer, userObj}) => {
   const lastTime = (Date.now() - answer.createdAt) / 1000 / 60
   const lastMinutes = Math.round(lastTime)
   const lastHours = Math.round(lastTime / 60)
@@ -79,7 +80,14 @@ const Answer = ({answer}) => {
           ? `${lastHours}시간 전`
           : `${lastDays}일 전`
         }</CreatedAt>
-        <MailIcon style={{width: "15px", marginLeft: "5px"}} />
+        {answer.userId === userObj.uid 
+        ? (
+        <>
+          <FontAwesomeIcon style={{marginLeft: "5px"}} icon={faPencilAlt} />
+          <FontAwesomeIcon style={{marginLeft: "5px"}} icon={faTrashAlt} />
+        </>
+          )
+        : <MailIcon style={{width: "15px", marginLeft: "5px"}} />}
       </InfoContainer>
       <Content>{answer.answer}</Content>
     </Container>
