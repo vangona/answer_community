@@ -16,6 +16,14 @@ const Container = styled.div`
 
 const AddBtn = styled.button``;
 
+const ModalBackground = styled.div`
+background-color: rgba(0,0,0,0.5);
+position: absolute;
+box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+`;
+
 const Home = () => {
   const [isLoading, setISLoading] = useState(true);
   const [cheerList, setCheerList] = useState([]);

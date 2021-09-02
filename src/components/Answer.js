@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect } from "react/cjs/react.development";
 import styled from "styled-components";
-import { authService } from "../fBase";
+import { MailIcon } from "@heroicons/react/outline"
 
 const Container = styled.div`
   position: relative;
@@ -33,7 +33,10 @@ transition: 0.3s all ease-in-out;
   font-size: 14px;
 `;
 
-const CreatedAt = styled.span`
+const InfoContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: white;
   position: absolute;
   top: 10px;
@@ -41,7 +44,12 @@ const CreatedAt = styled.span`
   font-size: 10px;
 `;
 
-const Writer = styled.span``;
+const CreatedAt = styled.span`
+`;
+
+const Writer = styled.span`
+  margin-right: 5px;
+`;
 
 const Content = styled.div`
   background-color: white;
@@ -63,13 +71,16 @@ const Answer = ({answer}) => {
   return (
     <Container>
       <Question>{answer.question}</Question>
-      <CreatedAt>{lastMinutes < 60 
-      ? `${lastMinutes}분 전` 
-      : lastHours < 24 
-        ? `${lastHours}시간 전`
-        : `${lastDays}일 전`
-      }</CreatedAt>
-      <Writer>{answer.userName}</Writer>
+      <InfoContainer>
+        <Writer>{answer.userName}</Writer>
+        <CreatedAt>{lastMinutes < 60 
+        ? `${lastMinutes}분 전` 
+        : lastHours < 24 
+          ? `${lastHours}시간 전`
+          : `${lastDays}일 전`
+        }</CreatedAt>
+        <MailIcon style={{width: "15px", marginLeft: "5px"}} />
+      </InfoContainer>
       <Content>{answer.answer}</Content>
     </Container>
   );

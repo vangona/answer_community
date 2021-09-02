@@ -208,7 +208,7 @@ function App() {
       if (user) {
         setUserObj({
           uid: user.uid,
-          displayName: user.displayName,
+          displayName: (user.displayName ? user.displayName : "익명"),
           updateProfile: (args) => user.updateProfile(args),
         })
       } else {

@@ -32,8 +32,6 @@ const CreatedAt = styled.span`
   font-size: 10px;
 `;
 
-const Writer = styled.span``;
-
 const Content = styled.div`
   background-color: white;
   border-radius: 10px;
@@ -65,7 +63,6 @@ const MyAnswer = ({answer}) => {
         <CreatedAt>
             {Year} - {Month < 10 ? `0${Month}` : Month} - {DateTime < 10 ? `0${DateTime}` : DateTime}
         </CreatedAt>
-        <Writer>{answer.userName}</Writer>
         <Content>{answer.answer}</Content>
     </Container>
   );

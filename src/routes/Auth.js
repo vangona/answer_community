@@ -5,6 +5,7 @@ import Login from "../components/Login";
 import { config } from "@fortawesome/fontawesome-svg-core";
 
 const Container = styled.div`
+  background-color: black;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -25,7 +26,7 @@ const Background = styled.div`
 
 const Title = styled(animated.h1)`
   position: absolute;
-  color: var(--gold);
+  color: white;
   margin-bottom: 20px;
   font-size: 25px;
   font-family: Jeju Myeongjo;

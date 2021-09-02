@@ -8,8 +8,11 @@ import { dbService } from "../fBase";
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    height: 90vh;
+    width: 100%;
+    margin-top: 30px;
 `;
 
 const Title = styled.div`
