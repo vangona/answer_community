@@ -85,11 +85,17 @@ const Navigation = () => {
                         <FontAwesomeIcon icon={faHome} />
                     </NavComponent>
                 </Link>
+                <Link to={"/community"} style={{textDecoration: "none"}}>
+                    <NavComponent>C</NavComponent>
+                </Link> 
                 <Link to={"/questions"} style={{textDecoration: "none"}}>
                     <NavComponent>Q</NavComponent>
                 </Link>
                 <Link to={"/myanswers"} style={{textDecoration: "none"}}>
                     <NavComponent>A</NavComponent>
+                </Link> 
+                <Link to={"/settings"} style={{textDecoration: "none"}}>
+                    <NavComponent>S</NavComponent>
                 </Link> 
                 <NavCloseBtn style onClick={onNavClick}>
                     <FontAwesomeIcon icon={faChevronRight} />

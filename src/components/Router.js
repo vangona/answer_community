@@ -9,8 +9,10 @@ import QuestionRegister from "../routes/QuestionRegister";
 import Questions from "../routes/Questions";
 import Navigation from "../routes/Navigation";
 import CheerRegister from "../routes/CheerRegister";
+import Settings from "../routes/Settings";
+import Community from "../routes/Community";
 
-const AppRouter = ({ isLoggedIn, userObj, refreshUser }) => {
+const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser }) => {
     return (
         <Router>
             {isLoggedIn ? 
@@ -23,17 +25,23 @@ const AppRouter = ({ isLoggedIn, userObj, refreshUser }) => {
                     <Route exact path="/auth" >
                         <Auth />
                     </Route>
+                    <Route exact path="/community" >
+                        <Community userObj={userObj} />
+                    </Route>
                     <Route exact path="/myanswers" >
-                        <MyAnswers refreshUser={refreshUser} userObj={userObj} />
+                        <MyAnswers questionArray={questionArray} userObj={userObj} />
                     </Route>
                     <Route exact path="/questions" >
-                        <Questions userObj={userObj} />
+                        <Questions questionArray={questionArray} userObj={userObj} />
                     </Route>
                     <Route exact path="/question/:id" >
                         <QuestionDetail />
                     </Route>
                     <Route exact path="/answer/:id" >
                         <AnswerDetail />
+                    </Route>
+                    <Route exact path="/settings" >
+                        <Settings refreshUser={refreshUser} userObj={userObj} />
                     </Route>
                 </Switch>
                 <Switch>

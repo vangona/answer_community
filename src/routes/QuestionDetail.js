@@ -11,9 +11,10 @@ const Container = styled.div`
 const QuestionDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [question, setQuestion] = useState("");
-  const questionID = useParams().id;
+  const questionId = useParams().id;
+  
   const getQuestion = async () => {
-    await dbService.collection("questions").where("questionId", "==", `${questionID}`).get()
+    await dbService.collection("questions").where("questionId", "==", `${questionId}`).get()
     .then(snapShot => {
       const questionData = snapShot.docs.map(doc => ({
         ...doc.data()

@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { dbService } from "../fBase";
 import { v4 as uuidv4} from "uuid";
+import { PaperAirplaneIcon } from "@heroicons/react/outline"
 
 const Container = styled.div`
     display: flex;
@@ -10,7 +11,7 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     width: 90%;
-    padding: 30px;
+    padding: 20px;
     box-sizing: border-box;
     border: 1px solid black;
     box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.75);
@@ -35,6 +36,7 @@ const Title = styled.div`
     text-align: center;
     word-break: keep-all;
     font-family: Jeju Myeongjo;
+    font-size: 14px;
     :hover {
         cursor: pointer;
     }
@@ -42,7 +44,7 @@ const Title = styled.div`
 
 const AnswerContainer = styled.div`
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
     margin-bottom: 15px;
 `;
@@ -59,16 +61,17 @@ const AnswerTextarea = styled.textarea``;
 const PrivateLabel = styled.label`
     transition: 0.3s all ease-in-out;
     font-size: 10px;
+    margin-right: 5px;
 `;
 
-const AnswerBtn = styled.button`
-    margin: 0;
-    margin-left: 1px;
-    padding: 3px 7px;
-    border-end-end-radius: 10px;
-    border-start-end-radius: 10px;
-    background-color: rgba(255,255,255);
-    font-family: Jeju Myeongjo;
+const AnswerBtn = styled.div`
+    margin-left: 5px;
+    width: 20px;
+    height: 20px;
+    transform: rotateZ(45deg);
+    :hover {
+        cursor: pointer;
+    }
     :active {
         background-color: var(--main-color);
         transform: scale(0.98);
@@ -133,7 +136,9 @@ const Question = ({userObj, question}) => {
                 ) : (
                 <AnswerInput onChange={onChange} value={answer} name={question.question} type="text" />
                 )}
-                <AnswerBtn onClick={onSubmit}>답변</AnswerBtn>
+                <AnswerBtn onClick={onSubmit}>
+                    <PaperAirplaneIcon />
+                </AnswerBtn>
             </AnswerContainer>
             <AnswerContainer style={{marginBottom: "0"}}>
                 <AnswerInput onChange={onChangeAnswerType} type="checkbox"/>

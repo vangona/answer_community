@@ -1,7 +1,5 @@
 import React from "react";
-import { useEffect } from "react/cjs/react.development";
 import styled from "styled-components";
-import { authService } from "../fBase";
 
 const Container = styled.div`
   position: relative;
@@ -26,13 +24,6 @@ const Container = styled.div`
   }
 `;
 
-const Question = styled.h1`
-transition: 0.3s all ease-in-out;
-  font-family: Jeju Myeongjo;
-  margin-bottom: 20px;
-  font-size: 14px;
-`;
-
 const CreatedAt = styled.span`
   color: white;
   position: absolute;
@@ -52,28 +43,33 @@ const Content = styled.div`
   font-size: 12px;
   opacity: 70%;
   color: black;
+  word-break: keep-all;
 `;
 
-const Answer = ({answer}) => {
-  const lastTime = (Date.now() - answer.createdAt) / 1000 / 60
-  const lastMinutes = Math.round(lastTime)
-  const lastHours = Math.round(lastTime / 60)
-  const lastDays = Math.round(lastHours / 24)
+const Question = styled.h1`
+    transition: 0.3s all ease-in-out;
+  font-family: Jeju Myeongjo;
+  margin-bottom: 20px;
+  font-size: 14px;
+`;
+
+const MyAnswer = ({answer}) => {
+    const createdTime = new Date(answer.createdAt);
+  const Year = createdTime.getFullYear();
+  const Month = createdTime.getMonth();
+  const DateTime = createdTime.getDate();
 
   return (
     <Container>
-      <Question>{answer.question}</Question>
-      <CreatedAt>{lastMinutes < 60 
-      ? `${lastMinutes}분 전` 
-      : lastHours < 24 
-        ? `${lastHours}시간 전`
-        : `${lastDays}일 전`
-      }</CreatedAt>
-      <Writer>{answer.userName}</Writer>
-      <Content>{answer.answer}</Content>
+        <Question>{answer.question}</Question>
+        <CreatedAt>
+            {Year} - {Month < 10 ? `0${Month}` : Month} - {DateTime < 10 ? `0${DateTime}` : DateTime}
+        </CreatedAt>
+        <Writer>{answer.userName}</Writer>
+        <Content>{answer.answer}</Content>
     </Container>
   );
 }
 
-export default Answer;
+export default MyAnswer;
   

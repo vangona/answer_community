@@ -12,7 +12,7 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 130px;
+    margin-top: 30px;
 `;
 
 const AddBtn = styled.button`
@@ -29,7 +29,7 @@ const AddBtn = styled.button`
     }
 `;
 
-const Questions = ({userObj}) => {
+const Questions = ({questionArray, userObj}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [questions, setQuestions] = useState([]);
     const [searchWord, setSearchWord] = useState("");
@@ -42,15 +42,15 @@ const Questions = ({userObj}) => {
     }
   
     const getQuestions = async () => {
-        await dbService.collection("questions").get()
-        .then(querySnapshot => {
-            const questionArray = querySnapshot.docs.map(doc => ({
-                id: doc.questionId,
-                ...doc.data()
-            }))
+    //     await dbService.collection("questions").get()
+    //     .then(querySnapshot => {
+    //         const questionArray = querySnapshot.docs.map(doc => ({
+    //             id: doc.questionId,
+    //             ...doc.data()
+    //         }))
             setQuestions(questionArray)
             setIsLoading(!isLoading)
-        })
+    //     })
     }
 
     const addPage = e => {

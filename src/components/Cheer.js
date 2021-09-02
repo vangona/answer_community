@@ -6,7 +6,7 @@ const Container = styled(animated.div)`
     position: relative;
     margin-top: 50px;
     margin-bottom: 15px;
-    width: 80%; 
+    width: 90%; 
     height: 130px;
     padding: 30px 0;
     box-sizing: border-box;
