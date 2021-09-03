@@ -1,6 +1,4 @@
-import React from "react";
-import { useEffect } from "react/cjs/react.development";
-import { useState } from "react/cjs/react.development";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import MyAnswer from "../components/MyAnswer";
 import { dbService } from "../fBase";
@@ -24,7 +22,7 @@ const Title = styled.div`
     flex-direction: column;
 `;
 
-const MyAnswers = ({questionArray ,userObj}) => {
+const MyAnswers = ({questionArray, userObj}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [myAnswers, setMyAnswers] = useState(null);
 

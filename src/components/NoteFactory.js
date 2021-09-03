@@ -4,6 +4,9 @@ import styled from "styled-components";
 const Container = styled.div``;
 
 const NoteFactory = () => {
+    const onSubmit = e => {
+        e.preventDefault();
+    }
     return (
         <Container>
             NoteFactory

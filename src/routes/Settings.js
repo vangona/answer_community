@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { authService, dbService } from "../fBase";
 import styled from "styled-components";
-import { useState } from "react/cjs/react.development";
 
 const Container = styled.div`
     display: flex;
@@ -102,7 +101,7 @@ const QnaSubmitBtn = styled.button`
     }
 `;
 
-const Settings = ({ refreshUser ,userObj }) => {
+const Settings = ({ refreshUser, userObj }) => {
     const [displayName, setDisplayName] = useState("");
     const [report, setReport] = useState('');
 
