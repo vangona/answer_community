@@ -4,6 +4,7 @@ import { MailIcon } from "@heroicons/react/outline"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { dbService } from "../fBase";
+import NoteFactory from "./NoteFactory";
 
 const Container = styled.div`
   position: relative;
@@ -28,7 +29,10 @@ const Container = styled.div`
 `;
 
 const Question = styled.h1`
-transition: 0.3s all ease-in-out;
+line-height: 20px;
+  text-align: center;
+  word-break: keep-all;
+  transition: 0.3s all ease-in-out;
   font-family: Jeju Myeongjo;
   margin-bottom: 20px;
   font-size: 14px;
@@ -99,6 +103,7 @@ const EditInput = styled.textarea`
 
 const Answer = ({answer, userObj}) => {
   const [editState, setEditState] = useState(false);
+  const [noteState, setNoteState] = useState(false);
   const [changedAnswer, setChangedAnswer] = useState('');
 
   const lastTime = (Date.now() - answer.createdAt) / 1000 / 60
@@ -130,6 +135,7 @@ const Answer = ({answer, userObj}) => {
 
   const onClickNote = e => {
     e.preventDefault();
+    setNoteState(!noteState);
   }
 
   const onChange = e => {
@@ -152,7 +158,7 @@ const Answer = ({answer, userObj}) => {
         </>
           )
         : (
-          <IconBox>
+          <IconBox onClick={onClickNote}>
             <MailIcon style={{width: "15px", marginLeft: "5px"}} />
           </IconBox>
         )}
@@ -169,6 +175,7 @@ const Answer = ({answer, userObj}) => {
         ? <EditInput autoFocus onChange={onChange} value={changedAnswer ? changedAnswer : answer.answer} />
         : answer.answer}
       </Content>
+      {noteState && <NoteFactory userObj={userObj} answer={answer} setNoteState={setNoteState} />}
     </Container>
   );
 }

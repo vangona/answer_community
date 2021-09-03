@@ -106,7 +106,7 @@ const Question = ({userObj, question}) => {
             isPrivate,
         }
         dbService.collection("answers").doc(`${answerId}`).set(answerObj).then(
-            console.log("Submit Success")
+            alert("답변이 저장되었습니다 :)")
         ).catch((error) => {
             console.error("Submit Error : ", error)
         });

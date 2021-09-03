@@ -126,12 +126,16 @@ const Settings = ({ refreshUser, userObj }) => {
 
     const onReport = async e => {
         e.preventDefault();
-        const reportObj = {
+        if (report) { 
+            const reportObj = {
             report,
             userId : userObj.uid,
             createdAt : Date.now()
         }
         dbService.collection("reports").add(reportObj)
+        alert("성공적으로 제출되었습니다. 감사합니다 :)")
+        setReport('');
+    }
     }
 
     const onLogOut = (e) => {
@@ -153,8 +157,8 @@ const Settings = ({ refreshUser, userObj }) => {
 
             <QnaContainer>
                 <QnaLabel>문의하기 & 버그리포트</QnaLabel>
-                <QnaInput onChange={onChangeReport} value={report} onClick={onReport} type="text" />
-                <QnaSubmitBtn>문의하기</QnaSubmitBtn>
+                <QnaInput onChange={onChangeReport} value={report}type="text" />
+                <QnaSubmitBtn onClick={onReport} >문의하기</QnaSubmitBtn>
             </QnaContainer>
             <LogOutBtn onClick={onLogOut}>Logout</LogOutBtn>
         </Container>

@@ -154,10 +154,6 @@ function App() {
         questionId: "2d6d5007-4a8b-4176-8b1b-9556d66a2b05"
     },
     {
-        question: "이해받고 있나요?",
-        questionId: "69b10746-2ee8-4941-b4d6-b943d6af7960"
-    },
-    {
         question: "정말 소통하고 있나요?",
         questionId: "5dc5d43e-9642-4272-a2cc-5724ef9e95f2"
     },
