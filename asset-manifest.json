@@ -1,21 +1,21 @@
 {
   "files": {
     "main.css": "/answer_community/static/css/main.bea3f047.chunk.css",
-    "main.js": "/answer_community/static/js/main.25e47b39.chunk.js",
-    "main.js.map": "/answer_community/static/js/main.25e47b39.chunk.js.map",
+    "main.js": "/answer_community/static/js/main.fe069521.chunk.js",
+    "main.js.map": "/answer_community/static/js/main.fe069521.chunk.js.map",
     "runtime-main.js": "/answer_community/static/js/runtime-main.7b8cb003.js",
     "runtime-main.js.map": "/answer_community/static/js/runtime-main.7b8cb003.js.map",
-    "static/js/2.8df03baf.chunk.js": "/answer_community/static/js/2.8df03baf.chunk.js",
-    "static/js/2.8df03baf.chunk.js.map": "/answer_community/static/js/2.8df03baf.chunk.js.map",
+    "static/js/2.2573c8e2.chunk.js": "/answer_community/static/js/2.2573c8e2.chunk.js",
+    "static/js/2.2573c8e2.chunk.js.map": "/answer_community/static/js/2.2573c8e2.chunk.js.map",
     "index.html": "/answer_community/index.html",
     "static/css/main.bea3f047.chunk.css.map": "/answer_community/static/css/main.bea3f047.chunk.css.map",
-    "static/js/2.8df03baf.chunk.js.LICENSE.txt": "/answer_community/static/js/2.8df03baf.chunk.js.LICENSE.txt",
+    "static/js/2.2573c8e2.chunk.js.LICENSE.txt": "/answer_community/static/js/2.2573c8e2.chunk.js.LICENSE.txt",
     "static/media/styles.css": "/answer_community/static/media/KyoboHandwriting2020pdy.3932c516.ttf"
   },
   "entrypoints": [
     "static/js/runtime-main.7b8cb003.js",
-    "static/js/2.8df03baf.chunk.js",
+    "static/js/2.2573c8e2.chunk.js",
     "static/css/main.bea3f047.chunk.css",
-    "static/js/main.25e47b39.chunk.js"
+    "static/js/main.fe069521.chunk.js"
   ]
 }
