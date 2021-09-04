@@ -16,7 +16,7 @@ const Community = ({userObj}) => {
     return (
         <Container>
             <Notes userObj={userObj} />
-            <Friends />
+            <Friends userObj={userObj} />
         </Container>
     )
 }

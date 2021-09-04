@@ -1,3 +1,5 @@
+import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import styled from "styled-components";
 
@@ -15,7 +17,6 @@ const Container = styled.div`
   background-color: rgba(0,0,0,0.3);
   :hover, :focus-within {
     font-style: italic;
-    background-color: var(--main-color);
   }
 `;
 
@@ -35,15 +36,54 @@ const SearchInput = styled.input`
   }
 `;
 
+const CloseBtn = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: white;
+  background-color: transparent;
+  border: 0;
+  :hover {
+    cursor: pointer;
+  }
+`;
+
+const SearchBtn = styled.button`
+  color: white;
+  background-color: transparent;
+  border: 0;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  :hover {
+    cursor: pointer;
+  }
+`;
+
 const Search = ({ searchWord, setSearchWord }) => {
+    const [searchState, setSearchState] = useState(false);
+
     const onChange = (e) => {
       setSearchWord(e.target.value)      
     }
+
+    const onClick = () => {
+      setSearchState(!searchState)
+    }
+
     return (
-      <Container>
+      <>
+      {searchState ? 
+        <Container>
         <Title>찾으시는 질문이 있나요?</Title>
         <SearchInput onChange={onChange} value={searchWord} />
+        <CloseBtn onClick={onClick}><FontAwesomeIcon icon={faTimes} size="lg" /></CloseBtn>
       </Container>
+      : <SearchBtn onClick={onClick}>
+          <FontAwesomeIcon icon={faSearch} size="lg" />
+        </SearchBtn>
+      }
+      </>
     );
 }
   

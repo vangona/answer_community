@@ -61,7 +61,7 @@ const MyAnswer = ({answer}) => {
     <Container>
         <Question>{answer.question}</Question>
         <CreatedAt>
-            {Year} - {Month < 10 ? `0${Month}` : Month} - {DateTime < 10 ? `0${DateTime}` : DateTime}
+            {Year} - {Month + 1 < 10 ? `0${Month + 1}` : Month + 1} - {DateTime < 10 ? `0${DateTime}` : DateTime}
         </CreatedAt>
         <Content>{answer.answer}</Content>
     </Container>

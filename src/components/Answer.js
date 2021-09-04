@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { MailIcon } from "@heroicons/react/outline"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencilAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { faPencilAlt, faTrashAlt, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { dbService } from "../fBase";
 import NoteFactory from "./NoteFactory";
 
@@ -158,9 +158,14 @@ const Answer = ({answer, userObj}) => {
         </>
           )
         : (
-          <IconBox onClick={onClickNote}>
-            <MailIcon style={{width: "15px", marginLeft: "5px"}} />
-          </IconBox>
+          <>
+            <IconBox>
+              <FontAwesomeIcon icon={faUserPlus} />
+            </IconBox>
+            <IconBox onClick={onClickNote}>
+              <MailIcon style={{width: "15px", marginLeft: "5px"}} />
+            </IconBox>
+          </>
         )}
       </InfoContainer>
       <CreatedAt>{lastMinutes < 60 

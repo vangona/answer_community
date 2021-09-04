@@ -1,4 +1,4 @@
-import { faBars, faChevronRight, faHome } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faChevronRight, faCog, faDoorOpen, faEdit, faHome, faQuestion, faUserFriends } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -94,18 +94,28 @@ const Navigation = () => {
                     </NavComponent>
                 </Link>
                 <Link to={"/community"} style={{textDecoration: "none"}}>
-                    <NavComponent>C</NavComponent>
+                    <NavComponent>
+                        <FontAwesomeIcon icon={faUserFriends} />
+                    </NavComponent>
                 </Link> 
                 <Link to={"/questions"} style={{textDecoration: "none"}}>
-                    <NavComponent>Q</NavComponent>
+                    <NavComponent>
+                        <FontAwesomeIcon icon={faQuestion} />
+                    </NavComponent>
                 </Link>
                 <Link to={"/myanswers"} style={{textDecoration: "none"}}>
-                    <NavComponent>A</NavComponent>
+                    <NavComponent>
+                    <FontAwesomeIcon icon={faEdit} />
+                    </NavComponent>
                 </Link> 
                 <Link to={"/settings"} style={{textDecoration: "none"}}>
-                    <NavComponent>S</NavComponent>
+                    <NavComponent>
+                        <FontAwesomeIcon icon={faCog} />
+                    </NavComponent>
                 </Link> 
-                <NavComponent onClick={onClickLogout}>O</NavComponent>
+                <NavComponent onClick={onClickLogout}>
+                <FontAwesomeIcon icon={faDoorOpen} />
+                </NavComponent>
                 <NavCloseBtn style onClick={onNavClick}>
                     <FontAwesomeIcon icon={faChevronRight} />
                 </NavCloseBtn>

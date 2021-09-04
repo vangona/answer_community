@@ -40,7 +40,6 @@ const ProfileInput = styled.input`
 `;
 
 const ProfileSubmitBtn = styled.button`
-    margin-top: 10px;
     font-size: 12px;
     border-radius: 10px;
     padding: 5px 10px;
@@ -152,6 +151,7 @@ const Settings = ({ refreshUser, userObj }) => {
             <ProfileContainer>
                 <ProfileLabel>이름 바꾸기</ProfileLabel>
                 <ProfileInput onChange={onChange} value={displayName} type="text" />
+                <ProfileLabel style={{marginTop: "5px", fontSize:"10px"}}>이름을 바꿔도, 사람들이 이전 이름을 알 수 있습니다.</ProfileLabel>
                 <ProfileSubmitBtn onClick={onSubmit}>변경하기</ProfileSubmitBtn>
             </ProfileContainer>
 

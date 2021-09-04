@@ -18,6 +18,7 @@ const Title = styled.h1`
 const Column = styled.div`
     display: flex;
     flex-direction: column;
+    margin-top: 15px;
 `;
 
 const NoteContainer = styled.div`
@@ -28,6 +29,7 @@ const NoteContainer = styled.div`
 `;
 
 const NoteTitle = styled.div`
+    font-size: 12px;
 `;
 
 const NoteWriter = styled.span`
@@ -36,6 +38,7 @@ const NoteWriter = styled.span`
 
 const NoteAnswer = styled.span`
     font-size: 12px;
+    margin-bottom: 5px;
 `;
 
 const Notes = ({userObj}) => {
@@ -50,7 +53,6 @@ const Notes = ({userObj}) => {
             }))
             setNotes(noteArray);
             setIsLoading(false);
-            console.log(noteArray)
         })
     }
 
@@ -69,7 +71,7 @@ const Notes = ({userObj}) => {
                 {notes.map(note => (
                     <>
                     <Column>
-                    <NoteAnswer>{note.answer}에서 온 쪽지입니다.</NoteAnswer>
+                    <NoteAnswer>'{note.answer}'에서 온 쪽지입니다.</NoteAnswer>
                         <NoteContainer key={note.noteId}>
                         <NoteTitle>
                             {note.noteContent}

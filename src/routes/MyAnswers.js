@@ -1,3 +1,5 @@
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import MyAnswer from "../components/MyAnswer";
@@ -22,9 +24,34 @@ const Title = styled.div`
     flex-direction: column;
 `;
 
+const AddBtn = styled.button`
+    background-color: transparent;
+    border: 0;
+    color: white;
+    opacity: 0.7;
+    margin: 15px;
+    :hover {
+        cursor: pointer;
+    }
+    :active {
+        transform: scale(0.98);
+    }
+`;
+
 const MyAnswers = ({questionArray, userObj}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [myAnswers, setMyAnswers] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1)
+
+    const currentPosts = (posts) => {
+        let currentPosts = 0;
+        currentPosts = posts.slice(0, currentPage * 5)
+        return currentPosts
+      }
+
+      const addPage = e => {
+        setCurrentPage(currentPage + 1)
+    }
 
     const getMyAnswers = async () => {
         await dbService.collection("answers").where("userId", "==", `${userObj.uid}`).get()
@@ -51,7 +78,10 @@ const MyAnswers = ({questionArray, userObj}) => {
                 <Title>
                     나의 대답들
                 </Title>
-                {myAnswers.map(myAnswer => <MyAnswer key={myAnswer.answerId} questionArray={questionArray} answer={myAnswer} />)}
+                {currentPosts(myAnswers).map(myAnswer => <MyAnswer key={myAnswer.answerId} questionArray={questionArray} answer={myAnswer} />)}
+                <AddBtn onClick={addPage}>
+                    <FontAwesomeIcon icon={faPlusCircle} size="3x" />
+                </AddBtn>
             </>
             )}
         </Container>

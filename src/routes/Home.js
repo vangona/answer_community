@@ -14,7 +14,19 @@ const Container = styled.div`
   background-color: var(--main-color);
 `;
 
-const AddBtn = styled.button``;
+const AddBtn = styled.button`
+    background-color: transparent;
+    border: 0;
+    color: white;
+    opacity: 0.7;
+    margin: 15px;
+    :hover {
+        cursor: pointer;
+    }
+    :active {
+        transform: scale(0.98);
+    }
+`;
 
 const ModalBackground = styled.div`
 background-color: rgba(0,0,0,0.5);
@@ -86,10 +98,12 @@ const Home = ({ userObj }) => {
               <Answer key={answer.answerId} userObj={userObj} answer={answer} />
             ))
             }
+            <AddBtn onClick={addBtn}>
+              <FontAwesomeIcon icon={faPlusCircle} size="3x" />
+            </AddBtn>
           </>
         )
         }
-        {currentPosts(answers) > 5 && <AddBtn onClick={addBtn}></AddBtn>}
       </Container>
     );
   }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
-import { authService } from "../fBase";
+import { authService, dbService } from "../fBase";
 import AppRouter from "./Router";
 
 const GlobalStyle = createGlobalStyle`
@@ -202,10 +202,16 @@ function App() {
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
-        setUserObj({
-          uid: user.uid,
-          displayName: (user.displayName ? user.displayName : "익명"),
-          updateProfile: (args) => user.updateProfile(args),
+        let friendArray;
+        dbService.collection("friends").doc(`${user.uid}`).get()
+        .then(snapshot => {
+            friendArray = snapshot.data()
+            setUserObj({
+                uid: user.uid,
+                friends : friendArray.friends,
+                displayName: (user.displayName ? user.displayName : "익명"),
+                updateProfile: (args) => user.updateProfile(args),
+              })
         })
       } else {
         setUserObj(null)
