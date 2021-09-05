@@ -70,9 +70,9 @@ const Notes = ({userObj}) => {
 
                 {notes.map(note => (
                     <>
-                    <Column>
+                    <Column key={note.noteId}>
                     <NoteAnswer>'{note.answer}'에서 온 쪽지입니다.</NoteAnswer>
-                        <NoteContainer key={note.noteId}>
+                        <NoteContainer>
                         <NoteTitle>
                             {note.noteContent}
                         </NoteTitle>

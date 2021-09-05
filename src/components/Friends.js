@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { authService, dbService } from "../fBase";
 
 const Container = styled.div`
     width: 90%;
@@ -14,11 +15,12 @@ const Title = styled.h1`
 `;
 
 const Friends = ({userObj}) => {
+
     return (
         <Container>
             <Title>친구들</Title>
             <hr />
-            <div>{userObj.friends[0]}</div>
+            <div></div>
         </Container>
     )
 }

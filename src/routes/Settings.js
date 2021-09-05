@@ -117,7 +117,13 @@ const Settings = ({ refreshUser, userObj }) => {
         if (displayName && userObj.displayname !== displayName) {
             await userObj.updateProfile({
                 displayName
-            });
+            })
+            dbService.collection("users").doc(`${userObj.uid}`).set({
+                uid: userObj.uid,
+                displayName: userObj.displayName
+            }).then(
+                alert("이름이 성공적으로 변경되었습니다 :)")
+            )
             refreshUser();
             setDisplayName("");
         };
@@ -151,7 +157,7 @@ const Settings = ({ refreshUser, userObj }) => {
             <ProfileContainer>
                 <ProfileLabel>이름 바꾸기</ProfileLabel>
                 <ProfileInput onChange={onChange} value={displayName} type="text" />
-                <ProfileLabel style={{marginTop: "5px", fontSize:"10px"}}>이름을 바꿔도, 사람들이 이전 이름을 알 수 있습니다.</ProfileLabel>
+                <ProfileLabel style={{marginTop: "5px", fontSize:"10px"}}>이름을 바꿔도, 친구들은 이전 이름을 알 수 있습니다.</ProfileLabel>
                 <ProfileSubmitBtn onClick={onSubmit}>변경하기</ProfileSubmitBtn>
             </ProfileContainer>
 

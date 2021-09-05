@@ -132,7 +132,7 @@ const Answer = ({answer, userObj}) => {
       && dbService.collection("answers").doc(answer.answerId).delete(); 
     }
   }
-
+  
   const onClickNote = e => {
     e.preventDefault();
     setNoteState(!noteState);

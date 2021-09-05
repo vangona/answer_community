@@ -212,11 +212,12 @@ function App() {
                 displayName: (user.displayName ? user.displayName : "익명"),
                 updateProfile: (args) => user.updateProfile(args),
               })
+            setInit(true)
         })
       } else {
         setUserObj(null)
+        setInit(true)
       }
-      setInit(true)
     })
   }, [])
 
