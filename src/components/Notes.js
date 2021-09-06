@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { dbService } from "../fBase";
+import Note from "./Note";
 
 const Container = styled.div`
     width: 90%;
@@ -13,32 +14,6 @@ const Container = styled.div`
 
 const Title = styled.h1`
     color: white;
-`;
-
-const Column = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin-top: 15px;
-`;
-
-const NoteContainer = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-`;
-
-const NoteTitle = styled.div`
-    font-size: 12px;
-`;
-
-const NoteWriter = styled.span`
-    font-size: 12px;
-`;
-
-const NoteAnswer = styled.span`
-    font-size: 12px;
-    margin-bottom: 5px;
 `;
 
 const Notes = ({userObj}) => {
@@ -70,17 +45,7 @@ const Notes = ({userObj}) => {
 
                 {notes.map(note => (
                     <>
-                    <Column key={note.noteId}>
-                    <NoteAnswer>'{note.answer}'에서 온 쪽지입니다.</NoteAnswer>
-                        <NoteContainer>
-                        <NoteTitle>
-                            {note.noteContent}
-                        </NoteTitle>
-                        <NoteWriter>
-                            - {note.writerName}
-                        </NoteWriter>
-                        </NoteContainer>
-                    </Column>
+                        <Note userObj={userObj} note={note} />
                     </>
                 ))}
             </>

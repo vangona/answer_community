@@ -208,7 +208,9 @@ function App() {
             friendArray = snapshot.data()
             setUserObj({
                 uid: user.uid,
-                friends : friendArray.friends,
+                friends : (friendArray 
+                    ? friendArray.friends 
+                    : null),
                 displayName: (user.displayName ? user.displayName : "익명"),
                 updateProfile: (args) => user.updateProfile(args),
               })
