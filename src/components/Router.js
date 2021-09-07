@@ -11,6 +11,7 @@ import Navigation from "../routes/Navigation";
 import CheerRegister from "../routes/CheerRegister";
 import Settings from "../routes/Settings";
 import Community from "../routes/Community";
+import UserAnswers from "../routes/UserAnswers";
 
 const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser }) => {
     return (
@@ -35,10 +36,10 @@ const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser }) => {
                         <Questions questionArray={questionArray} userObj={userObj} />
                     </Route>
                     <Route exact path="/question/:id" >
-                        <QuestionDetail />
+                        <QuestionDetail userObj={userObj} />
                     </Route>
-                    <Route exact path="/answer/:id" >
-                        <AnswerDetail />
+                    <Route exact path="/user/:id" >
+                        <UserAnswers userObj={userObj} />
                     </Route>
                     <Route exact path="/settings" >
                         <Settings refreshUser={refreshUser} userObj={userObj} />

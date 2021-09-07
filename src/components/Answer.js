@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faTrashAlt, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { dbService } from "../fBase";
 import NoteFactory from "./NoteFactory";
+import { useHistory } from "react-router";
 
 const Container = styled.div`
   position: relative;
@@ -36,6 +37,9 @@ line-height: 20px;
   font-family: Jeju Myeongjo;
   margin-bottom: 20px;
   font-size: 14px;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const InfoContainer = styled.div`
@@ -68,6 +72,9 @@ const Writer = styled.span`
   box-sizing: border-box;
   margin-bottom: 10px;
   font-size: 10px;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const Content = styled.div`
@@ -105,6 +112,8 @@ const Answer = ({answer, userObj}) => {
   const [editState, setEditState] = useState(false);
   const [noteState, setNoteState] = useState(false);
   const [changedAnswer, setChangedAnswer] = useState('');
+  
+  const history = useHistory();
 
   const lastTime = (Date.now() - answer.createdAt) / 1000 / 60
   const lastMinutes = Math.round(lastTime)
@@ -138,13 +147,23 @@ const Answer = ({answer, userObj}) => {
     setNoteState(!noteState);
   }
 
+  const onClickDetail = e => {
+    e.preventDefault();
+    history.push(`/question/${answer.questionId}`)
+  }
+
+  const onClickUser = e => {
+    e.preventDefault();
+    history.push(`/user/${answer.userId}`)
+  }
+
   const onChange = e => {
     setChangedAnswer(e.target.value)
   }
 
   return (
     <Container>
-      <Question>{answer.question}</Question>
+      <Question onClick={onClickDetail}>{answer.question}</Question>
       <InfoContainer>
         {answer.userId === userObj.uid 
         ? (
@@ -174,7 +193,7 @@ const Answer = ({answer, userObj}) => {
           ? `${lastHours}시간 전`
           : `${lastDays}일 전`
         }</CreatedAt>
-      <Writer>- {answer.userName}</Writer>
+      <Writer onClick={onClickUser}>- {answer.userName}</Writer>
       <Content>
         {editState 
         ? <EditInput autoFocus onChange={onChange} value={changedAnswer ? changedAnswer : answer.answer} />
