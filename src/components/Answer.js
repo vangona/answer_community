@@ -154,7 +154,7 @@ const Answer = ({answer, userObj}) => {
 
   const onClickUser = e => {
     e.preventDefault();
-    history.push(`/user/${answer.userId}`)
+    history.push(`/useranswer/${answer.userId}`)
   }
 
   const onChange = e => {

@@ -82,9 +82,15 @@ const QuestionRegister = () => {
         await authService.createUserWithEmailAndPassword(
             `${randomstring}@drawer.book`, 
             `${randomstring}@drawer.book`)
-        .then(
-            alert("성공")
-        )
+        .then(async (data) => {
+            const newUserObj = {
+                uid: data.user.uid,
+                displayName: "익명",
+                isPassword: false,
+                initCode: `${randomstring}@drawer.book`,
+            }
+            await dbService.collection("users").doc(`${data.user.uid}`).set(newUserObj).then(alert("성공했습니다."))
+        })
         setCode(`${randomstring}@drawer.book`)
     }
 

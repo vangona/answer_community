@@ -38,7 +38,7 @@ const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser }) => {
                     <Route exact path="/question/:id" >
                         <QuestionDetail userObj={userObj} />
                     </Route>
-                    <Route exact path="/user/:id" >
+                    <Route exact path="/useranswer/:id" >
                         <UserAnswers userObj={userObj} />
                     </Route>
                     <Route exact path="/settings" >

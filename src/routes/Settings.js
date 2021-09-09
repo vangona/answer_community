@@ -18,7 +18,10 @@ const ProfileContainer = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 150px;
+    height: auto;
+    padding: 20px 0px;
+    box-sizing: border-box;
+    transition: 1s all ease-in-out;
     background-color: rgba(255,255,255,0.5);
     margin-bottom: 20px;
 `;
@@ -32,7 +35,10 @@ const Title = styled.div`
 `;
 
 const ProfileLabel = styled.label`
-    margin-bottom: 10px;
+    margin: 5px 0;
+    :hover {
+        cursor: pointer;
+    }
 `;
 
 const ProfileInput = styled.input`
@@ -46,6 +52,8 @@ const ProfileSubmitBtn = styled.button`
     border: 1px solid rgba(0,0,0,0.5);
     color: black;
     background-color: rgba(255,255,255,0.5);
+    font-family: Kyobo Handwriting;
+    margin-top: 5px;
     :hover {
         cursor: pointer;
     }
@@ -102,10 +110,23 @@ const QnaSubmitBtn = styled.button`
 
 const Settings = ({ refreshUser, userObj }) => {
     const [displayName, setDisplayName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [report, setReport] = useState('');
+    const [nameState, setNameState] = useState(false);
+    const [emailState, setEmailState] = useState(false);
+    const [passwordState, setPasswordState] = useState(false);
 
     const onChange = e => {
-        setDisplayName(e.target.value)
+        if (e.target.getAttribute("name") === "name") {
+            setDisplayName(e.target.value)
+        }
+        if (e.target.getAttribute("name") === "email") {
+            setEmail(e.target.value)
+        }
+        if (e.target.getAttribute("name") === "password") {
+            setPassword(e.target.value)
+        }
     }
 
     const onChangeReport = e => {
@@ -129,6 +150,22 @@ const Settings = ({ refreshUser, userObj }) => {
         };
     };
 
+    const onSubmitEmail = async (e) => {
+        e.preventDefault();
+        if (window.confirm(`${email}로 코드를 변경할까요?`)) {
+        await authService.currentUser.updateEmail(email).then(()=>{
+            alert("코드 변경에 성공했습니다.", email)
+        })}
+    }
+
+    const onSubmitPassword = async (e) => {
+        e.preventDefault();
+        if (window.confirm("비밀번호를 변경할까요?")) 
+        authService.currentUser.updatePassword(password).then(()=>{
+            alert("비밀번호 변경에 성공했습니다.")
+        })
+    }
+
     const onReport = async e => {
         e.preventDefault();
         if (report) { 
@@ -143,6 +180,19 @@ const Settings = ({ refreshUser, userObj }) => {
     }
     }
 
+    const onClick = e =>{
+        e.preventDefault();
+        if (e.target.getAttribute("name") === "name") {
+            setNameState(!nameState)
+        }
+        if (e.target.getAttribute("name") === "email") {
+            setEmailState(!emailState)
+        }
+        if (e.target.getAttribute("name") === "password") {
+            setPasswordState(!passwordState)
+        }
+    }
+    
     const onLogOut = (e) => {
         e.preventDefault();
         authService.signOut();
@@ -155,10 +205,42 @@ const Settings = ({ refreshUser, userObj }) => {
             </Title>
 
             <ProfileContainer>
-                <ProfileLabel>이름 바꾸기</ProfileLabel>
-                <ProfileInput onChange={onChange} value={displayName} type="text" />
-                <ProfileLabel style={{marginTop: "5px", fontSize:"10px"}}>이름을 바꿔도, 친구들은 이전 이름을 알 수 있습니다.</ProfileLabel>
-                <ProfileSubmitBtn onClick={onSubmit}>변경하기</ProfileSubmitBtn>
+                {!(emailState | passwordState) && 
+                <> 
+                <ProfileLabel name="name" onClick={onClick}>이름 바꾸기</ProfileLabel>
+                <hr style={{width:"70%", opacity:"70%"}} />
+                </>
+                }
+                {nameState &&
+                <>
+                    <ProfileInput name="name" onChange={onChange} value={displayName} type="text" />
+                    <ProfileLabel style={{marginTop: "5px", fontSize:"10px"}}>이름을 바꿔도, 친구들은 이전 이름을 알 수 있습니다.</ProfileLabel>
+                    <ProfileSubmitBtn name="name" onClick={onSubmit}>변경하기</ProfileSubmitBtn>
+                </>
+                }
+                {!(nameState | passwordState) && 
+                <>
+                <ProfileLabel name="email" onClick={onClick}>이메일 바꾸기</ProfileLabel>
+                <hr style={{width:"70%", opacity:"70%"}} />
+                </>}
+                {emailState &&
+                <>
+                    <ProfileInput name="email" onChange={onChange} value={email} type="email" />
+                    <ProfileSubmitBtn name="email" onClick={onSubmitEmail}>변경하기</ProfileSubmitBtn>
+                </>
+                }
+                {!(nameState | emailState) && 
+                <>
+                    <ProfileLabel name="password" onClick={onClick}>2차 비밀번호 만들기</ProfileLabel>
+                    {passwordState && <hr style={{width:"70%", opacity:"70%"}} />}
+                </>
+                }
+                {passwordState &&
+                <>
+                    <ProfileInput name="password" onChange={onChange} value={password} type="password" />
+                    <ProfileSubmitBtn name="password" onClick={onSubmitPassword}>변경하기</ProfileSubmitBtn>
+                </>
+                }
             </ProfileContainer>
 
             <QnaContainer>
