@@ -41,11 +41,18 @@ const ProfileLabel = styled.label`
     }
 `;
 
+const ProfileForm = styled.form`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;
+
 const ProfileInput = styled.input`
     font-family: Kyobo Handwriting;
 `;
 
-const ProfileSubmitBtn = styled.button`
+const ProfileSubmitBtn = styled.input`
     font-size: 12px;
     border-radius: 10px;
     padding: 5px 10px;
@@ -155,6 +162,7 @@ const Settings = ({ refreshUser, userObj }) => {
         if (window.confirm(`${email}로 코드를 변경할까요?`)) {
         await authService.currentUser.updateEmail(email).then(()=>{
             alert("코드 변경에 성공했습니다.", email)
+            setEmail("");
         })}
     }
 
@@ -163,6 +171,7 @@ const Settings = ({ refreshUser, userObj }) => {
         if (window.confirm("비밀번호를 변경할까요?")) 
         authService.currentUser.updatePassword(password).then(()=>{
             alert("비밀번호 변경에 성공했습니다.")
+            setPassword("");
         })
     }
 
@@ -212,11 +221,11 @@ const Settings = ({ refreshUser, userObj }) => {
                 </>
                 }
                 {nameState &&
-                <>
-                    <ProfileInput name="name" onChange={onChange} value={displayName} type="text" />
+                <ProfileForm onSubmit={onSubmit}>
+                    <ProfileInput required name="name" onChange={onChange} value={displayName} type="text" />
                     <ProfileLabel style={{marginTop: "5px", fontSize:"10px"}}>이름을 바꿔도, 친구들은 이전 이름을 알 수 있습니다.</ProfileLabel>
-                    <ProfileSubmitBtn name="name" onClick={onSubmit}>변경하기</ProfileSubmitBtn>
-                </>
+                    <ProfileSubmitBtn value="변경하기" type="submit" name="name" />
+                </ProfileForm>
                 }
                 {!(nameState | passwordState) && 
                 <>
@@ -224,10 +233,10 @@ const Settings = ({ refreshUser, userObj }) => {
                 <hr style={{width:"70%", opacity:"70%"}} />
                 </>}
                 {emailState &&
-                <>
-                    <ProfileInput name="email" onChange={onChange} value={email} type="email" />
-                    <ProfileSubmitBtn name="email" onClick={onSubmitEmail}>변경하기</ProfileSubmitBtn>
-                </>
+                <ProfileForm onSubmit={onSubmitEmail}>
+                    <ProfileInput required name="email" onChange={onChange} value={email} type="email" />
+                    <ProfileSubmitBtn value="변경하기" type="submit" name="email" />
+                </ProfileForm>
                 }
                 {!(nameState | emailState) && 
                 <>
@@ -236,10 +245,10 @@ const Settings = ({ refreshUser, userObj }) => {
                 </>
                 }
                 {passwordState &&
-                <>
-                    <ProfileInput name="password" onChange={onChange} value={password} type="password" />
-                    <ProfileSubmitBtn name="password" onClick={onSubmitPassword}>변경하기</ProfileSubmitBtn>
-                </>
+                <ProfileForm onSubmit={onSubmitPassword}>
+                    <ProfileInput required name="password" onChange={onChange} value={password} type="password" />
+                    <ProfileSubmitBtn value="변경하기" type="submit" name="password" />
+                </ProfileForm>
                 }
             </ProfileContainer>
 

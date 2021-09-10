@@ -31,18 +31,22 @@ const LoginInput = styled.input`
 `;
 
 const LoginBtn = styled.div`
-  width: 20px;
-  height: 20px;
-  margin-left: 5px;
-  transform: rotateZ(45deg);
-  color: white;
+  color: var(--gold);
+  margin-top: 5px;
+  font-size: 14px;
+  transition: 0.5s all ease-in-out;
     :hover {
         cursor: pointer;
+        color: white;
     }
     :active {
-      transform: rotateZ(45deg) scale(0.9);
+      transform: scale(0.9);
     }
 `;
+
+const PasswordContainer = styled.div``;
+
+const PasswordInput = styled.input``;
 
 const Error = styled(animated.span)`
   display: flex;
@@ -55,15 +59,16 @@ const Error = styled(animated.span)`
   font-size: 12px;
 `;
 
-const Login = () => {
+const Login = ({codeState}) => {
   const [code, setCode] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
       await authService.signInWithEmailAndPassword(
-      code, code) 
+      code, password ? password : code) 
       setCode("");
     } catch (error) {
       if (error.message === "The email address is badly formatted.") {
@@ -79,6 +84,10 @@ const Login = () => {
 
   const onChange = e => {
     setCode(e.target.value)
+  }
+
+  const onChangePassword = e => {
+    setPassword(e.target.value)
   }
 
   const animation = useSpring({
@@ -100,11 +109,16 @@ const Login = () => {
     <Container style={animation}>
       <LoginContainer>
         <LoginInput onChange={onChange} value={code} type="text" />
-          <LoginBtn onClick={onSubmit}>
-            <PaperAirplaneIcon />
-          </LoginBtn>
       </LoginContainer>
-          <Error style={errorAni}>{error}</Error>
+      {codeState && 
+        <PasswordContainer>
+          <PasswordInput value={password} onChange={onChangePassword} type="password" />
+        </PasswordContainer>
+        }
+      <Error style={errorAni}>{error}</Error>
+      <LoginBtn onClick={onSubmit}>
+          들어가기
+      </LoginBtn>
     </Container>
   );
 }

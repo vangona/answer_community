@@ -34,8 +34,12 @@ const Title = styled(animated.h1)`
 
 const Notice = styled.span`
   color: var(--gold);
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   font-size: 14px;
+  z-index: 9;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const Welcome = styled(animated.div)`
@@ -47,6 +51,7 @@ const Welcome = styled(animated.div)`
 
 const Auth = () => {
     const [authState, setAuthState] = useState(false);
+    const [codeState, setCodeState] = useState(false);
 
     const animation = useSpring({
       top: authState ? "150px" : "200px",
@@ -69,8 +74,8 @@ const Auth = () => {
         {authState 
         ? (
         <>
-        <Notice>코드를 입력해주세요.</Notice>
-        <Login />
+        <Notice onClick={() => {setCodeState(!codeState)}}>코드를 입력해주세요.</Notice>
+        <Login codeState={codeState} />
         </>
         ) : <Welcome style={welcomeAni}>입장하시려면 터치해주세요.</Welcome>}
       </Container>
