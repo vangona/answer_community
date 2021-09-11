@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { authService, dbService } from "../fBase";
+import { dbService } from "../fBase";
 
 const Container = styled.div`
     width: 90%;
@@ -14,13 +14,48 @@ const Title = styled.h1`
     color: white;
 `;
 
-const Friends = ({userObj}) => {
+const Friend = styled.div`
+    width: 50px;
+    height: 30px;
+    color: white;
+`;
 
+const Friends = ({userObj}) => {
+    const [friends, setFriends] = useState([]);
+    const [init, setInit] = useState(false);
+
+    const getFriends = async () => {
+        let friendArray = [];
+
+        await userObj.friends.forEach(friend => {
+            dbService.collection("users").where("uid", "==", friend).get().then(
+                snapshot => {
+                    snapshot.docs.map(doc => friendArray.push({
+                        ...doc.data()
+                    }))
+                }
+            )
+        })
+        setFriends(friendArray);
+        setInit(true);
+        console.log(friends)
+    }
+
+    useEffect(() => {
+        getFriends();
+    }, [])
     return (
         <Container>
+            {init ? 
+            <>
             <Title>친구들</Title>
             <hr />
-            <div></div>
+            {friends.map(friend => (
+                <Friend>{friend.displayName}</Friend>
+            ))}
+            </>
+            : "Loading..."
+            }
         </Container>
     )
 }
