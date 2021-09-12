@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 import { dbService } from "../fBase";
 
@@ -15,32 +16,36 @@ const Title = styled.h1`
 `;
 
 const Friend = styled.div`
-    width: 50px;
-    height: 30px;
     color: white;
+    margin-top: 10px;
+    :hover {
+        cursor: pointer;
+    }
+    :active {
+        transform: scale(0.98)
+    }
 `;
 
 const Friends = ({userObj}) => {
     const [friends, setFriends] = useState([]);
     const [init, setInit] = useState(false);
+    const history = useHistory();
 
     const getFriends = async () => {
-        let friendArray = [];
-
-        await userObj.friends.forEach(friend => {
-            dbService.collection("users").where("uid", "==", friend).get().then(
-                snapshot => {
-                    snapshot.docs.map(
-                        doc => doc.data()
-                    )
-                }
-            )
-        })
-        setFriends(friendArray);
+        await dbService.collection("users").where("uid", "in", userObj.friends).get().then(
+            snapshot => {
+                const friendArray = snapshot.docs.map(doc => ({...doc.data()})
+                )
+                setFriends(friendArray)
+            }
+        )
         setInit(true);
-        console.log(friends);
     }
 
+    const onClickUser = (e) => {
+        history.push(`/useranswer/${e.target.id}`)
+    }
+      
     useEffect(() => {
         getFriends();
     }, [])
@@ -51,7 +56,7 @@ const Friends = ({userObj}) => {
             <Title>친구들</Title>
             <hr />
             {friends.map(friend => (
-                <Friend>{friend.displayName}</Friend>
+                <Friend id={friend.uid} onClick={onClickUser} key={friend.uid}>{friend.displayName}</Friend>
             ))}
             </>
             : "Loading..."

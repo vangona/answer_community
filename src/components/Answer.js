@@ -178,9 +178,11 @@ const Answer = ({answer, userObj}) => {
           )
         : (
           <>
+            {!userObj.friends.includes(answer.userId) && 
             <IconBox>
               <FontAwesomeIcon icon={faUserPlus} />
             </IconBox>
+            }
             <IconBox onClick={onClickNote}>
               <MailIcon style={{width: "15px", marginLeft: "5px"}} />
             </IconBox>
