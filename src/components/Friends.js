@@ -30,15 +30,15 @@ const Friends = ({userObj}) => {
         await userObj.friends.forEach(friend => {
             dbService.collection("users").where("uid", "==", friend).get().then(
                 snapshot => {
-                    snapshot.docs.map(doc => friendArray.push({
-                        ...doc.data()
-                    }))
+                    snapshot.docs.map(
+                        doc => doc.data()
+                    )
                 }
             )
         })
         setFriends(friendArray);
         setInit(true);
-        console.log(friends)
+        console.log(friends);
     }
 
     useEffect(() => {
