@@ -16,6 +16,12 @@ const Title = styled.h1`
     color: white;
 `;
 
+const NoteBox = styled.div`
+    color: rgba(0,0,0,0.5);
+    margin-top: 15px;
+    font-size: 14px;
+`;
+
 const Notes = ({userObj}) => {
     const [notes, setNotes] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -43,11 +49,16 @@ const Notes = ({userObj}) => {
                 <Title>쪽지함</Title>
                 <hr />
 
+                {notes.length === 0 
+                ? <NoteBox>표시할 쪽지가 없습니다.</NoteBox>
+                : (
+                <>
                 {notes.map(note => (
-                    <>
-                        <Note userObj={userObj} note={note} />
-                    </>
+                    <Note userObj={userObj} note={note} />
                 ))}
+                </>
+                )
+                }
             </>
                 )
             }

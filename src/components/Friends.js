@@ -1,3 +1,5 @@
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
@@ -16,8 +18,19 @@ const Title = styled.h1`
 `;
 
 const Friend = styled.div`
+    display: flex;
+    justify-content: space-between;
     color: white;
     margin-top: 10px;
+`;
+
+const FriendIcon = styled.div`
+    display: flex;
+    gap: 10px;
+    align-items: center;
+`;
+
+const FriendName = styled.div`
     :hover {
         cursor: pointer;
     }
@@ -25,6 +38,8 @@ const Friend = styled.div`
         transform: scale(0.98)
     }
 `;
+
+const FriendCode = styled.div``;
 
 const Friends = ({userObj}) => {
     const [friends, setFriends] = useState([]);
@@ -56,7 +71,17 @@ const Friends = ({userObj}) => {
             <Title>친구들</Title>
             <hr />
             {friends.map(friend => (
-                <Friend id={friend.uid} onClick={onClickUser} key={friend.uid}>{friend.displayName}</Friend>
+                <Friend key={friend.uid}>
+                    <FriendName id={friend.uid} onClick={onClickUser}>
+                        {friend.displayName}
+                    </FriendName>
+                    <FriendIcon>                         <FriendCode>
+                        #{friend.uid.slice(-4).toLowerCase()}
+                        </FriendCode>
+                        <FontAwesomeIcon icon={faTrashAlt} size="sm" />
+                    </FriendIcon>
+
+                </Friend>
             ))}
             </>
             : "Loading..."

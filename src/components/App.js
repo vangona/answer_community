@@ -202,15 +202,15 @@ function App() {
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
-        let friendArray;
-        dbService.collection("friends").doc(`${user.uid}`).get()
+        dbService.collection("users").doc(`${user.uid}`).get()
         .then(snapshot => {
-            friendArray = snapshot.data()
+            const userData= snapshot.data()
             setUserObj({
                 uid: user.uid,
-                friends : (friendArray 
-                    ? friendArray.friends 
+                friends : (userData.friends 
+                    ? userData.friends 
                     : null),
+                isPassword : userData.isPassword,
                 displayName: (user.displayName ? user.displayName : "익명"),
                 updateProfile: (args) => user.updateProfile(args),
               })
@@ -228,6 +228,8 @@ function App() {
     setUserObj({
       displayName:user.displayName,
       uid:user.uid,
+      isPassword: user.isPassword,
+      friends: user.friends,
       updateProfile: (args) => user.updateProfile(args),
     });
   };

@@ -159,10 +159,15 @@ const Settings = ({ refreshUser, userObj }) => {
 
     const onSubmitEmail = async (e) => {
         e.preventDefault();
-        if (window.confirm(`${email}로 코드를 변경할까요?`)) {
+        if (window.confirm(`${email}로 로그인 코드를 변경할까요? 더 이상 변경하실 수 없어요.`)) {
         await authService.currentUser.updateEmail(email).then(()=>{
-            alert("코드 변경에 성공했습니다.", email)
-            setEmail("");
+            dbService.collection("users").doc(`${userObj.uid}`).update({
+                isPassword: true
+            }).then(()=>{
+                alert("코드 변경에 성공했습니다.", email)
+                refreshUser();
+                setEmail("");
+            })
         })}
     }
 
@@ -171,6 +176,7 @@ const Settings = ({ refreshUser, userObj }) => {
         if (window.confirm("비밀번호를 변경할까요?")) 
         authService.currentUser.updatePassword(password).then(()=>{
             alert("비밀번호 변경에 성공했습니다.")
+            refreshUser();
             setPassword("");
         })
     }
@@ -227,11 +233,13 @@ const Settings = ({ refreshUser, userObj }) => {
                     <ProfileSubmitBtn value="변경하기" type="submit" name="name" />
                 </ProfileForm>
                 }
-                {!(nameState | passwordState) && 
+                {!userObj.isPassword ? !(nameState | passwordState) && 
                 <>
-                <ProfileLabel name="email" onClick={onClick}>이메일 바꾸기</ProfileLabel>
+                <ProfileLabel name="email" onClick={onClick}>이메일 만들기</ProfileLabel>
                 <hr style={{width:"70%", opacity:"70%"}} />
-                </>}
+                </>
+                : null
+                }
                 {emailState &&
                 <ProfileForm onSubmit={onSubmitEmail}>
                     <ProfileInput required name="email" onChange={onChange} value={email} type="email" />
@@ -240,7 +248,7 @@ const Settings = ({ refreshUser, userObj }) => {
                 }
                 {!(nameState | emailState) && 
                 <>
-                    <ProfileLabel name="password" onClick={onClick}>2차 비밀번호 만들기</ProfileLabel>
+                    <ProfileLabel name="password" onClick={onClick}>{userObj.isPassword ? "2차 비밀번호 바꾸기" : "2차 비밀번호 만들기"}</ProfileLabel>
                     {passwordState && <hr style={{width:"70%", opacity:"70%"}} />}
                 </>
                 }
