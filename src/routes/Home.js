@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Answer from "../components/Answer";
 import Cheer from "../components/Cheer";
+import useNotification from "../components/useNotification";
 import { authService, dbService } from "../fBase";
 
 const Container = styled.div`
@@ -19,7 +20,7 @@ const AddBtn = styled.button`
     border: 0;
     color: white;
     opacity: 0.7;
-    margin: 15px;
+    padding: 15px 0;
     :hover {
         cursor: pointer;
     }
@@ -28,12 +29,10 @@ const AddBtn = styled.button`
     }
 `;
 
-const ModalBackground = styled.div`
-background-color: rgba(0,0,0,0.5);
-position: absolute;
-box-sizing: border-box;
-  width: 100vw;
-  height: 100vh;
+const LastAnswer = styled.div`
+    color: white;
+    font-size: 12px;
+    padding: 15px 0;
 `;
 
 const Home = ({ userObj }) => {
@@ -98,9 +97,15 @@ const Home = ({ userObj }) => {
               <Answer key={answer.answerId} userObj={userObj} answer={answer} />
             ))
             }
+            {currentPage*5 <= answers.length 
+            ? 
             <AddBtn onClick={addBtn}>
-              <FontAwesomeIcon icon={faPlusCircle} size="3x" />
+              <FontAwesomeIcon icon={faPlusCircle} size="2x" />
             </AddBtn>
+            : <LastAnswer>
+                    마지막 대답입니다.
+            </LastAnswer>
+            }
           </>
         )
         }

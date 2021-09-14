@@ -65,10 +65,17 @@ const CreatedAt = styled.span`
   font-size: 10px;
 `;
 
+const WriterContainer = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
 const Writer = styled.span`
   transition: 0.3s all ease-in-out;
   text-align: right;
-  width: 100%;
+  width: auto;
   box-sizing: border-box;
   margin-bottom: 10px;
   font-size: 10px;
@@ -124,7 +131,7 @@ const Answer = ({answer, userObj}) => {
     e.preventDefault();
     if (answer.userId === userObj.uid) {
       setEditState(!editState);
-      if(changedAnswer !== answer.answer) {
+      if(changedAnswer !== answer.answer & editState === true) {
         window.confirm("내용을 바꿀까요?") 
         && dbService.collection("answers").doc(answer.answerId).update({
           answer: changedAnswer,
@@ -195,7 +202,9 @@ const Answer = ({answer, userObj}) => {
           ? `${lastHours}시간 전`
           : `${lastDays}일 전`
         }</CreatedAt>
-      <Writer onClick={onClickUser}>- {answer.userName}</Writer>
+      <WriterContainer>
+        <Writer onClick={onClickUser}>- {answer.userName}</Writer>
+      </WriterContainer>
       <Content>
         {editState 
         ? <EditInput autoFocus onChange={onChange} value={changedAnswer ? changedAnswer : answer.answer} />

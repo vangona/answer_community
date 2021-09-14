@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Question from "../components/Question";
 import Search from "../components/Search";
-import { dbService } from "../fBase";
 
 const Container = styled.div`
     display: flex;
@@ -29,6 +28,12 @@ const AddBtn = styled.button`
     }
 `;
 
+const LastQuestion = styled.div`
+    color: white;
+    font-size: 12px;
+    padding: 15px 0;
+`;
+
 const Questions = ({questionArray, userObj}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [questions, setQuestions] = useState([]);
@@ -48,7 +53,7 @@ const Questions = ({questionArray, userObj}) => {
     //             id: doc.questionId,
     //             ...doc.data()
     //         }))
-            setQuestions(questionArray)
+            setQuestions(questionArray.sort(() => Math.random() - 0.5))
             setIsLoading(!isLoading)
     //     })
     }
@@ -67,11 +72,17 @@ const Questions = ({questionArray, userObj}) => {
             ? "Loading..." 
             : (
             <>
-                { currentPosts(questions.filter(question => question.question.includes(searchWord))).map(question => <Question key={question.questionId} userObj={userObj} question={question} /> )}
+                {currentPosts(questions.filter(question => question.question.includes(searchWord))).map(question => <Question key={question.questionId} userObj={userObj} question={question} /> )}
                 <Search searchWord={searchWord} setSearchWord={setSearchWord} />
+                {currentPage*5 <= questions.length 
+                ?
                 <AddBtn onClick={addPage}>
-                    <FontAwesomeIcon icon={faPlusCircle} size="3x" />
+                    <FontAwesomeIcon icon={faPlusCircle} size="2x" />
                 </AddBtn>
+                : <LastQuestion>
+                    마지막 질문입니다.
+                </LastQuestion>
+                }
             </>
             )}
         </Container>

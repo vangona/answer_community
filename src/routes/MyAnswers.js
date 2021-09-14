@@ -2,7 +2,7 @@ import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import MyAnswer from "../components/MyAnswer";
+import Answer from "../components/Answer";
 import { dbService } from "../fBase";
 
 const Container = styled.div`
@@ -13,6 +13,7 @@ const Container = styled.div`
     height: 90vh;
     width: 100%;
     margin-top: 30px;
+    box-sizing: border-box;
 `;
 
 const Title = styled.div`
@@ -29,7 +30,7 @@ const AddBtn = styled.button`
     border: 0;
     color: white;
     opacity: 0.7;
-    margin: 15px;
+    padding: 15px 0;
     :hover {
         cursor: pointer;
     }
@@ -38,7 +39,13 @@ const AddBtn = styled.button`
     }
 `;
 
-const MyAnswers = ({questionArray, userObj}) => {
+const LastAnswer = styled.div`
+    color: white;
+    font-size: 12px;
+    padding: 15px 0;
+`;
+
+const MyAnswers = ({userObj}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [myAnswers, setMyAnswers] = useState(null);
     const [currentPage, setCurrentPage] = useState(1)
@@ -49,7 +56,7 @@ const MyAnswers = ({questionArray, userObj}) => {
         return currentPosts
       }
 
-      const addPage = e => {
+      const addPage = () => {
         setCurrentPage(currentPage + 1)
     }
 
@@ -78,10 +85,16 @@ const MyAnswers = ({questionArray, userObj}) => {
                 <Title>
                     나의 대답들
                 </Title>
-                {currentPosts(myAnswers).map(myAnswer => <MyAnswer key={myAnswer.answerId} questionArray={questionArray} answer={myAnswer} />)}
+                {currentPosts(myAnswers).map(myAnswer => <Answer key={myAnswer.answerId} answer={myAnswer} userObj={userObj}/>)}
+                {currentPage*5 <= myAnswers.length 
+                ?
                 <AddBtn onClick={addPage}>
-                    <FontAwesomeIcon icon={faPlusCircle} size="3x" />
+                    <FontAwesomeIcon icon={faPlusCircle} size="2x" />
                 </AddBtn>
+                : <LastAnswer>
+                    마지막 대답입니다.
+                </LastAnswer>
+                }
             </>
             )}
         </Container>

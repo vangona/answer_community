@@ -1,4 +1,4 @@
-import { faBars, faChevronRight, faCog, faDoorOpen, faEdit, faHome, faQuestion, faUserFriends } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faChevronUp, faCog, faDoorOpen, faEdit, faHome, faQuestion, faUserFriends } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
@@ -9,22 +9,21 @@ import { authService } from "../fBase";
 const Container = styled(animated.div)`
     position: fixed;
     top: 0;
-    right: 0;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    width: 100vw;
     height: auto;
-    width: 50px;
     z-index: 9;
+    box-sizing: border-box;
+    background-color: rgba(0,0,0, 0.2);
 `;
 
 const NavComponent = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 60px;
+    height: 40px;
     color: white;
-    background-color: rgba(0,0,0, 0.2);
     opacity: 1;
     z-index: 9;
     :hover {
@@ -64,16 +63,16 @@ const Navigation = () => {
 
     const animation = useSpring({
         opacity : navState ? 1 : 0, 
-        x: navState ? 0 : 100,
+        y: navState ? 0 : -10,
         reverse: !navState,
-        config: config.gentle,
+        config: config.default,
     })
 
     const reverseAnimation = useSpring({
         opacity : navState ? 0 : 1, 
-        x: navState ? 100 : 0,
+        y: navState ? -10 : 0,
         reverse: navState,
-        config: config.gentle,
+        config: config.default,
     })
 
     const onNavClick = () => {
@@ -88,7 +87,7 @@ const Navigation = () => {
         <>
             {navState ?(
             <Container style={animation}>
-                <Link to={"/"} style={{textDecoration: "none"}}>
+                <Link to={"/"} style={{textDecoration: "none", marginLeft: "20px"}}>
                     <NavComponent>
                         <FontAwesomeIcon icon={faHome} />
                     </NavComponent>
@@ -114,10 +113,10 @@ const Navigation = () => {
                     </NavComponent>
                 </Link> 
                 <NavComponent onClick={onClickLogout}>
-                <FontAwesomeIcon icon={faDoorOpen} />
+                    <FontAwesomeIcon icon={faDoorOpen} />
                 </NavComponent>
                 <NavCloseBtn style onClick={onNavClick}>
-                    <FontAwesomeIcon icon={faChevronRight} />
+                    <FontAwesomeIcon icon={faChevronUp} />
                 </NavCloseBtn>
             </Container>
             ) : (

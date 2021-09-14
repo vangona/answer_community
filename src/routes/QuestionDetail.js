@@ -1,3 +1,5 @@
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -9,7 +11,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 100%;
   padding-top: 30px;
 `;
 
@@ -24,11 +26,42 @@ const Question = styled.div`
   margin-bottom: 20px;
 `;
 
+const AddBtn = styled.button`
+    background-color: transparent;
+    border: 0;
+    color: white;
+    opacity: 0.7;
+    padding: 15px 0;
+    :hover {
+        cursor: pointer;
+    }
+    :active {
+        transform: scale(0.98);
+    }
+`;
+
+const LastAnswer = styled.div`
+    color: white;
+    font-size: 12px;
+    padding: 15px 0;
+`;
+
 const QuestionDetail = ({userObj}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [answers, setAnswers] = useState([]);
   const { id } = useParams();
-  
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const currentPosts = (posts) => {
+      let currentPosts = 0;
+      currentPosts = posts.slice(0, currentPage * 5)
+      return currentPosts
+    }
+
+    const addPage = () => {
+      setCurrentPage(currentPage + 1)
+  }
+
   const getAnswers = async () => {
     await dbService.collection("answers").where("questionId", "==", `${id}`).get()
     .then(snapShot => {
@@ -51,7 +84,16 @@ const QuestionDetail = ({userObj}) => {
       :
       <>
       <Question>{answers[0].question}</Question>
-      {answers.map(answer => <Answer answer={answer} userObj={userObj} />)}
+      {currentPosts(answers).map(answer => <Answer answer={answer} userObj={userObj} />)}
+      {currentPage*5 <= answers.length 
+      ?
+      <AddBtn onClick={addPage}>
+          <FontAwesomeIcon icon={faPlusCircle} size="2x" />
+      </AddBtn>
+      : <LastAnswer>
+          마지막 대답입니다.
+      </LastAnswer>
+      }
       </>
       }
     </Container>
