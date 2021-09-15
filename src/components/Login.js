@@ -32,7 +32,7 @@ const LoginInput = styled.input`
 
 const LoginBtn = styled.div`
   color: var(--gold);
-  margin-top: 5px;
+  margin-top: 10px;
   font-size: 14px;
   transition: 0.5s all ease-in-out;
     :hover {
@@ -48,18 +48,29 @@ const PasswordContainer = styled.div``;
 
 const PasswordInput = styled.input``;
 
+const PasswordBtn = styled.div`
+  color: white;
+  opacity: 70%;
+  margin-bottom: 10px;
+  font-size: 10px;
+  :hover {
+    cursor: pointer;
+  }
+`;
+
 const Error = styled(animated.span)`
   display: flex;
   text-align: center;
   align-items: center;
   justify-content: center;
+  margin-top: 5px;
   color: var(--gold);
   word-break: keep-all;
   width: 80%;
   font-size: 12px;
 `;
 
-const Login = ({codeState}) => {
+const Login = ({setCodeState, codeState}) => {
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -107,6 +118,14 @@ const Login = ({codeState}) => {
 
   return (
     <Container style={animation}>
+      <PasswordBtn onClick={() => {
+        setCodeState(!codeState)
+      }}>
+        {codeState 
+        ? "저는 비밀번호가 없습니다" 
+        : "저는 코드만 있습니다"
+        }
+      </PasswordBtn>
       <LoginContainer>
         <LoginInput onChange={onChange} value={code} type="text" />
       </LoginContainer>
@@ -114,7 +133,7 @@ const Login = ({codeState}) => {
         <PasswordContainer>
           <PasswordInput value={password} onChange={onChangePassword} type="password" />
         </PasswordContainer>
-        }
+      }
       <Error style={errorAni}>{error}</Error>
       <LoginBtn onClick={onSubmit}>
           들어가기

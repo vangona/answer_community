@@ -75,7 +75,7 @@ const Auth = () => {
         ? (
         <>
         <Notice onClick={() => {setCodeState(!codeState)}}>코드를 입력해주세요.</Notice>
-        <Login codeState={codeState} />
+        <Login setCodeState={setCodeState} codeState={codeState} />
         </>
         ) : <Welcome style={welcomeAni}>입장하시려면 터치해주세요.</Welcome>}
       </Container>
