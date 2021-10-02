@@ -60,7 +60,6 @@ const NoteFactory = ({answer, userObj, setNoteState}) => {
         alert("쪽지가 성공적으로 보내졌습니다 :)")
         setNoteState(false);
         setNoteContent('');
-        
     }
     }
     return (
@@ -68,7 +67,12 @@ const NoteFactory = ({answer, userObj, setNoteState}) => {
             <Title>쪽지</Title>
             <hr />
             <NoteTextarea value={noteContent} onChange={onChange} />
-            <IconBox onClick={onSubmit}>
+            <IconBox onClick={(e) => {
+                if(window.confirm(`${answer.userName}님께 쪽지를 보낼까요?`)){
+                    onSubmit(e)
+                }
+                
+            }}>
                 <PaperAirplaneIcon style={{width:"16px", height:"16px", transform: "rotateZ(45deg)"}} />
             </IconBox>
         </Container>

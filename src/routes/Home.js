@@ -35,7 +35,7 @@ const LastAnswer = styled.div`
     padding: 15px 0;
 `;
 
-const Home = ({ userObj }) => {
+const Home = ({ userObj, refreshFriends }) => {
   const [isLoading, setISLoading] = useState(true);
   const [cheerList, setCheerList] = useState([]);
   const [randNum, setRandNum] = useState(null);
@@ -94,7 +94,7 @@ const Home = ({ userObj }) => {
           <>
             {cheerList && <Cheer key={cheerList[randNum].cheerId} cheer={cheerList[randNum]} />}
             {answers && currentPosts(answers).map(answer => (
-              <Answer key={answer.answerId} userObj={userObj} answer={answer} />
+              <Answer key={answer.answerId} userObj={userObj} answer={answer} refreshFriends={refreshFriends} />
             ))
             }
             {currentPage*5 <= answers.length 

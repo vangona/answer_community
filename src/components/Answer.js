@@ -115,7 +115,7 @@ const EditInput = styled.textarea`
   width: 90%;
 `;
 
-const Answer = ({answer, userObj}) => {
+const Answer = ({answer, userObj, refreshFriends}) => {
   const [editState, setEditState] = useState(false);
   const [noteState, setNoteState] = useState(false);
   const [changedAnswer, setChangedAnswer] = useState('');
@@ -147,6 +147,16 @@ const Answer = ({answer, userObj}) => {
       window.confirm("정말 지우실건가요?") 
       && dbService.collection("answers").doc(answer.answerId).delete(); 
     }
+  }
+
+  const onClicekFriend = async (answer) => {
+    await dbService.collection("users").doc(`${userObj.uid}`).update({
+      friends: [...userObj.friends, answer.userId]
+    })
+    .then(() => {
+      refreshFriends([...userObj.friends, answer.userId])
+      alert(`${answer.userName}님을 친구로 추가했습니다.`)
+    })
   }
   
   const onClickNote = e => {
@@ -185,9 +195,11 @@ const Answer = ({answer, userObj}) => {
           )
         : (
           <>
-            {!userObj.friends.includes(answer.userId) && 
+            {userObj.friends && !userObj.friends.includes(answer.userId) && 
             <IconBox>
-              <FontAwesomeIcon icon={faUserPlus} />
+              <FontAwesomeIcon onClick={() => {
+                onClicekFriend(answer)
+              }} icon={faUserPlus} />
             </IconBox>
             }
             <IconBox onClick={onClickNote}>

@@ -79,10 +79,6 @@ const Navigation = () => {
         setNavState(!navState)
     }
 
-    const onClickLogout = () => {
-        authService.signOut();
-    }
-
     return(
         <>
             {navState ?(
@@ -112,9 +108,6 @@ const Navigation = () => {
                         <FontAwesomeIcon icon={faCog} />
                     </NavComponent>
                 </Link> 
-                <NavComponent onClick={onClickLogout}>
-                    <FontAwesomeIcon icon={faDoorOpen} />
-                </NavComponent>
                 <NavCloseBtn style onClick={onNavClick}>
                     <FontAwesomeIcon icon={faChevronUp} />
                 </NavCloseBtn>

@@ -20,6 +20,7 @@ const NoteBox = styled.div`
     color: rgba(0,0,0,0.5);
     margin-top: 15px;
     font-size: 14px;
+    text-align: center;
 `;
 
 const Notes = ({userObj}) => {

@@ -123,7 +123,7 @@ const Login = ({setCodeState, codeState}) => {
       }}>
         {codeState 
         ? "저는 비밀번호가 없습니다" 
-        : "저는 코드만 있습니다"
+        : "저는 비밀번호가 있습니다"
         }
       </PasswordBtn>
       <LoginContainer>

@@ -14,7 +14,7 @@ import Community from "../routes/Community";
 import UserAnswers from "../routes/UserAnswers";
 import SignOut from "../routes/SignOut";
 
-const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser }) => {
+const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFriends }) => {
     return (
         <Router>
             {isLoggedIn ? 
@@ -22,13 +22,13 @@ const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser }) => {
                 <Navigation />
                 <Switch>
                     <Route exact path="/" >
-                        <Home userObj={userObj} />
+                        <Home userObj={userObj} refreshFriends={refreshFriends} />
                     </Route>
                     <Route exact path="/auth" >
                         <Auth />
                     </Route>
                     <Route exact path="/community" >
-                        <Community userObj={userObj} />
+                        <Community userObj={userObj} refreshFriends={refreshFriends} />
                     </Route>
                     <Route exact path="/myanswers" >
                         <MyAnswers questionArray={questionArray} userObj={userObj} />
@@ -37,10 +37,10 @@ const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser }) => {
                         <Questions questionArray={questionArray} userObj={userObj} />
                     </Route>
                     <Route exact path="/question/:id" >
-                        <QuestionDetail userObj={userObj} />
+                        <QuestionDetail userObj={userObj} refreshFriends={refreshFriends} />
                     </Route>
                     <Route exact path="/useranswer/:id" >
-                        <UserAnswers userObj={userObj} />
+                        <UserAnswers userObj={userObj} refreshFriends={refreshFriends} />
                     </Route>
                     <Route exact path="/settings" >
                         <Settings refreshUser={refreshUser} userObj={userObj} />

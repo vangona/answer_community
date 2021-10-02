@@ -143,23 +143,25 @@ const Settings = ({ refreshUser, userObj }) => {
     const onSubmit = async (e) => {
         e.preventDefault();
         if (displayName && userObj.displayname !== displayName) {
-            await userObj.updateProfile({
-                displayName
-            })
-            dbService.collection("users").doc(`${userObj.uid}`).set({
+            await dbService.collection("users").doc(`${userObj.uid}`).set({
                 uid: userObj.uid,
                 displayName: userObj.displayName
-            }).then(
-                alert("이름이 성공적으로 변경되었습니다 :)")
-            )
-            refreshUser();
+            }).then(() => {
+                userObj.updateProfile({
+                    displayName
+                })
+                setTimeout(() => {
+                    refreshUser();
+                    alert("이름이 성공적으로 변경되었습니다 :)")
+                })
+            })
             setDisplayName("");
         };
     };
 
     const onSubmitEmail = async (e) => {
         e.preventDefault();
-        if (window.confirm(`${email}로 로그인 코드를 변경할까요? 더 이상 변경하실 수 없어요.`)) {
+        if (window.confirm(`${email}로 로그인 코드를 변경할까요?`)) {
         await authService.currentUser.updateEmail(email).then(()=>{
             dbService.collection("users").doc(`${userObj.uid}`).update({
                 isPassword: true
@@ -229,13 +231,13 @@ const Settings = ({ refreshUser, userObj }) => {
                 {nameState &&
                 <ProfileForm onSubmit={onSubmit}>
                     <ProfileInput required name="name" onChange={onChange} value={displayName} type="text" />
-                    <ProfileLabel style={{marginTop: "5px", fontSize:"10px"}}>이름을 바꿔도, 친구들은 이전 이름을 알 수 있습니다.</ProfileLabel>
+                    <ProfileLabel style={{marginTop: "5px", fontSize:"10px", opacity: "80%"}}>이름을 바꿔도, 친구들은 이전 이름을 알 수 있습니다.</ProfileLabel>
                     <ProfileSubmitBtn value="변경하기" type="submit" name="name" />
                 </ProfileForm>
                 }
-                {!userObj.isPassword ? !(nameState | passwordState) && 
+                {userObj.isPassword ? !(nameState | passwordState) && 
                 <>
-                <ProfileLabel name="email" onClick={onClick}>이메일 만들기</ProfileLabel>
+                <ProfileLabel name="email" onClick={onClick}>접속 코드 변경</ProfileLabel>
                 <hr style={{width:"70%", opacity:"70%"}} />
                 </>
                 : null
@@ -243,12 +245,13 @@ const Settings = ({ refreshUser, userObj }) => {
                 {emailState &&
                 <ProfileForm onSubmit={onSubmitEmail}>
                     <ProfileInput required name="email" onChange={onChange} value={email} type="email" />
+                    <ProfileLabel style={{marginTop: "5px", fontSize:"10px"}}>접속코드는 이메일 형태여야 합니다.</ProfileLabel>
                     <ProfileSubmitBtn value="변경하기" type="submit" name="email" />
                 </ProfileForm>
                 }
                 {!(nameState | emailState) && 
                 <>
-                    <ProfileLabel name="password" onClick={onClick}>{userObj.isPassword ? "2차 비밀번호 바꾸기" : "2차 비밀번호 만들기"}</ProfileLabel>
+                    <ProfileLabel name="password" onClick={onClick}>{userObj.isPassword ? "비밀번호 만들기" : "비밀번호 바꾸기"}</ProfileLabel>
                     {passwordState && <hr style={{width:"70%", opacity:"70%"}} />}
                 </>
                 }

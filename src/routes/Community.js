@@ -12,11 +12,11 @@ const Container = styled.div`
     height: 100vh;
 `;
 
-const Community = ({userObj}) => {
+const Community = ({userObj, refreshFriends}) => {
     return (
         <Container>
             <Notes userObj={userObj} />
-            <Friends userObj={userObj} />
+            <Friends userObj={userObj} refreshFriends={refreshFriends} />
         </Container>
     )
 }

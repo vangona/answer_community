@@ -7,7 +7,7 @@ const SignOut = () => {
         authService.signOut();
     }, [])
     return (
-        <div>로그아웃</div>
+        "Signout"
     )
 }
 

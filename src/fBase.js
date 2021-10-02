@@ -2,6 +2,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
+import "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCp6H94uOjFnuEvgDEoTt2V_PLtt0DBnrs",
@@ -13,12 +14,15 @@ const firebaseConfig = {
   measurementId: "G-KJV9NQRBNJ"
 };
 
-firebase.initializeApp(firebaseConfig);
-
-firebase.firestore().enablePersistence();
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app();
+}
 
 export const firebaseInstance = firebase;
 
+export const messaging = firebase.messaging();
 export const authService = firebase.auth();
 export const dbService = firebase.firestore();
 export const storageService = firebase.storage();

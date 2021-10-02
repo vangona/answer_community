@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import { authService, dbService } from "../fBase";
+import { setToken } from "./Messaginginit";
 import AppRouter from "./Router";
-import useNotification from "./useNotification";
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -200,9 +200,15 @@ function App() {
     },
 ]
 
+    const requestToken = async () => {
+        let token = await setToken();
+        console.log('token === ', token)
+    }
+
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
+        requestToken();
         dbService.collection("users").doc(`${user.uid}`).get()
         .then(snapshot => {
             const userData= snapshot.data()
@@ -210,7 +216,7 @@ function App() {
                 uid: user.uid,
                 friends : (userData.friends 
                     ? userData.friends 
-                    : null),
+                    : []),
                 isPassword : userData.isPassword,
                 displayName: (user.displayName ? user.displayName : "익명"),
                 updateProfile: (args) => user.updateProfile(args),
@@ -235,10 +241,21 @@ function App() {
     });
   };
 
+  const refreshFriends = (friends) => {
+    const user = authService.currentUser;
+    setUserObj({
+      displayName:user.displayName,
+      uid:user.uid,
+      isPassword: user.isPassword,
+      friends,
+      updateProfile: (args) => user.updateProfile(args),
+    });
+  }
+
   return (
     <Container>
       <GlobalStyle />
-      {init ? <AppRouter questionArray={questionArray} isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser = {refreshUser} />
+      {init ? <AppRouter questionArray={questionArray} isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} refreshFriends={refreshFriends} />
       : "Loading..."
         }
     </Container>

@@ -74,7 +74,7 @@ const Note = ({note, userObj}) => {
     }
     return (
         <Column key={note.noteId}>
-            <NoteAnswer>'{note.answer}'에서 온 쪽지입니다.
+            <NoteAnswer>'{note.answer.slice(0, 15)}...'에서 온 쪽지입니다.
             </NoteAnswer>
             <NoteContainer>
                 <NoteTitle onClick={onClickReply}>
