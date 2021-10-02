@@ -22,10 +22,11 @@ const NavComponent = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 40px;
+    height: 50px;
     color: white;
     opacity: 1;
     z-index: 9;
+    font-size: 18px;
     :hover {
         cursor: pointer;
     }
@@ -50,7 +51,7 @@ const NavCloseBtn = styled.div`
     justify-content: center;
     align-items: center;
     background-color: transparent;
-    margin: 10px;
+    margin-right: 30px;
     z-index: 9;
     color: white;
     :hover {
@@ -83,7 +84,7 @@ const Navigation = () => {
         <>
             {navState ?(
             <Container style={animation}>
-                <Link to={"/"} style={{textDecoration: "none", marginLeft: "20px"}}>
+                <Link to={"/"} style={{textDecoration: "none", marginLeft: "30px"}}>
                     <NavComponent>
                         <FontAwesomeIcon icon={faHome} />
                     </NavComponent>

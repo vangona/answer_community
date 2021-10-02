@@ -2,6 +2,7 @@ import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import Loading from "../components/Loading";
 import Question from "../components/Question";
 import Search from "../components/Search";
 
@@ -11,7 +12,7 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 30px;
+    margin-top: 50px;
 `;
 
 const AddBtn = styled.button`
@@ -69,7 +70,7 @@ const Questions = ({questionArray, userObj}) => {
     return (
         <Container>
             {isLoading
-            ? "Loading..." 
+            ? <Loading />
             : (
             <>
                 {currentPosts(questions.filter(question => question.question.includes(searchWord))).map(question => <Question key={question.questionId} userObj={userObj} question={question} /> )}

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Answer from "../components/Answer";
+import Loading from "../components/Loading";
 import { dbService } from "../fBase";
 
 const Container = styled.div`
@@ -80,7 +81,8 @@ const QuestionDetail = ({userObj, refreshFriends}) => {
 
   return (
     <Container>
-      {isLoading ? "Loading..."
+      {isLoading 
+      ? <Loading />
       :
       <>
       <Question>{answers[0].question}</Question>

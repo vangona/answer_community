@@ -62,10 +62,9 @@ const Notice = styled.div`
     line-height: 130%;
 `;
 
-const Friends = ({userObj, refreshFriends}) => {
+const Friends = ({userObj, refreshFriends, getFriendLoading, loading}) => {
     const [friends, setFriends] = useState([]);
     const [friendsId, SetFriendsId] = useState([]);
-    const [init, setInit] = useState(false);
     const history = useHistory();
 
     const getFriends = async () => {
@@ -81,10 +80,10 @@ const Friends = ({userObj, refreshFriends}) => {
                 setFriends(friendArray)
                 SetFriendsId(friendIdArray)
             })
-        setInit(true);
+        getFriendLoading(true)
         } else {
             setFriends([]);
-            setInit(true);
+            getFriendLoading(true)
         }
     }
 
@@ -108,9 +107,10 @@ const Friends = ({userObj, refreshFriends}) => {
         getFriends();
     }, [])
     return (
-        <Container>
-            {init ? 
-            <>
+        <>
+        {loading ?
+
+            <Container>
             <Title>친구들</Title>
             <hr />
             {friends.length !== 0 
@@ -135,10 +135,10 @@ const Friends = ({userObj, refreshFriends}) => {
             ))
             : <Notice>다른 사람의 답변을 통해 <br /> 친구를 추가 할 수 있어요.</Notice>
             }
-            </>
-            : "Loading..."
-            }
         </Container>
+            : null
+        }
+        </>
     )
 }
 

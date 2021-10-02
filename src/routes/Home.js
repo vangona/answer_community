@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Answer from "../components/Answer";
 import Cheer from "../components/Cheer";
+import { CheerComment } from "../components/DB/CheerDB";
+import Loading from "../components/Loading";
 import useNotification from "../components/useNotification";
 import { authService, dbService } from "../fBase";
 
@@ -37,8 +39,6 @@ const LastAnswer = styled.div`
 
 const Home = ({ userObj, refreshFriends }) => {
   const [isLoading, setISLoading] = useState(true);
-  const [cheerList, setCheerList] = useState([]);
-  const [randNum, setRandNum] = useState(null);
   const [answers, setAnswers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -48,22 +48,8 @@ const Home = ({ userObj, refreshFriends }) => {
     return currentPosts
   }
 
-  const getRandNum = () => {
-    const number = Math.floor(Math.random() * 5);
-    setRandNum(number)
-  }
-
   const getData = async () => {
-    await dbService.collection("cheers").get()
-    .then(snapShot => {
-      const cheerArray = snapShot.docs.map(doc => ({
-        id: doc.cheerId,
-        ...doc.data()
-    }))
-    setCheerList(cheerArray)
-    })
-
-    await dbService.collection("answers").onSnapshot(snapshot => {
+    dbService.collection("answers").onSnapshot(snapshot => {
       const answerArray = snapshot.docs.map(doc => ({
         id:doc.answerId,
         ...doc.data(),
@@ -84,15 +70,15 @@ const Home = ({ userObj, refreshFriends }) => {
 
   useEffect(() => {
     getData();
-    getRandNum();
   }, [])
 
     return (
       <Container>
-        {isLoading ? "Loading..." 
+        {isLoading 
+        ? <Loading />
         : (
           <>
-            {cheerList && <Cheer key={cheerList[randNum].cheerId} cheer={cheerList[randNum]} />}
+            <Cheer />
             {answers && currentPosts(answers).map(answer => (
               <Answer key={answer.answerId} userObj={userObj} answer={answer} refreshFriends={refreshFriends} />
             ))

@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { animated, useSpring } from "react-spring";
+import { useEffect, useState } from "react/cjs/react.development";
+import { CheerComment } from "./DB/CheerDB";
 
 const Container = styled(animated.div)`
     position: relative;
@@ -33,7 +35,8 @@ const CheerPhrase = styled.div`
     font-family: Kyobo Handwriting;
 `;
 
-const Cheer = ({cheer}) => {
+const Cheer = () => {
+    const [cheer, setCheer] = useState();
     const animation = useSpring({
         from: {
             opacity: 0,
@@ -44,10 +47,15 @@ const Cheer = ({cheer}) => {
             y: 0
         }
     })
+
+    useEffect(() => {
+        setCheer(CheerComment[Math.floor(Math.random() * CheerComment.length)])
+    }, [])
+
     return (
         <Container style={animation}>
             <CheerPhrase>
-                {cheer.cheer}
+                {cheer}
             </CheerPhrase>
         </Container>
     )

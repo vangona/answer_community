@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import { authService, dbService } from "../fBase";
+import Loading from "./Loading";
 import { setToken } from "./Messaginginit";
 import AppRouter from "./Router";
 
@@ -256,7 +257,7 @@ function App() {
     <Container>
       <GlobalStyle />
       {init ? <AppRouter questionArray={questionArray} isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} refreshFriends={refreshFriends} />
-      : "Loading..."
+      : <Loading />
         }
     </Container>
   );

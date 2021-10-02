@@ -9,6 +9,7 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     font-family: Kyobo Handwriting;
+    margin-top: 20px;
 `;
 
 const ProfileContainer = styled.div`

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Answer from "../components/Answer";
+import Loading from "../components/Loading";
 import { dbService } from "../fBase";
 
 const Container = styled.div`
@@ -10,9 +11,9 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 90vh;
+    height: 100%;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 50px;
     box-sizing: border-box;
 `;
 
@@ -79,7 +80,7 @@ const MyAnswers = ({userObj}) => {
     return (
         <Container>
             {isLoading 
-            ? "Loading..."
+            ? <Loading />
             : ( 
             <>
                 <Title>

@@ -23,9 +23,8 @@ const NoteBox = styled.div`
     text-align: center;
 `;
 
-const Notes = ({userObj}) => {
+const Notes = ({userObj, getNoteLoading, loading}) => {
     const [notes, setNotes] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
 
     const getNotes = async () => {
         await dbService.collection("notes").where("receiver", "==", `${userObj.uid}`).onSnapshot(querySnapshot => {
@@ -34,7 +33,7 @@ const Notes = ({userObj}) => {
                 ...doc.data(),
             }))
             setNotes(noteArray);
-            setIsLoading(false);
+            getNoteLoading(true);
         })
     }
 
@@ -42,28 +41,24 @@ const Notes = ({userObj}) => {
         getNotes();
     }, [])
     return (
-        <Container>
-            {isLoading 
-            ? "Loading..."
-            : (
-            <>
-                <Title>쪽지함</Title>
-                <hr />
+        <>
+        {loading 
+            ? <Container>
+            <Title>쪽지함</Title>
+            <hr />
 
-                {notes.length === 0 
-                ? <NoteBox>표시할 쪽지가 없습니다.</NoteBox>
-                : (
-                <>
+            {notes.length === 0 
+            ? <NoteBox>표시할 쪽지가 없습니다.</NoteBox>
+            : (<>
                 {notes.map(note => (
                     <Note userObj={userObj} note={note} />
                 ))}
-                </>
-                )
-                }
-            </>
-                )
+            </>)
             }
-        </Container>
+            </Container>
+            : null
+        }
+        </>
     )
 }
 

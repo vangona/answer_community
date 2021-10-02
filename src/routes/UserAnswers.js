@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 import { useEffect } from "react/cjs/react.development";
 import styled from "styled-components";
 import Answer from "../components/Answer";
+import Loading from "../components/Loading";
 import { dbService } from "../fBase";
 
 const Container = styled.div`
@@ -78,7 +79,8 @@ const UserAnswers = ({userObj, refreshFriends}) => {
 
     return (
         <Container>
-        {isLoading ? "Loading..."
+        {isLoading 
+        ? <Loading />
         :
         <>
         <Writer>{answers[0].userName}의 대답들</Writer>
