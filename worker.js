@@ -1,6 +1,11 @@
 var CACHE_NAME = 'answer_community';
 var urlsToCache = [
     '/',
+    '/auth',
+    '/community',
+    '/myanswers',
+    '/questions',
+    '/settings'
 ];
 // Install a service worker
 self.addEventListener('install', event => {
