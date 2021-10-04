@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { animated, useSpring } from "react-spring";
-import { useEffect, useState } from "react/cjs/react.development";
 import { CheerComment } from "./DB/CheerDB";
 
 const Container = styled(animated.div)`

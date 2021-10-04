@@ -1,8 +1,5 @@
-import React from "react";
-import { useEffect, useState } from "react/cjs/react.development";
+import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
-import bulb from "../img/loading_bulb.png"
-import drawer from "../img/loading_drawer.png"
 
 const LoadingBox = styled.div`
     display: flex;
@@ -63,17 +60,18 @@ const DotBlink = keyframes`
 
 const Title = styled.h1`
     display: flex;
+    margin-bottom: 20px;
     font-family: Kyobo Handwriting;
 `;
 
 const Bulb = styled.img`
-    width: 80%;
+    height: 35vh;
     animation: ${Blink} 2s ease-in-out infinite;
 `;
 
 const Drawer = styled.img`
     animation: ${Skew} 2s ease-in-out infinite ;
-    width: 80%;
+    height: 35vh;
     opacity: 80%;
 `;
 
@@ -108,11 +106,11 @@ const Loading = () => {
     }, [])
     return (
        <LoadingBox>
+           <Bulb class="loading__bulb" src="https://cdn.jsdelivr.net/gh/vangona/answer_community/src/img/loading_bulb.png" alt="" />
            <Title>
                {comment[num]}<Dot>.</Dot><Dot>.</Dot><Dot>.</Dot>
             </Title>
-           <Bulb class="loading__bulb" src={bulb} />
-           <Drawer class="loading__drawer" src={drawer} />
+           <Drawer class="loading__drawer" src="https://cdn.jsdelivr.net/gh/vangona/answer_community/src/img/loading_drawer.png" alt="" />
        </LoadingBox>
     )
 }

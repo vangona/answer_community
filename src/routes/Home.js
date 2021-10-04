@@ -4,10 +4,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Answer from "../components/Answer";
 import Cheer from "../components/Cheer";
-import { CheerComment } from "../components/DB/CheerDB";
 import Loading from "../components/Loading";
-import useNotification from "../components/useNotification";
-import { authService, dbService } from "../fBase";
+import { dbService } from "../fBase";
 
 const Container = styled.div`
   width: 100%;

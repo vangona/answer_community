@@ -79,7 +79,7 @@ const Login = ({setCodeState, codeState}) => {
     e.preventDefault();
     try {
       await authService.signInWithEmailAndPassword(
-      code, password ? password : code) 
+      code, codeState ? password : code) 
       setCode("");
     } catch (error) {
       if (error.message === "The email address is badly formatted.") {

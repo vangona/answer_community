@@ -1,9 +1,8 @@
 import React from "react";
-import { HashRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Home from "../routes/Home";
 import Auth from "../routes/Auth";
 import MyAnswers from "../routes/MyAnswers";
-import AnswerDetail from "../routes/AnswerDetail";
 import QuestionDetail from "../routes/QuestionDetail";
 import QuestionRegister from "../routes/QuestionRegister";
 import Questions from "../routes/Questions";

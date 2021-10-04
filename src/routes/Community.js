@@ -1,5 +1,4 @@
-import React from "react";
-import { useEffect, useState } from "react/cjs/react.development";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Friends from "../components/Friends";
 import Loading from "../components/Loading";
@@ -20,12 +19,10 @@ const Community = ({userObj, refreshFriends}) => {
 
     const getFriendLoading = (loading) => {
         setFriendLoading(loading);
-        console.log("f")
     }
 
     const getNoteLoading = (loading) => {
         setNoteLoading(loading)
-        console.log("n")
     }
 
     useEffect(() => {

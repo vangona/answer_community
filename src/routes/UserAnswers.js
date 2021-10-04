@@ -1,8 +1,7 @@
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { useEffect } from "react/cjs/react.development";
 import styled from "styled-components";
 import Answer from "../components/Answer";
 import Loading from "../components/Loading";
