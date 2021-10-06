@@ -12,6 +12,7 @@ import Settings from "../routes/Settings";
 import Community from "../routes/Community";
 import UserAnswers from "../routes/UserAnswers";
 import SignOut from "../routes/SignOut";
+import Credit from "../routes/Credit";
 
 const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFriends }) => {
     return (
@@ -43,6 +44,9 @@ const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFri
                     </Route>
                     <Route exact path="/settings" >
                         <Settings refreshUser={refreshUser} userObj={userObj} />
+                    </Route>
+                    <Route exact path="/credit">
+                        <Credit />
                     </Route>
                     <Route exact path="/signout" >
                         <SignOut />

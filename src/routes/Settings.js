@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { authService, dbService } from "../fBase";
 import styled from "styled-components";
+import { useHistory } from "react-router";
 
 const Container = styled.div`
     display: flex;
@@ -67,12 +68,28 @@ const ProfileSubmitBtn = styled.input`
     }
 `;
 
+const CreditBtn = styled.button`
+    margin-bottom: 10px;
+    font-size: 12px;
+    border-radius: 15px;
+    padding: 5px 10px;
+    border: 1px solid rgba(255,255,255,0.5);
+    color: white;
+    background-color: transparent;
+    font-family: Kyobo Handwriting;
+    transition: 0.5s all ease-in-out;
+    :hover {
+        cursor: pointer;
+        color: var(--gold);
+    }
+`;
+
 const LogOutBtn = styled.button`
     margin-top: 10px;
     font-size: 12px;
     border-radius: 15px;
     padding: 5px 10px;
-    border: 1px solid rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.5);
     color: white;
     background-color: transparent;
     font-family: Kyobo Handwriting;
@@ -117,6 +134,7 @@ const QnaSubmitBtn = styled.button`
 `;
 
 const Settings = ({ refreshUser, userObj }) => {
+    const history = useHistory();
     const [displayName, setDisplayName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -124,6 +142,10 @@ const Settings = ({ refreshUser, userObj }) => {
     const [nameState, setNameState] = useState(false);
     const [emailState, setEmailState] = useState(false);
     const [passwordState, setPasswordState] = useState(false);
+
+    const onClickCredit = e => {
+        history.push("/credit");
+    }
 
     const onChange = e => {
         if (e.target.getAttribute("name") === "name") {
@@ -263,7 +285,7 @@ const Settings = ({ refreshUser, userObj }) => {
                 </ProfileForm>
                 }
             </ProfileContainer>
-
+            <CreditBtn onClick={onClickCredit}>명예의 전당</CreditBtn>
             <QnaContainer>
                 <QnaLabel>문의하기 & 버그리포트</QnaLabel>
                 <QnaInput onChange={onChangeReport} value={report}type="text" />
