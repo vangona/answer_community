@@ -13,6 +13,7 @@ const Container = styled.div`
     width: 100%;
     overflow-y: scroll;
     color: white;
+    padding: 100vh 0;
     ::-webkit-scrollbar {
         display: none;
     }
@@ -20,15 +21,19 @@ const Container = styled.div`
 
 const PlayInput = styled.input``;
 
-const PlayBtn = styled.button`
+const PlayBox = styled.button`
+    display: flex;
     position: fixed;
-    top: 0;
-    left: 0;
+    bottom: 20px;
+    opacity: 50%;
+    transition: 0.5s all ease-in-out;
+    :hover {
+        opacity: 100%;
+    }
 `;
 
 const Title = styled.h1`
     font-size: 24px;
-    margin-top: 100vh;
     color: var(--gold);
 `;
 
@@ -40,6 +45,7 @@ const ThanksContainer = styled.div`
     justify-content: center;
     align-items: center;
     height: auto;
+    width: 100%;
 `;
 
 const ThanksTitle = styled.h2`
@@ -63,33 +69,30 @@ const Comment = styled.div`
 `;
 
 const Name = styled.h3`
+    display: flex;
     color: var(--gold);
 `;
 
-const Credit = () => {
-    const [play, setPlay] = useState(10);
-    const [speed, setSpeed] = useState(10);
+const White = styled.h3`
+    color: white;
+    margin-left: 5px;
+`;
 
-    const onClickPlay = (e) => {
-        e.preventDefault();
-        if (play === 0) {
-            setPlay(10)
-        } else if (play === 10) {
-            setPlay(0) 
-        }
-    }
+const Credit = () => {
+    const [speed, setSpeed] = useState(1);
+    let currentScroll;
 
     const onSpeedChange = e => {
         e.preventDefault();
         setSpeed(e.target.value);
+        console.log(e.target.value)
     }
 
     useInterval(() => {
         scriptPlay();
-    }, 10)
+    }, 30)
 
     const scriptPlay = () => {
-        let currentScroll;  
         if (window.scrollY !== currentScroll) {
             window.scrollBy({ top: speed, behavior: 'smooth'});
             currentScroll = window.scrollY;
@@ -98,16 +101,67 @@ const Credit = () => {
 
     return (
         <Container>
-            <PlayBtn onClick={onClickPlay}>
-            <PlayInput max="100" min="0" onChange={onSpeedChange} type="range" />
-                재생
-            </PlayBtn>
+            <PlayBox>
+            <PlayInput max="10" min="0" value={speed} step="0.1" onChange={onSpeedChange} type="range" />
+            </PlayBox>
             <Title>서랍장 명예의 전당</Title>
             <ThanksContainer>
-                <ThanksTitle>도움을 주신 분들</ThanksTitle>
-                <ThanksName>수석 디자이너 <Name>경민이</Name></ThanksName>
-                <ThanksName>사진, 아이디어를 짜는데 많은 도움이 되어준 <Name>영민이</Name></ThanksName>
-                <ThanksName>창업 초기부터 많은 도움을 준 <Name>태일 형</Name></ThanksName>
+                <ThanksTitle>후원해주신 분들</ThanksTitle>
+                {Sponsor.sponsor["#1"].map(thinkperson => (
+                    <ThanksName>
+                        <Comment>{thinkperson.comment}</Comment>
+                        <Name> 
+                            - {thinkperson.writer} 
+                            <White>
+                             님
+                            </White>
+                        </Name>
+                    </ThanksName>
+                ))}
+                {Sponsor.sponsor["#2"].map(thinkperson => (
+                    <ThanksName>
+                        <Comment>{thinkperson.comment}</Comment>
+                        <Name> 
+                            - {thinkperson.writer} 
+                            <White>
+                             님
+                            </White>
+                        </Name>
+                    </ThanksName>
+                ))}
+                {Sponsor.sponsor["#3"].map(thinkperson => (
+                    <ThanksName>
+                        <Comment>{thinkperson.comment}</Comment>
+                        <Name> 
+                            - {thinkperson.writer} 
+                            <White>
+                             님
+                            </White>
+                        </Name>
+                    </ThanksName>
+                ))}
+                {Sponsor.sponsor["#4"].map(thinkperson => (
+                    <ThanksName>
+                        <Comment>{thinkperson.comment}</Comment>
+                        <Name> 
+                            - {thinkperson.writer} 
+                            <White>
+                             님
+                            </White>
+                        </Name>
+                    </ThanksName>
+                ))}    
+                {Sponsor.sponsor["#5"].map(thinkperson => (
+                    <ThanksName>
+                        <Comment>{thinkperson.comment}</Comment>
+                        <Name> 
+                            - {thinkperson.writer} 
+                            <White>
+                             님
+                            </White>
+                        </Name>
+                    </ThanksName>
+                ))}                            
             </ThanksContainer>
             <ThanksContainer>
                 <ThanksTitle>생각을 함께 나눠주신 분들</ThanksTitle>
@@ -118,37 +172,10 @@ const Credit = () => {
                 ))}
             </ThanksContainer>
             <ThanksContainer>
-                <ThanksTitle>후원해주신 분들</ThanksTitle>
-                {Sponsor.sponsor["#1"].map(thinkperson => (
-                    <ThanksName>
-                        <Comment>{thinkperson.comment}</Comment>
-                        <Name> - {thinkperson.writer} 님</Name>
-                    </ThanksName>
-                ))}
-                {Sponsor.sponsor["#2"].map(thinkperson => (
-                    <ThanksName>
-                        <Comment>{thinkperson.comment}</Comment>
-                        <Name> - {thinkperson.writer} 님</Name>
-                    </ThanksName>
-                ))}
-                {Sponsor.sponsor["#3"].map(thinkperson => (
-                    <ThanksName>
-                        <Comment>{thinkperson.comment}</Comment>
-                        <Name> - {thinkperson.writer} 님</Name>
-                    </ThanksName>
-                ))}
-                {Sponsor.sponsor["#4"].map(thinkperson => (
-                    <ThanksName>
-                        <Comment>{thinkperson.comment}</Comment>
-                        <Name> - {thinkperson.writer} 님</Name>
-                    </ThanksName>
-                ))}    
-                {Sponsor.sponsor["#5"].map(thinkperson => (
-                    <ThanksName>
-                        <Comment>{thinkperson.comment}</Comment>
-                        <Name> - {thinkperson.writer} 님</Name>
-                    </ThanksName>
-                ))}                            
+                <ThanksTitle>도움을 주신 분들</ThanksTitle>
+                <ThanksName>수석 디자이너 <Name>경민이</Name></ThanksName>
+                <ThanksName>창동관 이웃<Name>영민이</Name></ThanksName>
+                <ThanksName>많은 도움을 준 <Name>태일 형</Name></ThanksName>
             </ThanksContainer>
         </Container>
     )
