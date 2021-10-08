@@ -1,7 +1,10 @@
+import { faBackward, faForward, faPause, faPlay } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { Sponsor } from "../components/DB/Sponsor";
 import { useInterval } from "../hooks/UseInterval";
+import bgm from "../music/Soul and Mind - E's Jammy Jams.mp3"
 
 const Container = styled.div`
     display: flex;
@@ -19,16 +22,57 @@ const Container = styled.div`
     }
 `;
 
-const PlayInput = styled.input``;
-
 const PlayBox = styled.button`
     display: flex;
+    flex-direction: column;
     position: fixed;
     bottom: 20px;
     opacity: 50%;
-    transition: 0.5s all ease-in-out;
+    background-color: transparent;
+    border: none;
+    transition: 1s all ease-in-out;
     :hover {
         opacity: 100%;
+    }
+`;
+
+const PlayInput = styled.input`
+  -webkit-appearance: none;
+  margin-right: 15px;
+  width: 100%;
+  height: 6px;
+  border-radius: 7px;
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+  background-color: white;
+  ::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background: white;
+    cursor: ew-resize;
+    box-shadow: 0 0 2px 0 #555;
+    transition: background .3s ease-in-out;
+  }
+`;
+
+const PlayBtnBox = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    gap: 5px;
+`;
+
+const PlayBtn = styled.button`
+    background-color: transparent;
+    border: none;
+    color: white;
+    transition: 1s all ease-in-out;
+    :hover {
+        cursor: pointer;
     }
 `;
 
@@ -79,13 +123,45 @@ const White = styled.h3`
 `;
 
 const Credit = () => {
-    const [speed, setSpeed] = useState(1);
+    const [init, setInit] = useState(false);
+    const [speed, setSpeed] = useState(0);
     let currentScroll;
+    const [bgmJazz] = useState(new Audio(bgm));
 
     const onSpeedChange = e => {
         e.preventDefault();
         setSpeed(e.target.value);
         console.log(e.target.value)
+    }
+
+    const onClickBackward = e => {
+        if (speed > -10) {
+            setSpeed(speed - 1)
+        }
+    }
+
+    const onClickPlay = e => {
+        if (speed === 0) {
+            if (!init) {
+                setInit(true)
+                setSpeed(1)
+                setTimeout(() => {
+                    bgmJazz.play();
+                }, 1000)
+            } else {
+                setSpeed(1)
+                bgmJazz.play();
+            }
+        } else if (speed !== 0) {
+            setSpeed(0);
+            bgmJazz.pause();
+        }
+    }
+
+    const onClickForward = e => {
+        if (speed < 10) {
+            setSpeed(speed + 1)
+        }
     }
 
     useInterval(() => {
@@ -99,10 +175,33 @@ const Credit = () => {
         }
     }
 
+    useEffect(() => {
+    }, [])
+    
     return (
         <Container>
-            <PlayBox>
-            <PlayInput max="10" min="0" value={speed} step="0.1" onChange={onSpeedChange} type="range" />
+            <PlayBox style={{bottom: init? "20px" : "50vh"}} >
+                {init && 
+                <PlayInput max="10" min="-10" value={speed}onChange={onSpeedChange} type="range" />}
+                <PlayBtnBox>
+                    {init && <PlayBtn onClick={onClickBackward}>
+                        <FontAwesomeIcon icon={faBackward} />
+                    </PlayBtn>}
+                    {speed === 0
+                    ?
+                    <PlayBtn style={{fontSize: !init && "30px"}} onClick={onClickPlay}>
+                        <FontAwesomeIcon icon={faPlay} />
+                    </PlayBtn>
+                    : 
+                    <PlayBtn onClick={onClickPlay}>
+                        <FontAwesomeIcon icon={faPause} />
+                    </PlayBtn>
+                    }
+                    {init && 
+                    <PlayBtn onClick={onClickForward}>
+                        <FontAwesomeIcon icon={faForward} />
+                    </PlayBtn>}
+                </PlayBtnBox>
             </PlayBox>
             <Title>서랍장 명예의 전당</Title>
             <ThanksContainer>

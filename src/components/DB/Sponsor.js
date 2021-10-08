@@ -207,7 +207,7 @@ export const Sponsor = {
                 writer : "keenk",
             },
             { 
-                comment : "정리되지 생각들로 힘들어 하던 당신에게 보냅니다.",
+                comment : "정리되지 않은 생각들로 힘들어 하던 당신에게 보냅니다.",
                 writer : "savannah",
             },
             { 
@@ -215,7 +215,7 @@ export const Sponsor = {
                 writer : "savannah",
             },
             { 
-                comment : "정리되지 얺은 생각으로 힘들어 하는 당신에게 힘이 되길.",
+                comment : "정리되지 않은 생각으로 힘들어 하는 당신에게 힘이 되길.",
                 writer : "savannah",
             },
             { 

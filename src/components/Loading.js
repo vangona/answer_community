@@ -59,20 +59,27 @@ const DotBlink = keyframes`
 `;
 
 const Title = styled.h1`
+    position: absolute;
+    bottom: 55vh;
     display: flex;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     font-family: Kyobo Handwriting;
 `;
 
 const Bulb = styled.img`
+    position: absolute;
     height: 35vh;
+    top: 0;
     animation: ${Blink} 2s ease-in-out infinite;
 `;
 
 const Drawer = styled.img`
+    position: absolute;
     animation: ${Skew} 2s ease-in-out infinite ;
     height: 35vh;
+    width: 80%;
     opacity: 80%;
+    bottom: 20vh;
 `;
 
 const Dot = styled.div`
