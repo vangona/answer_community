@@ -12,7 +12,7 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 50px;
+    margin-top: 20px;
 `;
 
 const AddBtn = styled.button`

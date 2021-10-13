@@ -99,7 +99,7 @@ const Friends = ({userObj, refreshFriends, getFriendLoading, loading}) => {
         .then(() => {
             console.log(newFriends)
             refreshFriends(newFriends);
-            alert(`${friend.displayName}님을 친구 목록에서 삭제했습니다.`)
+            alert(`${friend.displayName}님을 서랍장에서 꺼냈습니다.`)
         })
     }
 
@@ -111,7 +111,7 @@ const Friends = ({userObj, refreshFriends, getFriendLoading, loading}) => {
         {loading ?
 
             <Container>
-            <Title>친구들</Title>
+            <Title>누군가의 서랍장</Title>
             <hr />
             {friends.length !== 0 
             ? friends.map(friend => (
@@ -125,7 +125,7 @@ const Friends = ({userObj, refreshFriends, getFriendLoading, loading}) => {
                         </FriendCode>
                         <FriendIcon>
                             <FontAwesomeIcon onClick={() => {
-                                if (window.confirm(`${friend.displayName}님을 친구 목록에서 삭제하시겠어요?`)) {
+                                if (window.confirm(`${friend.displayName}님을 목록에서 삭제하시겠어요?`)) {
                                     onDeleteFriend(friend)
                                 }}
                                 } icon={faTrashAlt} size="sm" />
@@ -133,7 +133,7 @@ const Friends = ({userObj, refreshFriends, getFriendLoading, loading}) => {
                     </FriendRight>
                 </Friend>
             ))
-            : <Notice>다른 사람의 답변을 통해 <br /> 친구를 추가 할 수 있어요.</Notice>
+            : <Notice>다른 사람의 답변을 통해 <br /> 다른 누군가의 서랍장을 추가 할 수 있어요.</Notice>
             }
         </Container>
             : null

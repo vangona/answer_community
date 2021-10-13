@@ -256,7 +256,11 @@ function App() {
   return (
     <Container>
       <GlobalStyle />
-      {init ? <AppRouter questionArray={questionArray} isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} refreshFriends={refreshFriends} />
+      {init 
+      ? 
+      <>
+        <AppRouter questionArray={questionArray} isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} refreshFriends={refreshFriends} />
+      </>
       : <Loading />
         }
     </Container>

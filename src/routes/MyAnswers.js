@@ -13,7 +13,7 @@ const Container = styled.div`
     align-items: center;
     height: 100%;
     width: 100%;
-    margin-top: 50px;
+    margin-top: 20px;
     box-sizing: border-box;
 `;
 
@@ -58,16 +58,24 @@ const MyAnswers = ({userObj}) => {
       }
 
       const addPage = () => {
+        if (currentPage*5 >= myAnswers.length) {
+            getMyAnswers();
+          }
         setCurrentPage(currentPage + 1)
     }
 
     const getMyAnswers = async () => {
-        await dbService.collection("answers").where("userId", "==", `${userObj.uid}`).get()
+        await dbService.collection("answers").where("userId", "==", `${userObj.uid}`).orderBy("createdAt").limitToLast(currentPage*5 + 10).get()
         .then(snapshot => {
             const myAnswerArray = snapshot.docs.map(doc => ({
                 id: doc.answerId,
                 ...doc.data()    
             }))
+            myAnswerArray.sort((a, b) => {
+                if(a.createdAt > b.createdAt) return -1;
+                if(a.createdAt === b.createdAt) return 0;
+                if(a.createdAt < b.createdAt) return 1;
+              });
             setMyAnswers(myAnswerArray)
             setIsLoading(!isLoading)
         })
@@ -84,7 +92,7 @@ const MyAnswers = ({userObj}) => {
             : ( 
             <>
                 <Title>
-                    나의 대답들
+                    나만의 서랍장
                 </Title>
                 {currentPosts(myAnswers).map(myAnswer => <Answer key={myAnswer.answerId} answer={myAnswer} userObj={userObj}/>)}
                 {currentPage*5 <= myAnswers.length 

@@ -1,5 +1,6 @@
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { head, last } from "lodash";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Answer from "../components/Answer";
@@ -46,8 +47,8 @@ const Home = ({ userObj, refreshFriends }) => {
     return currentPosts
   }
 
-  const getData = async () => {
-    dbService.collection("answers").onSnapshot(snapshot => {
+  const getData = () => {
+    dbService.collection("answers").where("isPrivate", "==", false).orderBy("createdAt").limitToLast(currentPage*5 + 10).onSnapshot(snapshot => {
       const answerArray = snapshot.docs.map(doc => ({
         id:doc.answerId,
         ...doc.data(),
@@ -58,11 +59,16 @@ const Home = ({ userObj, refreshFriends }) => {
         if(a.createdAt < b.createdAt) return 1;
       });
       setAnswers(answerArray)
-      setISLoading(false)
+      if (isLoading) {
+        setISLoading(false)
+      }
     });
   };
 
   const addBtn = e => {
+    if (currentPage*5 >= answers.length) {
+      getData();
+    }
     setCurrentPage(currentPage + 1)
   }
 

@@ -12,6 +12,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 `;
 
 const Writer = styled.div`
@@ -57,24 +58,32 @@ const UserAnswers = ({userObj, refreshFriends}) => {
       }
   
       const addPage = () => {
+        if (currentPage*5 >= answers.length) {
+          getAnswers();
+        }
         setCurrentPage(currentPage + 1)
     }
     
     const getAnswers = async () => {
-        await dbService.collection("answers").where("userId", "==", `${id}`).get()
+        console.log(answers)
+        await dbService.collection("answers").where("isPrivate", "==", false).where("userId", "==", `${id}`).orderBy("createdAt").limitToLast(currentPage*5 + 10).get()
         .then(snapShot => {
           const answerData = snapShot.docs.map(doc => ({
             ...doc.data()
           }))
+          answerData.sort((a, b) => {
+            if(a.createdAt > b.createdAt) return -1;
+            if(a.createdAt === b.createdAt) return 0;
+            if(a.createdAt < b.createdAt) return 1;
+          });
           setAnswers(answerData)
           setIsLoading(false);
         }
         )
       }
-    
       useEffect(() => {
         getAnswers();
-      })
+      }, [])
 
     return (
         <Container>

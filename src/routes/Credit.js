@@ -16,7 +16,7 @@ const Container = styled.div`
     width: 100%;
     overflow-y: scroll;
     color: white;
-    padding: 100vh 0;
+    padding: 105vh 0;
     ::-webkit-scrollbar {
         display: none;
     }
@@ -27,7 +27,7 @@ const PlayBox = styled.button`
     flex-direction: column;
     position: fixed;
     bottom: 20px;
-    opacity: 50%;
+    opacity: 30%;
     background-color: transparent;
     border: none;
     transition: 1s all ease-in-out;
@@ -122,11 +122,21 @@ const White = styled.h3`
     margin-left: 5px;
 `;
 
+const Thankyou = styled.div`
+    position: fixed;
+    top: 40vh;
+    color: white;
+    transition: 1s all ease-in-out;
+    width: 100%;
+    text-align: center;
+`;
+
 const Credit = () => {
     const [init, setInit] = useState(false);
     const [speed, setSpeed] = useState(0);
-    let currentScroll;
+    const [commentState, setCommentState] = useState(false);
     const [bgmJazz] = useState(new Audio(bgm));
+    let currentScroll;
 
     const onSpeedChange = e => {
         e.preventDefault();
@@ -165,14 +175,19 @@ const Credit = () => {
     }
 
     useInterval(() => {
-        scriptPlay();
+        if (speed !== 0 && window.scrollY + window.innerHeight + 1 <= document.body.scrollHeight) {
+            scriptPlay();
+        }
+        if (window.scrollY + window.innerHeight + 100 >= document.body.scrollHeight) {
+            setCommentState(true);
+        } else {
+            setCommentState(false);
+        }
     }, 30)
 
     const scriptPlay = () => {
-        if (window.scrollY !== currentScroll) {
-            window.scrollBy({ top: speed, behavior: 'smooth'});
-            currentScroll = window.scrollY;
-        }
+        window.scrollBy({ top: speed, behavior: 'smooth'});
+        currentScroll = window.scrollY;
     }
 
     useEffect(() => {
@@ -274,8 +289,17 @@ const Credit = () => {
                 <ThanksTitle>도움을 주신 분들</ThanksTitle>
                 <ThanksName>수석 디자이너 <Name>경민이</Name></ThanksName>
                 <ThanksName>창동관 이웃<Name>영민이</Name></ThanksName>
-                <ThanksName>많은 도움을 준 <Name>태일 형</Name></ThanksName>
+                <ThanksName>많은 도움을 준<Name>태일 형</Name></ThanksName>
+                <ThanksName>여러가지 정보들 주시고 응원해주신<Name>창업 동아리 선생님들</Name></ThanksName>
+                <ThanksName>많은 동기부여 주신<Name>대표님들</Name></ThanksName>
+                <ThanksName>저보고 할 수 있다고 해주셨던<Name>모든 분들</Name></ThanksName>
             </ThanksContainer>
+            <Thankyou style={{opacity: commentState ? "100%" : "0%"}}>
+                정말 감사합니다. 행복하시면 좋겠습니다.
+                <Thankyou style={{marginTop: "30px", opacity: commentState ? "100%" : "0%", transitionDelay: "1s"}}>
+                    서랍장 주인장 드림
+                </Thankyou>
+            </Thankyou>
         </Container>
     )
 }

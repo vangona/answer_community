@@ -69,6 +69,7 @@ const Title = styled.h1`
 const Bulb = styled.img`
     position: absolute;
     height: 35vh;
+    width: auto;
     top: 0;
     animation: ${Blink} 2s ease-in-out infinite;
 `;
@@ -77,7 +78,7 @@ const Drawer = styled.img`
     position: absolute;
     animation: ${Skew} 2s ease-in-out infinite ;
     height: 35vh;
-    width: 80%;
+    width: auto;
     opacity: 80%;
     bottom: 20vh;
 `;

@@ -5,7 +5,7 @@ import { CheerComment } from "./DB/CheerDB";
 
 const Container = styled(animated.div)`
     position: relative;
-    margin-top: 50px;
+    margin-top: 20px;
     margin-bottom: 15px;
     width: 90%; 
     height: 130px;

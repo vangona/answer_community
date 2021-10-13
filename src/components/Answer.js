@@ -155,7 +155,7 @@ const Answer = ({answer, userObj, refreshFriends}) => {
     })
     .then(() => {
       refreshFriends([...userObj.friends, answer.userId])
-      alert(`${answer.userName}님을 친구로 추가했습니다.`)
+      alert(`${answer.userName}님을 내 서랍장에 추가했습니다.`)
     })
   }
   
@@ -215,7 +215,7 @@ const Answer = ({answer, userObj, refreshFriends}) => {
           : `${lastDays}일 전`
         }</CreatedAt>
       <WriterContainer>
-        <Writer onClick={onClickUser}>- {answer.userName}</Writer>
+        <Writer onClick={onClickUser}>- {answer.userName}{answer.isPrivate && " (나에게만 보임)"}</Writer>
       </WriterContainer>
       <Content>
         {editState 

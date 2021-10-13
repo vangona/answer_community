@@ -60,15 +60,23 @@ const QuestionDetail = ({userObj, refreshFriends}) => {
     }
 
     const addPage = () => {
+      if (currentPage*5 >= answers.length) {
+        getAnswers();
+      }
       setCurrentPage(currentPage + 1)
   }
 
   const getAnswers = async () => {
-    await dbService.collection("answers").where("questionId", "==", `${id}`).get()
+    await dbService.collection("answers").where("isPrivate", "==", false).where("questionId", "==", `${id}`).orderBy("createdAt").limitToLast(currentPage*5 + 10).get()
     .then(snapShot => {
       const answerData = snapShot.docs.map(doc => ({
         ...doc.data()
       }))
+      answerData.sort((a, b) => {
+        if(a.createdAt > b.createdAt) return -1;
+        if(a.createdAt === b.createdAt) return 0;
+        if(a.createdAt < b.createdAt) return 1;
+      });
       setAnswers(answerData)
       setIsLoading(false);
     }
@@ -77,7 +85,7 @@ const QuestionDetail = ({userObj, refreshFriends}) => {
 
   useEffect(() => {
     getAnswers();
-  })
+  }, [])
 
   return (
     <Container>
