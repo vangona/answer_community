@@ -209,7 +209,9 @@ function App() {
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
-        requestToken();
+        if ("serviceWorker" in navigator) {
+            requestToken();
+        }
         dbService.collection("users").doc(`${user.uid}`).get()
         .then(snapshot => {
             const userData= snapshot.data()

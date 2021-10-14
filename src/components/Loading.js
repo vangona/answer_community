@@ -81,6 +81,7 @@ const Drawer = styled.img`
     width: auto;
     opacity: 80%;
     bottom: 20vh;
+    object-fit: cover;
 `;
 
 const Dot = styled.div`

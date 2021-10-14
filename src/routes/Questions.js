@@ -7,6 +7,7 @@ import Question from "../components/Question";
 import Search from "../components/Search";
 
 const Container = styled.div`
+    padding-top: 30px;
     display: flex;
     width: 100%;
     flex-direction: column;

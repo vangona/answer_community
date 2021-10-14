@@ -8,7 +8,7 @@ import { authService } from "../fBase";
 
 const Container = styled(animated.div)`
     position: fixed;
-    bottom: -10px;
+    top: 0;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -40,7 +40,7 @@ const NavTitle = styled.span`
 
 const NavBtn = styled(animated.button)`
     position: fixed;
-    bottom: 15px;
+    top: 15px;
     left: 15px;
     background-color: transparent;
     border: 0;

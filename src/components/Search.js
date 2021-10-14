@@ -15,7 +15,7 @@ const Container = styled.div`
   padding: 10px 0;
   z-index: 10;
   transition: 0.3s all ease-in-out;
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0,0,0,0.5);
   :hover, :focus-within {
     font-style: italic;
     background-color: rgba(0,0,0,0.8);
@@ -55,8 +55,8 @@ const SearchBtn = styled.button`
   background-color: transparent;
   border: 0;
   position: fixed;
-  bottom: 15px;
-  right: 15px;
+  bottom: 20px;
+  right: 20px;
   :hover {
     cursor: pointer;
   }

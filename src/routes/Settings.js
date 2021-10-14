@@ -5,6 +5,7 @@ import { useHistory } from "react-router";
 
 const Container = styled.div`
     display: flex;
+    padding: 30px 0;
     flex-direction: column;
     width: 90%;
     justify-content: center;
@@ -67,6 +68,28 @@ const ProfileSubmitBtn = styled.input`
     }
 `;
 
+const BtnContainer = styled.div`
+    display: flex;
+    gap: 10px;
+`;
+
+const ManualBtn = styled.button`
+    margin-bottom: 10px;
+    font-size: 12px;
+    border-radius: 15px;
+    padding: 5px 10px;
+    border: 1px solid rgba(255,255,255,0.5);
+    color: white;
+    background-color: transparent;
+    font-family: Kyobo Handwriting;
+    transition: 0.5s all ease-in-out;
+    :hover {
+        cursor: pointer;
+        border: 1px solid var(--gold);
+        color: var(--gold);
+    }
+`;
+
 const CreditBtn = styled.button`
     margin-bottom: 10px;
     font-size: 12px;
@@ -79,6 +102,7 @@ const CreditBtn = styled.button`
     transition: 0.5s all ease-in-out;
     :hover {
         cursor: pointer;
+        border: 1px solid var(--gold);
         color: var(--gold);
     }
 `;
@@ -284,7 +308,10 @@ const Settings = ({ refreshUser, userObj }) => {
                 </ProfileForm>
                 }
             </ProfileContainer>
-            <CreditBtn onClick={onClickCredit}>명예의 전당</CreditBtn>
+            <BtnContainer>
+                <ManualBtn>서랍장 사용 설명서</ManualBtn>
+                <CreditBtn onClick={onClickCredit}>명예의 전당</CreditBtn>
+            </BtnContainer>
             <QnaContainer>
                 <QnaLabel>문의하기 & 버그리포트</QnaLabel>
                 <QnaInput onChange={onChangeReport} value={report}type="text" />

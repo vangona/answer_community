@@ -8,6 +8,7 @@ import { dbService } from "../fBase";
 
 const Container = styled.div`
     display: flex;
+    padding-top: 30px;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
