@@ -40,7 +40,7 @@ const NavTitle = styled.span`
 
 const NavBtn = styled(animated.button)`
     position: fixed;
-    top: 15px;
+    top: 20px;
     left: 15px;
     background-color: transparent;
     border: 0;

@@ -8,7 +8,7 @@ import Reply from "./Reply";
 const Column = styled.div`
     display: flex;
     flex-direction: column;
-    margin-top: 15px;
+    margin-top: 10px;
     color: rgba(0,0,0,0.5);
     transition: 0.5s all ease-in-out;
     :focus-within {
@@ -37,7 +37,6 @@ const NoteWriter = styled.span`
     width: 50px;
     word-break: keep-all;
     font-size: 12px;
-    margin-bottom: 5px;
 `;
 
 const NoteAnswer = styled.span`
@@ -47,12 +46,14 @@ const NoteAnswer = styled.span`
 
 const NoteIcon = styled.div`
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-right: 5px;
 `;
 
 const DeleteIcon = styled.div`
+    display: flex;
     :hover {
         cursor: pointer;
         color: black;
@@ -74,7 +75,7 @@ const Note = ({note, userObj}) => {
     }
     return (
         <Column key={note.noteId}>
-            <NoteAnswer>'{note.answer.slice(0, 15)}...'에서 온 쪽지입니다.
+            <NoteAnswer>'{note.answer.slice(0, 15)}{note.answer.length > 15 && "..."}'라고 쓴 답변에서 온 쪽지입니다.
             </NoteAnswer>
             <NoteContainer>
                 <NoteTitle onClick={onClickReply}>

@@ -65,7 +65,6 @@ const UserAnswers = ({userObj, refreshFriends}) => {
     }
     
     const getAnswers = async () => {
-        console.log(answers)
         await dbService.collection("answers").where("isPrivate", "==", false).where("userId", "==", `${id}`).orderBy("createdAt").limitToLast(currentPage*5 + 10).get()
         .then(snapShot => {
           const answerData = snapShot.docs.map(doc => ({

@@ -10,11 +10,26 @@ const Container = styled.div`
     background-color: rgba(255,255,255,0.5);
     border-radius: 10px;
     padding: 20px;
-    box-sizing: border-box;
+    box-sizing: border-box;    
+    margin-bottom: 10px;
 `;
 
 const Title = styled.h1`
     color: white;
+`;
+
+const FriendList = styled.div`
+    width: 100%;
+    padding: 3px 0;
+    max-height: 25vh;
+    overflow: auto;
+    ::-webkit-scrollbar {
+        width: 7px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(255,255,255,0.7);
+        border-radius: 5px;
+    }
 `;
 
 const Friend = styled.div`
@@ -46,6 +61,7 @@ const FriendIcon = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-right: 5px;
     :hover {
         cursor: pointer;
     }
@@ -113,28 +129,30 @@ const Friends = ({userObj, refreshFriends, getFriendLoading, loading}) => {
             <Container>
             <Title>누군가의 서랍장</Title>
             <hr />
-            {friends.length !== 0 
-            ? friends.map(friend => (
-                <Friend key={friend.uid}>
-                    <FriendName id={friend.uid} onClick={onClickUser}>
-                        {friend.displayName}
-                    </FriendName>
-                    <FriendRight>                        
-                        <FriendCode>
-                        #{friend.uid.slice(-4).toLowerCase()}
-                        </FriendCode>
-                        <FriendIcon>
-                            <FontAwesomeIcon onClick={() => {
-                                if (window.confirm(`${friend.displayName}님을 목록에서 삭제하시겠어요?`)) {
-                                    onDeleteFriend(friend)
-                                }}
-                                } icon={faTrashAlt} size="sm" />
-                        </FriendIcon>
-                    </FriendRight>
-                </Friend>
-            ))
-            : <Notice>다른 사람의 답변을 통해 <br /> 다른 누군가의 서랍장을 추가 할 수 있어요.</Notice>
-            }
+            <FriendList>
+                {friends.length !== 0 
+                ? friends.map(friend => (
+                    <Friend key={friend.uid}>
+                        <FriendName id={friend.uid} onClick={onClickUser}>
+                            {friend.displayName}
+                        </FriendName>
+                        <FriendRight>                        
+                            <FriendCode>
+                            #{friend.uid.slice(-4).toLowerCase()}
+                            </FriendCode>
+                            <FriendIcon>
+                                <FontAwesomeIcon onClick={() => {
+                                    if (window.confirm(`${friend.displayName}님을 목록에서 삭제하시겠어요?`)) {
+                                        onDeleteFriend(friend)
+                                    }}
+                                    } icon={faTrashAlt} size="sm" />
+                            </FriendIcon>
+                        </FriendRight>
+                    </Friend>
+                ))
+                : <Notice>다른 사람의 답변을 통해 <br /> 다른 누군가의 서랍장을 추가 할 수 있어요.</Notice>
+                }
+            </FriendList>
         </Container>
             : null
         }

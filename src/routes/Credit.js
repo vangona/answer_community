@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Sponsor } from "../components/DB/Sponsor";
 import { useInterval } from "../hooks/UseInterval";
+import { isMobile } from "react-device-detect";
 import bgm from "../music/Soul and Mind - E's Jammy Jams.mp3"
 
 const Container = styled.div`
@@ -134,19 +135,26 @@ const Thankyou = styled.div`
 const Credit = () => {
     const [init, setInit] = useState(false);
     const [speed, setSpeed] = useState(0);
+    const [scroll, setScroll] = useState(0);
     const [commentState, setCommentState] = useState(false);
     const [bgmJazz] = useState(new Audio(bgm));
     let currentScroll;
 
-    const onSpeedChange = e => {
+    const onScrollChange = e => {
         e.preventDefault();
-        setSpeed(e.target.value);
-        console.log(e.target.value)
+        setScroll(e.target.value)
+        window.scrollTo(0, e.target.value);
     }
 
     const onClickBackward = e => {
-        if (speed > -10) {
-            setSpeed(speed - 1)
+        if (isMobile) {
+            if (speed > -100) {
+                setSpeed(speed - 10)
+            }
+        } else {
+            if (speed > -10) {
+                setSpeed(speed - 1)
+            }
         }
     }
 
@@ -154,12 +162,12 @@ const Credit = () => {
         if (speed === 0) {
             if (!init) {
                 setInit(true)
-                setSpeed(1)
+                setSpeed(isMobile ? 10 : 1)
                 setTimeout(() => {
                     bgmJazz.play();
                 }, 1000)
             } else {
-                setSpeed(1)
+                setSpeed(isMobile ? 10 : 1)
                 bgmJazz.play();
             }
         } else if (speed !== 0) {
@@ -169,8 +177,14 @@ const Credit = () => {
     }
 
     const onClickForward = e => {
-        if (speed < 10) {
-            setSpeed(speed + 1)
+        if (isMobile) {
+            if (speed < 100) {
+                setSpeed(speed + 10)
+            } 
+        } else {
+            if (speed < 10) {
+                setSpeed(speed + 1)
+            }
         }
     }
 
@@ -185,19 +199,27 @@ const Credit = () => {
         }
     }, 30)
 
+    useInterval(() => {
+        setScroll(window.scrollY)
+    }, 500)
+
     const scriptPlay = () => {
-        window.scrollBy({ top: speed, behavior: 'smooth'});
+        window.scrollBy({ top: `${speed}`, behavior: 'smooth'});
         currentScroll = window.scrollY;
     }
 
     useEffect(() => {
+        return () => {
+            clearInterval();
+            bgmJazz.pause();
+        }
     }, [])
     
     return (
         <Container>
             <PlayBox style={{bottom: init? "20px" : "50vh"}} >
                 {init && 
-                <PlayInput max="10" min="-10" value={speed}onChange={onSpeedChange} type="range" />}
+                <PlayInput max={document.body.scrollHeight - window.innerHeight} min="0" value={window.scrollY} onChange={onScrollChange} type="range" />}
                 <PlayBtnBox>
                     {init && <PlayBtn onClick={onClickBackward}>
                         <FontAwesomeIcon icon={faBackward} />
@@ -218,8 +240,8 @@ const Credit = () => {
                     </PlayBtn>}
                 </PlayBtnBox>
             </PlayBox>
-            <Title>서랍장 명예의 전당</Title>
-            <ThanksContainer>
+            <Title style={{opacity: !init && "0"}}>서랍장 명예의 전당</Title>
+            <ThanksContainer style={{opacity: !init && "0"}}>
                 <ThanksTitle>후원해주신 분들</ThanksTitle>
                 {Sponsor.sponsor["#1"].map(thinkperson => (
                     <ThanksName>
@@ -290,13 +312,23 @@ const Credit = () => {
                 <ThanksName>수석 디자이너 <Name>경민이</Name></ThanksName>
                 <ThanksName>창동관 이웃<Name>영민이</Name></ThanksName>
                 <ThanksName>많은 도움을 준<Name>태일 형</Name></ThanksName>
+                <ThanksName>창업 초기부터 많은 도움 주신<Name>허재경 대표님</Name></ThanksName>
+                <ThanksName>SAYU PARTNER-S<Name>준성이형</Name></ThanksName>
+                <ThanksName>사람에게 정 붙일 수 있게 도와준<Name>태훈이형</Name></ThanksName>
                 <ThanksName>여러가지 정보들 주시고 응원해주신<Name>창업 동아리 선생님들</Name></ThanksName>
                 <ThanksName>많은 동기부여 주신<Name>대표님들</Name></ThanksName>
-                <ThanksName>저보고 할 수 있다고 해주셨던<Name>모든 분들</Name></ThanksName>
+                <ThanksName>응원해준<Name>친구들</Name></ThanksName>
+                <ThanksName>저보고 할 수 있다고 해주신<Name>모든 분들</Name></ThanksName>
             </ThanksContainer>
             <Thankyou style={{opacity: commentState ? "100%" : "0%"}}>
-                정말 감사합니다. 행복하시면 좋겠습니다.
+                아직 무언가를 이뤄낸건 아니지만, 
                 <Thankyou style={{marginTop: "30px", opacity: commentState ? "100%" : "0%", transitionDelay: "1s"}}>
+                    덕분에 여기까지라도 올 수 있었습니다.
+                </Thankyou>
+                <Thankyou style={{marginTop: "60px", opacity: commentState ? "100%" : "0%", transitionDelay: "2s"}}>
+                    정말 감사합니다. 행복하시면 좋겠습니다.
+                </Thankyou>
+                <Thankyou style={{marginTop: "90px", opacity: commentState ? "100%" : "0%", transitionDelay: "3s"}}>
                     서랍장 주인장 드림
                 </Thankyou>
             </Thankyou>

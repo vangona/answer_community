@@ -32,6 +32,17 @@ const Title = styled(animated.h1)`
   font-family: Jeju Myeongjo;
 `;
 
+const AuthBox = styled.div`
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  width: 100%;
+  z-index: 9;
+`;
+
 const Notice = styled.span`
   color: var(--gold);
   margin-bottom: 15px;
@@ -73,10 +84,10 @@ const Auth = () => {
         <Title style={animation}>누군가의 서랍장</Title>
         {authState 
         ? (
-        <>
+        <AuthBox>
         <Notice onClick={() => {setCodeState(!codeState)}}>코드를 입력해주세요.</Notice>
         <Login setCodeState={setCodeState} codeState={codeState} />
-        </>
+        </AuthBox>
         ) : <Welcome style={welcomeAni}>입장하시려면 터치해주세요.</Welcome>}
       </Container>
     );

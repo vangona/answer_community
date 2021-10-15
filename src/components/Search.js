@@ -17,7 +17,6 @@ const Container = styled.div`
   transition: 0.3s all ease-in-out;
   background-color: rgba(0,0,0,0.5);
   :hover, :focus-within {
-    font-style: italic;
     background-color: rgba(0,0,0,0.8);
   }
 `;
@@ -51,15 +50,28 @@ const CloseBtn = styled.button`
 `;
 
 const SearchBtn = styled.button`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
   color: white;
   background-color: transparent;
   border: 0;
   position: fixed;
   bottom: 20px;
   right: 20px;
+  font-size: 20px;
+  font-family: Kyobo Handwriting;
+  transition: 0.5s all ease-in-out;
   :hover {
     cursor: pointer;
+    color: var(--gold);
   }
+`;
+
+const SearchBtnLabel = styled.span`
+  font-size: 12px;
 `;
 
 const Search = ({ searchWord, setSearchWord }) => {
@@ -82,7 +94,10 @@ const Search = ({ searchWord, setSearchWord }) => {
         <CloseBtn onClick={onClick}><FontAwesomeIcon icon={faTimes} size="lg" /></CloseBtn>
       </Container>
       : <SearchBtn onClick={onClick}>
-          <FontAwesomeIcon icon={faSearch} size="lg" />
+          <FontAwesomeIcon icon={faSearch} />
+          <SearchBtnLabel>
+            질문 찾기
+          </SearchBtnLabel>
         </SearchBtn>
       }
       </>

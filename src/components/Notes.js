@@ -23,6 +23,20 @@ const NoteBox = styled.div`
     text-align: center;
 `;
 
+const NoteList = styled.div`
+    width: 100%;
+    padding: 3px 0;
+    max-height: 60vh;
+    overflow: auto;
+    ::-webkit-scrollbar {
+        width: 7px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(255,255,255,0.7);
+        border-radius: 5px;
+    }
+`;
+
 const Notes = ({userObj, getNoteLoading, loading}) => {
     const [notes, setNotes] = useState([]);
 
@@ -49,11 +63,11 @@ const Notes = ({userObj, getNoteLoading, loading}) => {
 
             {notes.length === 0 
             ? <NoteBox>표시할 쪽지가 없습니다.</NoteBox>
-            : (<>
+            : (<NoteList>
                 {notes.map(note => (
                     <Note userObj={userObj} note={note} />
                 ))}
-            </>)
+            </NoteList>)
             }
             </Container>
             : null

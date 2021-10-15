@@ -7,7 +7,9 @@ import Notes from "../components/Notes";
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    margin-top: 40px;
+    padding: 10px 0; 
+    justify-content: flex-start;
     align-items: center;
     width: 100%;
     height: 100vh;
@@ -30,8 +32,8 @@ const Community = ({userObj, refreshFriends}) => {
 
     return (
         <Container>
-            <Notes userObj={userObj} loading={noteLoading} getNoteLoading={getNoteLoading} />
             <Friends userObj={userObj} loading={friendLoading} refreshFriends={refreshFriends} getFriendLoading={getFriendLoading} />
+            <Notes userObj={userObj} loading={noteLoading} getNoteLoading={getNoteLoading} />
         </Container>
     )
 }

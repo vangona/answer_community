@@ -16,11 +16,27 @@ const Container = styled(animated.div)`
   z-index: 9;
 `;
 
+const AuthConatiner = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+
 const LoginContainer = styled.div`
   display: flex;
   margin-bottom: 10px;
   justify-content: center;
   align-items: center;
+  color: white;
+  transition: 0.5s all ease-in-out;
+  :focus-within {
+    color: var(--gold);
+  }
+`;
+
+const LoginLabel = styled.label`
+  width: 70px;
+  margin-right: 5px;
 `;
 
 const LoginInput = styled.input`
@@ -30,13 +46,19 @@ const LoginInput = styled.input`
     }    
 `;
 
-const LoginBtn = styled.div`
+const LoginBtn = styled.button`
   color: var(--gold);
+  background-color: transparent;
+  border: 1px solid var(--gold);
+  padding : 3px 10px;
+  border-radius: 10px;
   margin-top: 10px;
-  font-size: 14px;
+  font-size: 12px;
+  font-family: Kyobo Handwriting;
   transition: 0.5s all ease-in-out;
     :hover {
         cursor: pointer;
+        border: 1px solid white;
         color: white;
     }
     :active {
@@ -44,13 +66,30 @@ const LoginBtn = styled.div`
     }
 `;
 
-const PasswordContainer = styled.div``;
+const PasswordContainer = styled.div`
+  color: white;
+  transition: 0.5s all ease-in-out;
+  :focus-within {
+    color: var(--gold);
+  }
+`;
 
-const PasswordInput = styled.input``;
+const PasswordLabel = styled.label`
+  width: 70px;
+  margin-right: 5px;
+`;
+
+const PasswordInput = styled.input`
+    transition: 0.3s all ease-in-out;
+    :focus {
+      border-radius: 10px;
+    }   
+`;
 
 const PasswordBtn = styled.div`
   color: white;
   opacity: 70%;
+  padding: 5px;
   margin-bottom: 10px;
   font-size: 10px;
   :hover {
@@ -126,14 +165,18 @@ const Login = ({setCodeState, codeState}) => {
         : "저는 비밀번호가 있습니다"
         }
       </PasswordBtn>
+      <AuthConatiner>
       <LoginContainer>
+        <LoginLabel style={{width: !codeState && "auto"}}>Code :</LoginLabel>
         <LoginInput onChange={onChange} value={code} type="text" />
       </LoginContainer>
       {codeState && 
         <PasswordContainer>
+          <PasswordLabel>Password :</PasswordLabel>
           <PasswordInput value={password} onChange={onChangePassword} type="password" />
         </PasswordContainer>
       }
+      </AuthConatiner>
       <Error style={errorAni}>{error}</Error>
       <LoginBtn onClick={onSubmit}>
           들어가기

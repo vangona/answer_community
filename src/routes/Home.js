@@ -9,7 +9,7 @@ import Loading from "../components/Loading";
 import { dbService } from "../fBase";
 
 const Container = styled.div`
-  padding-top: 30px;
+  padding-top: 40px;
   width: 100%;
   display: flex;
   flex-direction: column;

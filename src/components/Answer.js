@@ -155,7 +155,7 @@ const Answer = ({answer, userObj, refreshFriends}) => {
     })
     .then(() => {
       refreshFriends([...userObj.friends, answer.userId])
-      alert(`${answer.userName}님을 내 서랍장에 추가했습니다.`)
+      alert(`${answer.userName}님을 서랍장에 추가했습니다.`)
     })
   }
   

@@ -5,7 +5,7 @@ import { useHistory } from "react-router";
 
 const Container = styled.div`
     display: flex;
-    padding: 30px 0;
+    padding: 40px 0;
     flex-direction: column;
     width: 90%;
     justify-content: center;
@@ -297,7 +297,7 @@ const Settings = ({ refreshUser, userObj }) => {
                 }
                 {!(nameState | emailState) && 
                 <>
-                    <ProfileLabel name="password" onClick={onClick}>{userObj.isPassword ? "비밀번호 만들기" : "비밀번호 바꾸기"}</ProfileLabel>
+                    <ProfileLabel name="password" onClick={onClick}>{userObj.isPassword ? "비밀번호 바꾸기" : "비밀번호 설정하기"}</ProfileLabel>
                     {passwordState && <hr style={{width:"70%", opacity:"70%"}} />}
                 </>
                 }
