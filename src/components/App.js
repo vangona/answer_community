@@ -21,6 +21,7 @@ const Container = styled.div`
 function App() {
   const [init, setInit] = useState(false);
   const [userObj, setUserObj] = useState(null);
+  const [answerCount, setAnswerCount] = useState('');
 
   const questionArray = [
     {
@@ -207,12 +208,17 @@ function App() {
     }
 
   useEffect(() => {
-    authService.onAuthStateChanged((user) => {
+    authService.onAuthStateChanged(async (user) => {
       if (user) {
         if ("serviceWorker" in navigator) {
             requestToken();
         }
-        dbService.collection("users").doc(`${user.uid}`).get()
+        dbService.collection("main").doc("counts")
+        .onSnapshot((snapshot) => {
+            const countData = snapshot.data();
+            setAnswerCount(countData.answers);
+        });
+        await dbService.collection("users").doc(`${user.uid}`).get()
         .then(snapshot => {
             const userData= snapshot.data()
             setUserObj({
@@ -261,7 +267,7 @@ function App() {
       {init 
       ? 
       <>
-        <AppRouter questionArray={questionArray} isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} refreshFriends={refreshFriends} />
+        <AppRouter answerCount={answerCount} questionArray={questionArray} isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} refreshFriends={refreshFriends} />
       </>
       : <Loading />
         }

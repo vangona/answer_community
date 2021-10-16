@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { dbService } from "../fBase";
+import { dbService, firebaseInstance } from "../fBase";
 import { v4 as uuidv4} from "uuid";
 import { PaperAirplaneIcon } from "@heroicons/react/outline"
 
@@ -105,8 +105,12 @@ const Question = ({userObj, question}) => {
             editedAt: null,
             isPrivate,
         }
-        dbService.collection("answers").doc(`${answerId}`).set(answerObj).then(
+        dbService.collection("answers").doc(`${answerId}`).set(answerObj).then(async () => {
+            await dbService.collection("main").doc("counts").update({
+                answers: firebaseInstance.firestore.FieldValue.increment(1)
+            })
             alert("답변이 저장되었습니다 :)")
+        }
         ).catch((error) => {
             console.error("Submit Error : ", error)
         });

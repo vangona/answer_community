@@ -37,7 +37,7 @@ const LastAnswer = styled.div`
     padding: 15px 0;
 `;
 
-const Home = ({ userObj, refreshFriends }) => {
+const Home = ({ userObj, answerCount, refreshFriends }) => {
   const [isLoading, setISLoading] = useState(true);
   const [answers, setAnswers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1)
@@ -49,6 +49,7 @@ const Home = ({ userObj, refreshFriends }) => {
   }
 
   const getData = () => {
+
     dbService.collection("answers").where("isPrivate", "==", false).orderBy("createdAt").limitToLast(currentPage*5 + 10).onSnapshot(snapshot => {
       const answerArray = snapshot.docs.map(doc => ({
         id:doc.answerId,
@@ -84,6 +85,7 @@ const Home = ({ userObj, refreshFriends }) => {
         : (
           <>
             <Cheer />
+            {answerCount}
             {answers && currentPosts(answers).map(answer => (
               <Answer key={answer.answerId} userObj={userObj} answer={answer} refreshFriends={refreshFriends} />
             ))

@@ -14,7 +14,7 @@ import UserAnswers from "../routes/UserAnswers";
 import SignOut from "../routes/SignOut";
 import Credit from "../routes/Credit";
 
-const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFriends }) => {
+const AppRouter = ({ answerCount, questionArray, isLoggedIn, userObj, refreshUser, refreshFriends }) => {
     return (
         <Router>
             {isLoggedIn ? 
@@ -22,7 +22,7 @@ const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFri
                 <Navigation />
                 <Switch>
                     <Route exact path="/" >
-                        <Home userObj={userObj} refreshFriends={refreshFriends} />
+                        <Home userObj={userObj} answerCount={answerCount} refreshFriends={refreshFriends} />
                     </Route>
                     <Route exact path="/auth" >
                         <Auth />
