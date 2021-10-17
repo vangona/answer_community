@@ -28,7 +28,7 @@ const NavComponent = styled.div`
     gap: 5px;
     opacity: 1;
     z-index: 9;
-    font-size: 16px;
+    font-size: 1rem;
     :hover {
         cursor: pointer;
     }

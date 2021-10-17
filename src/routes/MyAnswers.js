@@ -22,7 +22,7 @@ const Title = styled.div`
     margin: 20px;
     display: flex;
     color: white;
-    font-size: 25px;
+    font-size: 1.5rem;
     font-family: Kyobo Handwriting;
     flex-direction: column;
 `;
@@ -43,7 +43,7 @@ const AddBtn = styled.button`
 
 const LastAnswer = styled.div`
     color: white;
-    font-size: 12px;
+    font-size: 0.7rem;
     padding: 15px 0;
 `;
 

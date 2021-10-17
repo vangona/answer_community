@@ -78,7 +78,7 @@ const PlayBtn = styled.button`
 `;
 
 const Title = styled.h1`
-    font-size: 24px;
+    font-size: 1.5rem;
     color: var(--gold);
 `;
 
@@ -94,7 +94,7 @@ const ThanksContainer = styled.div`
 `;
 
 const ThanksTitle = styled.h2`
-    font-size: 20px;
+    font-size: 1.3rem;
     margin-bottom: 10px;
 `;
 

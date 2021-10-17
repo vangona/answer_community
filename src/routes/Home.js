@@ -185,6 +185,23 @@ const Home = ({ userObj, answerCount, refreshFriends }) => {
     }
   }
 
+  const onSearch = async (e) => {
+    await dbService.collection("answers").where("isPrivate", "==", false).where("answer", "array-contains", searchWord).get()
+    .then(snapshot => {
+      console.log(snapshot.docs)
+      const answerArray = snapshot.docs.map(doc => ({
+        id:doc.answerId,
+        ...doc.data(),
+      }));
+      answerArray.sort((a, b) => {
+        if(a.createdAt > b.createdAt) return -1;
+        if(a.createdAt === b.createdAt) return 0;
+        if(a.createdAt < b.createdAt) return 1;
+      });
+      setAnswers(answerArray)
+    });
+  }
+
   useEffect(() => {
     getData();
   }, [])
@@ -196,6 +213,7 @@ const Home = ({ userObj, answerCount, refreshFriends }) => {
         : (
           <>
             <Cheer />
+            {searchWord}
             <RandomBtn onClick={onToggleRandom}>
               {randomState ? "목록으로 보기" : "랜덤으로 보기"}
             </RandomBtn>
@@ -224,7 +242,7 @@ const Home = ({ userObj, answerCount, refreshFriends }) => {
                     마지막 대답입니다.
             </LastAnswer>
             }
-            {randomState && <Search from="home" searchWord={searchWord} setSearchWord={setSearchWord} />}
+            {/* {randomState && <Search onSearch={onSearch} from="home" searchWord={searchWord} setSearchWord={setSearchWord} />} */}
           </>
         )
         }

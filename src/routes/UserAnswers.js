@@ -18,7 +18,7 @@ const Container = styled.div`
 const Writer = styled.div`
     width: 100%;
     text-align: center;
-    font-size: 20px;
+    font-size: 1.2rem;
     color: white;
     font-family: Jeju myeongjo;
     margin-top: 50px;
@@ -41,7 +41,7 @@ const AddBtn = styled.button`
 
 const LastAnswer = styled.div`
     color: white;
-    font-size: 12px;
+    font-size: 0.7rem;
     padding: 15px 0;
 `;
 

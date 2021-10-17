@@ -30,6 +30,13 @@ const Title = styled.h1`
   transition: 0.3s all ease-in-out;
 `;
 
+const SearchContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3px;
+`;
+
 const SearchInput = styled.input`
   width: 200px;
   transition: 0.3s all ease-in-out;
@@ -38,7 +45,24 @@ const SearchInput = styled.input`
   }
 `;
 
-const SearchSubmit = styled.button``;
+const SearchSubmit = styled.button`
+    font-size: 0.8rem;
+    border-radius: 5px;
+    padding: 3px 5px;
+    border: 1px solid rgba(255,255,255,0.5);
+    color: white;
+    background-color: transparent;
+    font-family: Kyobo Handwriting;
+    transition: 0.5s all ease-in-out;
+    :hover {
+        cursor: pointer;
+        border: 1px solid var(--gold);
+        color: var(--gold);
+    }
+    :active {
+      transform: scale(0.95)
+    }
+`;
 
 const CloseBtn = styled.button`
   position: absolute;
@@ -77,7 +101,7 @@ const SearchBtnLabel = styled.span`
   font-size: 12px;
 `;
 
-const Search = ({ from, searchWord, setSearchWord }) => {
+const Search = ({ onSearch, from, searchWord, setSearchWord }) => {
     const [searchState, setSearchState] = useState(false);
     const fromHome = from === "home" ? true : false
 
@@ -93,7 +117,10 @@ const Search = ({ from, searchWord, setSearchWord }) => {
       {searchState ? 
         <Container>
         <Title>찾으시는 {fromHome ? "답변" : "질문"}이 있나요?</Title>
-        <SearchInput onChange={onChange} value={searchWord} />
+        <SearchContainer>
+          <SearchInput onChange={onChange} value={searchWord} />
+          {from === "home" && <SearchSubmit onClick={onSearch}>검색하기</SearchSubmit>}
+        </SearchContainer>
         <CloseBtn onClick={onClick}><FontAwesomeIcon icon={faTimes} size="lg" /></CloseBtn>
       </Container>
       : <SearchBtn onClick={onClick}>

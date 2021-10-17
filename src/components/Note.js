@@ -25,7 +25,7 @@ const NoteContainer = styled.div`
 
 const NoteTitle = styled.div`
     transition: 0.5s all ease-in-out;
-    font-size: 12px;
+    font-size: 0.7rem;
     :hover {
         cursor: pointer;
         color: black;

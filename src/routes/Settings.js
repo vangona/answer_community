@@ -32,7 +32,7 @@ const Title = styled.div`
     margin: 20px;
     display: flex;
     color: white;
-    font-size: 25px;
+    font-size: 1.5rem;
     flex-direction: column;
 `;
 
@@ -55,7 +55,7 @@ const ProfileInput = styled.input`
 `;
 
 const ProfileSubmitBtn = styled.input`
-    font-size: 12px;
+    font-size: 0.6rem;
     border-radius: 10px;
     padding: 5px 10px;
     border: 1px solid rgba(0,0,0,0.5);
@@ -75,7 +75,7 @@ const BtnContainer = styled.div`
 
 const ManualBtn = styled.button`
     margin-bottom: 10px;
-    font-size: 12px;
+    font-size: 0.8rem;
     border-radius: 15px;
     padding: 5px 10px;
     border: 1px solid rgba(255,255,255,0.5);
@@ -92,7 +92,7 @@ const ManualBtn = styled.button`
 
 const CreditBtn = styled.button`
     margin-bottom: 10px;
-    font-size: 12px;
+    font-size: 0.8rem;
     border-radius: 15px;
     padding: 5px 10px;
     border: 1px solid rgba(255,255,255,0.5);
@@ -109,7 +109,7 @@ const CreditBtn = styled.button`
 
 const LogOutBtn = styled.button`
     margin-top: 10px;
-    font-size: 12px;
+    font-size: 0.8rem;
     border-radius: 15px;
     padding: 5px 10px;
     border: 1px solid rgba(255,255,255,0.5);
@@ -137,14 +137,14 @@ const QnaLabel =styled.label`
 `;
 
 const QnaInput = styled.textarea`
-    font-size: 12px;
+    font-size: 0.8rem;
     width: 70%;
     height: 50px;
 `;
 
 const QnaSubmitBtn = styled.button`
     margin-top: 10px;
-    font-size: 12px;
+    font-size: 0.8rem;
     border-radius: 10px;
     padding: 5px 10px;
     border: 1px solid rgba(0,0,0,0.5);
@@ -191,7 +191,7 @@ const Settings = ({ refreshUser, userObj }) => {
         if (displayName && userObj.displayname !== displayName) {
             await dbService.collection("users").doc(`${userObj.uid}`).set({
                 uid: userObj.uid,
-                displayName: userObj.displayName
+                displayName: displayName
             }).then(() => {
                 userObj.updateProfile({
                     displayName

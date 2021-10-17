@@ -73,7 +73,7 @@ const FriendIcon = styled.div`
 const Notice = styled.div`
     color: rgba(0,0,0,0.5);
     margin-top: 15px;
-    font-size: 14px;
+    font-size: 0.9rem;
     text-align: center;
     line-height: 130%;
 `;
