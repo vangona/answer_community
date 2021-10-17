@@ -28,7 +28,7 @@ const Title = styled(animated.h1)`
   position: absolute;
   color: white;
   margin-bottom: 20px;
-  font-size: 25px;
+  font-size: 1.5rem;
   font-family: Jeju Myeongjo;
 `;
 
@@ -46,7 +46,7 @@ const AuthBox = styled.div`
 const Notice = styled.span`
   color: var(--gold);
   margin-bottom: 15px;
-  font-size: 14px;
+  font-size: 0.9rem;
   z-index: 9;
   :hover {
     cursor: pointer;
@@ -55,7 +55,7 @@ const Notice = styled.span`
 
 const Welcome = styled(animated.div)`
   color: white;
-  font-size: 14px;
+  font-size: 0.9rem;
   opacity: 0;
   transition: 1s all ease-in-out;
 `;

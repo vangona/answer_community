@@ -5,6 +5,7 @@ import { authService, dbService } from "../fBase";
 import Loading from "./Loading";
 import { setToken } from "./Messaginginit";
 import AppRouter from "./Router";
+import { isMobile } from "react-device-detect";
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -208,6 +209,10 @@ function App() {
     }
 
   useEffect(() => {
+    if (isMobile) {
+        const htmlCss = document.querySelector("html")
+        htmlCss.style.fontSize = "22px";
+    }
     authService.onAuthStateChanged(async (user) => {
       if (user) {
         if ("serviceWorker" in navigator) {

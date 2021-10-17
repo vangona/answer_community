@@ -1,6 +1,7 @@
 import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
+import { useEffect } from "react/cjs/react.development";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -36,6 +37,8 @@ const SearchInput = styled.input`
     border-radius: 10px;
   }
 `;
+
+const SearchSubmit = styled.button``;
 
 const CloseBtn = styled.button`
   position: absolute;
@@ -74,8 +77,9 @@ const SearchBtnLabel = styled.span`
   font-size: 12px;
 `;
 
-const Search = ({ searchWord, setSearchWord }) => {
+const Search = ({ from, searchWord, setSearchWord }) => {
     const [searchState, setSearchState] = useState(false);
+    const fromHome = from === "home" ? true : false
 
     const onChange = (e) => {
       setSearchWord(e.target.value)      
@@ -84,19 +88,18 @@ const Search = ({ searchWord, setSearchWord }) => {
     const onClick = () => {
       setSearchState(!searchState)
     }
-
     return (
       <>
       {searchState ? 
         <Container>
-        <Title>찾으시는 질문이 있나요?</Title>
+        <Title>찾으시는 {fromHome ? "답변" : "질문"}이 있나요?</Title>
         <SearchInput onChange={onChange} value={searchWord} />
         <CloseBtn onClick={onClick}><FontAwesomeIcon icon={faTimes} size="lg" /></CloseBtn>
       </Container>
       : <SearchBtn onClick={onClick}>
           <FontAwesomeIcon icon={faSearch} />
           <SearchBtnLabel>
-            질문 찾기
+          {fromHome ? "답변" : "질문"} 찾기
           </SearchBtnLabel>
         </SearchBtn>
       }

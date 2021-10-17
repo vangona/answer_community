@@ -36,7 +36,7 @@ line-height: 20px;
   transition: 0.3s all ease-in-out;
   font-family: Jeju Myeongjo;
   margin-bottom: 20px;
-  font-size: 14px;
+  font-size: 0.9rem;
   :hover {
     cursor: pointer;
   }
@@ -51,7 +51,7 @@ const InfoContainer = styled.div`
   position: absolute;
   bottom: 10px;
   right: 15px;
-  font-size: 10px;
+  font-size: 0.7rem;
 `;
 
 const CreatedAt = styled.span`
@@ -62,7 +62,7 @@ const CreatedAt = styled.span`
   position: absolute;
   top: 10px;
   right: 15px;
-  font-size: 10px;
+  font-size: 0.6rem;
 `;
 
 const WriterContainer = styled.div`
@@ -78,7 +78,7 @@ const Writer = styled.span`
   width: auto;
   box-sizing: border-box;
   margin-bottom: 10px;
-  font-size: 10px;
+  font-size: 0.7rem;
   :hover {
     cursor: pointer;
   }
@@ -93,7 +93,7 @@ const Content = styled.div`
   font-family: Jeju Myeongjo;
   width: 100%;
   padding: 15px;
-  font-size: 12px;
+  font-size: 0.8rem;
   opacity: 70%;
   color: black;
   box-sizing: border-box;
@@ -111,7 +111,7 @@ const IconBox = styled.div`
 
 const EditInput = styled.textarea`
   line-height: 17px;
-  font-size: 10px;
+  font-size: 0.7rem;
   width: 90%;
 `;
 
@@ -129,10 +129,11 @@ const Answer = ({answer, userObj, refreshFriends}) => {
 
   const onClickEdit = e => {
     e.preventDefault();
+    setChangedAnswer(answer.answer)
     if (answer.userId === userObj.uid) {
       setEditState(!editState);
       if(changedAnswer !== answer.answer & editState === true) {
-        window.confirm("내용을 바꿀까요?") 
+        window.confirm("내용을 수정하시겠어요?") 
         && dbService.collection("answers").doc(answer.answerId).update({
           answer: changedAnswer,
           modifedAt: Date.now()
@@ -223,7 +224,7 @@ const Answer = ({answer, userObj, refreshFriends}) => {
       </WriterContainer>
       <Content>
         {editState 
-        ? <EditInput autoFocus onChange={onChange} value={changedAnswer ? changedAnswer : answer.answer} />
+        ? <EditInput autoFocus onChange={onChange} value={changedAnswer} />
         : answer.answer}
       </Content>
       {noteState && <NoteFactory userObj={userObj} answer={answer} setNoteState={setNoteState} />}

@@ -75,7 +75,7 @@ const Questions = ({questionArray, userObj}) => {
             : (
             <>
                 {currentPosts(questions.filter(question => question.question.includes(searchWord))).map(question => <Question key={question.questionId} userObj={userObj} question={question} /> )}
-                <Search searchWord={searchWord} setSearchWord={setSearchWord} />
+                <Search from="question" searchWord={searchWord} setSearchWord={setSearchWord} />
                 {currentPage*5 <= questions.length 
                 ?
                 <AddBtn onClick={addPage}>

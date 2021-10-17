@@ -36,7 +36,7 @@ const Title = styled.div`
     text-align: center;
     word-break: keep-all;
     font-family: Jeju Myeongjo;
-    font-size: 14px;
+    font-size: 0.9rem;
     :hover {
         cursor: pointer;
     }
@@ -47,6 +47,7 @@ const AnswerContainer = styled.div`
     align-items: center;
     justify-content: center;
     margin-bottom: 15px;
+    width: 80%;
 `;
 
 const AnswerInput = styled.input`
@@ -56,11 +57,14 @@ const AnswerInput = styled.input`
     }    
 `;
 
-const AnswerTextarea = styled.textarea``;
+const AnswerTextarea = styled.textarea`
+    width: 100%;
+    min-height: 100px;
+`;
 
 const PrivateLabel = styled.label`
     transition: 0.3s all ease-in-out;
-    font-size: 10px;
+    font-size: 0.7rem;
     margin-right: 5px;
 `;
 

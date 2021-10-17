@@ -30,7 +30,7 @@ const CheerPhrase = styled.div`
     width: 80%;
     word-break: keep-all;
     line-height: 25px;
-    font-size: 18px;
+    font-size: 1.1rem;
     font-family: Kyobo Handwriting;
 `;
 

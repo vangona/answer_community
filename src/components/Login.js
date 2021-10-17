@@ -53,7 +53,7 @@ const LoginBtn = styled.button`
   padding : 3px 10px;
   border-radius: 10px;
   margin-top: 10px;
-  font-size: 12px;
+  font-size: 0.8rem;
   font-family: Kyobo Handwriting;
   transition: 0.5s all ease-in-out;
     :hover {
@@ -91,7 +91,7 @@ const PasswordBtn = styled.div`
   opacity: 70%;
   padding: 5px;
   margin-bottom: 10px;
-  font-size: 10px;
+  font-size: 0.7rem;
   :hover {
     cursor: pointer;
   }
@@ -106,7 +106,7 @@ const Error = styled(animated.span)`
   color: var(--gold);
   word-break: keep-all;
   width: 80%;
-  font-size: 12px;
+  font-size: 0.7rem;
 `;
 
 const Login = ({setCodeState, codeState}) => {
@@ -178,9 +178,10 @@ const Login = ({setCodeState, codeState}) => {
       }
       </AuthConatiner>
       <Error style={errorAni}>{error}</Error>
+      {code && 
       <LoginBtn onClick={onSubmit}>
           들어가기
-      </LoginBtn>
+      </LoginBtn>}
     </Container>
   );
 }

@@ -5,6 +5,7 @@ import styled, { keyframes } from "styled-components";
 import Answer from "../components/Answer";
 import Cheer from "../components/Cheer";
 import Loading from "../components/Loading";
+import Search from "../components/Search";
 import { dbService } from "../fBase";
 
 const Container = styled.div`
@@ -18,7 +19,7 @@ const Container = styled.div`
 
 const RandomBtn = styled.button`
     margin-bottom: 10px;
-    font-size: 12px;
+    font-size: 0.8rem;
     border-radius: 15px;
     padding: 5px 10px;
     border: 1px solid rgba(255,255,255,0.5);
@@ -49,7 +50,7 @@ const AddBtn = styled.button`
 
 const LastAnswer = styled.div`
     color: white;
-    font-size: 12px;
+    font-size: 0.8rem;
     padding: 15px 0;
 `;
 
@@ -62,6 +63,7 @@ const DiceContainer = styled.div`
 const Dice = styled.div``;
 
 const Notice = styled.span`
+  font-size: 0.8rem;
   display: flex;
   font-family: Kyobo Handwriting;
 `;
@@ -103,6 +105,7 @@ const Home = ({ userObj, answerCount, refreshFriends }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const [diceState, setDiceState] = useState(false);
   const [randomState, setRandomState] = useState(true);
+  const [searchWord, setSearchWord] = useState('');
 
   const currentPosts = (posts) => {
     let currentPosts = 0;
@@ -221,6 +224,7 @@ const Home = ({ userObj, answerCount, refreshFriends }) => {
                     마지막 대답입니다.
             </LastAnswer>
             }
+            {randomState && <Search from="home" searchWord={searchWord} setSearchWord={setSearchWord} />}
           </>
         )
         }
