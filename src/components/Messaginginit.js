@@ -7,17 +7,20 @@ export const setToken = async () => {
     } else {
         const messaging = firebase.messaging();
         const token = await messaging.getToken()
-        .then(token => 
-            token
-        )
+        .then(() => {
+            return messaging.getToken()
+        })
+        .then((token) => {
+            messaging.onMessage(payload => {
+                alert(payload.notification.body)
+            })
+            return token;
+        })
         .catch((err) => {
             console.log('error : ', err);
             return null;
         })
     
-        messaging.onMessage(payload => {
-            console.log(payload)
-        })
     
         console.log('token : ', token)
         return token;
