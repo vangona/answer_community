@@ -6,6 +6,7 @@ import Loading from "./Loading";
 import { setToken } from "./Messaginginit";
 import AppRouter from "./Router";
 import { isMobile } from "react-device-detect";
+import axios from "axios";
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -23,6 +24,7 @@ function App() {
   const [init, setInit] = useState(false);
   const [userObj, setUserObj] = useState(null);
   const [answerCount, setAnswerCount] = useState('');
+  const [tokenData, setTokenData] = useState('');
 
   const questionArray = [
     {
@@ -205,7 +207,40 @@ function App() {
 
     const requestToken = async () => {
         let token = await setToken();
-        console.log('token === ', token)
+        setTokenData(token)
+    }
+
+    const postMessage = (user) => {
+        console.log("start")
+        dbService.collection("notes").where("receiver", "==", `${user.uid}`).where("isRead", "==", false).orderBy("createdAt").onSnapshot(querySnapshot => {
+            console.log("1")
+            querySnapshot.docChanges().sort((a, b) => {
+                console.log(a.doc.data())
+                if(a.doc.data().createdAt > b.doc.data().createdAt) return -1;
+                if(a.doc.data().createdAt === b.doc.data().createdAt) return 0;
+                if(a.doc.data().createdAt < b.doc.data().createdAt) return 1;
+              }).slice(0, 1).forEach((change) => {
+                  console.log(change.doc.data())
+                if (change.type === "modified") {
+                    const contentData = change.doc.data()
+                    axios.post("https://fcm.googleapis.com/fcm/send", {
+                        "to": `${tokenData}`,
+                        "notification": {
+                            "title": `${contentData.writerName}님에게 쪽지가 도착했습니다.`,
+                            "body": `${contentData.noteContent}`
+                        }
+                    }, {
+                        headers:  {
+                            "Content-Type": "application/json",
+                            "Authorization": "key=AAAAbdbI9T8:APA91bHBHA83-rpRKMQChKE7FcUkvFSzbZ1qHOBZhrXNxBdo6U2cfB89xqpbsLIjYbBHVyGhOMFWwZNlRMF0I9cAshUvrkhyWDZqMcjgx5FzuAL3P9IK2YivTtQfdvygSIAhk9HVM30K"
+                        }
+                    }
+                    )
+                    .then(response => { console.log(response) })
+                    .catch(response => { console.log(response) })
+                }
+            })
+        })
     }
 
   useEffect(() => {
@@ -216,7 +251,8 @@ function App() {
     authService.onAuthStateChanged(async (user) => {
       if (user) {
         if ("serviceWorker" in navigator) {
-            requestToken();
+            await requestToken();
+            postMessage(user);
         }
         dbService.collection("main").doc("counts")
         .onSnapshot((snapshot) => {
@@ -272,7 +308,7 @@ function App() {
       {init 
       ? 
       <>
-        <AppRouter answerCount={answerCount} questionArray={questionArray} isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} refreshFriends={refreshFriends} />
+        <AppRouter tokenData={tokenData} answerCount={answerCount} questionArray={questionArray} isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} refreshFriends={refreshFriends} />
       </>
       : <Loading />
         }

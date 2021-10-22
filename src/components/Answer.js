@@ -115,7 +115,7 @@ const EditInput = styled.textarea`
   width: 90%;
 `;
 
-const Answer = ({answer, userObj, refreshFriends}) => {
+const Answer = ({answer, userObj, refreshFriends, tokenData}) => {
   const [editState, setEditState] = useState(false);
   const [noteState, setNoteState] = useState(false);
   const [changedAnswer, setChangedAnswer] = useState('');
@@ -227,7 +227,7 @@ const Answer = ({answer, userObj, refreshFriends}) => {
         ? <EditInput autoFocus onChange={onChange} value={changedAnswer} />
         : answer.answer}
       </Content>
-      {noteState && <NoteFactory userObj={userObj} answer={answer} setNoteState={setNoteState} />}
+      {noteState && <NoteFactory userObj={userObj} answer={answer} setNoteState={setNoteState} tokenData={tokenData} />}
     </Container>
   );
 }

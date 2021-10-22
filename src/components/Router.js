@@ -14,7 +14,7 @@ import UserAnswers from "../routes/UserAnswers";
 import SignOut from "../routes/SignOut";
 import Credit from "../routes/Credit";
 
-const AppRouter = ({ answerCount, questionArray, isLoggedIn, userObj, refreshUser, refreshFriends }) => {
+const AppRouter = ({ tokenData, answerCount, questionArray, isLoggedIn, userObj, refreshUser, refreshFriends }) => {
     return (
         <Router>
             {isLoggedIn ? 
@@ -22,13 +22,13 @@ const AppRouter = ({ answerCount, questionArray, isLoggedIn, userObj, refreshUse
                 <Navigation />
                 <Switch>
                     <Route exact path="/" >
-                        <Home userObj={userObj} answerCount={answerCount} refreshFriends={refreshFriends} />
+                        <Home tokenData={tokenData} userObj={userObj} answerCount={answerCount} refreshFriends={refreshFriends} />
                     </Route>
                     <Route exact path="/auth" >
                         <Auth />
                     </Route>
                     <Route exact path="/community" >
-                        <Community userObj={userObj} refreshFriends={refreshFriends} />
+                        <Community tokenData={tokenData} userObj={userObj} refreshFriends={refreshFriends} />
                     </Route>
                     <Route exact path="/myanswers" >
                         <MyAnswers questionArray={questionArray} userObj={userObj} />
@@ -37,10 +37,10 @@ const AppRouter = ({ answerCount, questionArray, isLoggedIn, userObj, refreshUse
                         <Questions questionArray={questionArray} userObj={userObj} />
                     </Route>
                     <Route exact path="/question/:id" >
-                        <QuestionDetail userObj={userObj} refreshFriends={refreshFriends} />
+                        <QuestionDetail tokenData={tokenData} userObj={userObj} refreshFriends={refreshFriends} />
                     </Route>
                     <Route exact path="/useranswer/:id" >
-                        <UserAnswers userObj={userObj} refreshFriends={refreshFriends} />
+                        <UserAnswers tokenData={tokenData} userObj={userObj} refreshFriends={refreshFriends} />
                     </Route>
                     <Route exact path="/settings" >
                         <Settings refreshUser={refreshUser} userObj={userObj} />

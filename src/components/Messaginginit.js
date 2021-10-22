@@ -20,9 +20,6 @@ export const setToken = async () => {
             console.log('error : ', err);
             return null;
         })
-    
-    
-        console.log('token : ', token)
         return token;
     }
 }

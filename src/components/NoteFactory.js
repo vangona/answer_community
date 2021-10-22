@@ -18,6 +18,7 @@ const Container = styled.div`
   opacity: 70%;
   color: black;
   box-sizing: border-box;
+  position: relative;
 `;
 
 const Title = styled.div``;
@@ -29,14 +30,17 @@ const NoteTextarea = styled.textarea`
 
 const IconBox = styled.div`
     display: flex;
-    width: 100%;
+    position: absolute;
+    width: 20px;
+    right: 5px;
+    top: 5px;
     justify-content: flex-end;
     :hover {
         cursor: pointer;
     }
 `;
 
-const NoteFactory = ({answer, userObj, setNoteState}) => {
+const NoteFactory = ({answer, userObj, setNoteState, tokenData}) => {
     const [noteContent, setNoteContent] = useState('');
 
     const onChange = e => {
@@ -54,9 +58,10 @@ const NoteFactory = ({answer, userObj, setNoteState}) => {
             writer: userObj.uid,
             writerName: userObj.displayName,
             receiver: answer.userId,
-            answer: answer.answer
+            answer: answer.answer,
+            isRead: false,
         }
-        dbService.collection("notes").doc(`${noteId}`).set(noteObj)
+        dbService.collection("notes").doc(`${answer.userId}`).set(noteObj)
         alert("쪽지가 성공적으로 보내졌습니다 :)")
         setNoteState(false);
         setNoteContent('');
