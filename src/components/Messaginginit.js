@@ -9,6 +9,9 @@ export const setToken = async () => {
         const token = await messaging.getToken()
         .then(() => {
             return messaging.getToken()
+        }).catch((err) => {
+            console.log('error : ', err);
+            return null;
         })
         .then((token) => {
             messaging.onMessage(payload => {

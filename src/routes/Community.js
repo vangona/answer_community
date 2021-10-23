@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Friends from "../components/Friends";
-import Loading from "../components/Loading";
 import Notes from "../components/Notes";
 
 const Container = styled.div`
@@ -15,16 +14,11 @@ const Container = styled.div`
     height: 100vh;
 `;
 
-const Community = ({userObj, refreshFriends}) => {
+const Community = ({userObj, refreshFriends, noteData}) => {
     const [friendLoading, setFriendLoading] = useState(false);
-    const [noteLoading, setNoteLoading] = useState(false);
 
     const getFriendLoading = (loading) => {
         setFriendLoading(loading);
-    }
-
-    const getNoteLoading = (loading) => {
-        setNoteLoading(loading)
     }
 
     useEffect(() => {
@@ -33,7 +27,7 @@ const Community = ({userObj, refreshFriends}) => {
     return (
         <Container>
             <Friends userObj={userObj} loading={friendLoading} refreshFriends={refreshFriends} getFriendLoading={getFriendLoading} />
-            <Notes userObj={userObj} loading={noteLoading} getNoteLoading={getNoteLoading} />
+            <Notes userObj={userObj} noteData={noteData} />
         </Container>
     )
 }

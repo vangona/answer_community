@@ -38,42 +38,25 @@ const NoteList = styled.div`
     }
 `;
 
-const Notes = ({userObj, getNoteLoading, loading}) => {
-    const [notes, setNotes] = useState([]);
-
-    const getNotes = async () => {
-        await dbService.collection("notes").where("receiver", "==", `${userObj.uid}`).onSnapshot(querySnapshot => {
-            const noteArray = querySnapshot.docs.map(doc => ({
-                id: doc.noteId,
-                ...doc.data(),
-            }))
-            setNotes(noteArray);
-            getNoteLoading(true);
-        })
-    }
+const Notes = ({userObj, noteData}) => {
 
     useEffect(() => {
-        getNotes();
     }, [])
+    
     return (
-        <>
-        {loading 
-            ? <Container>
+            <Container>
             <Title>쪽지함</Title>
             <hr />
 
-            {notes.length === 0 
+            {noteData.length === 0 
             ? <NoteBox>표시할 쪽지가 없습니다.</NoteBox>
             : (<NoteList>
-                {notes.map(note => (
+                {noteData.map(note => (
                     <Note userObj={userObj} note={note} />
                 ))}
             </NoteList>)
             }
             </Container>
-            : null
-        }
-        </>
     )
 }
 

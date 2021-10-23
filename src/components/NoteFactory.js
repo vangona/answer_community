@@ -61,7 +61,7 @@ const NoteFactory = ({answer, userObj, setNoteState, tokenData}) => {
             answer: answer.answer,
             isRead: false,
         }
-        dbService.collection("notes").doc(`${answer.userId}`).set(noteObj)
+        dbService.collection("notes").doc(`${noteId}`).set(noteObj)
         alert("쪽지가 성공적으로 보내졌습니다 :)")
         setNoteState(false);
         setNoteContent('');

@@ -25,6 +25,7 @@ function App() {
   const [userObj, setUserObj] = useState(null);
   const [answerCount, setAnswerCount] = useState('');
   const [tokenData, setTokenData] = useState('');
+  const [noteData, setNoteData] = useState('');
 
   const questionArray = [
     {
@@ -205,41 +206,51 @@ function App() {
     },
 ]
 
-    const requestToken = async () => {
+    const requestToken = async (user) => {
         let token = await setToken();
         setTokenData(token)
+        getMessage(user, token);
     }
 
-    const postMessage = (user) => {
-        console.log("start")
-        dbService.collection("notes").where("receiver", "==", `${user.uid}`).where("isRead", "==", false).orderBy("createdAt").onSnapshot(querySnapshot => {
-            console.log("1")
-            querySnapshot.docChanges().sort((a, b) => {
-                console.log(a.doc.data())
-                if(a.doc.data().createdAt > b.doc.data().createdAt) return -1;
-                if(a.doc.data().createdAt === b.doc.data().createdAt) return 0;
-                if(a.doc.data().createdAt < b.doc.data().createdAt) return 1;
-              }).slice(0, 1).forEach((change) => {
-                  console.log(change.doc.data())
-                if (change.type === "modified") {
-                    const contentData = change.doc.data()
-                    axios.post("https://fcm.googleapis.com/fcm/send", {
-                        "to": `${tokenData}`,
-                        "notification": {
-                            "title": `${contentData.writerName}님에게 쪽지가 도착했습니다.`,
-                            "body": `${contentData.noteContent}`
-                        }
-                    }, {
-                        headers:  {
-                            "Content-Type": "application/json",
-                            "Authorization": "key=AAAAbdbI9T8:APA91bHBHA83-rpRKMQChKE7FcUkvFSzbZ1qHOBZhrXNxBdo6U2cfB89xqpbsLIjYbBHVyGhOMFWwZNlRMF0I9cAshUvrkhyWDZqMcjgx5FzuAL3P9IK2YivTtQfdvygSIAhk9HVM30K"
-                        }
+    const postMessage = (querySnapshot, token) => {
+        querySnapshot.docChanges().forEach(change => {
+            if (change.type === "added") {
+                const contentData = change.doc.data()
+                axios.post("https://fcm.googleapis.com/fcm/send", {
+                    "to": `${token}`,
+                    "notification": {
+                        "title": `${contentData.writerName}님에게 쪽지가 도착했습니다.`,
+                        "body": `${contentData.noteContent}`
                     }
-                    )
-                    .then(response => { console.log(response) })
-                    .catch(response => { console.log(response) })
+                }, {
+                    headers:  {
+                        "Content-Type": "application/json",
+                        "Authorization": "key=AAAAbdbI9T8:APA91bHBHA83-rpRKMQChKE7FcUkvFSzbZ1qHOBZhrXNxBdo6U2cfB89xqpbsLIjYbBHVyGhOMFWwZNlRMF0I9cAshUvrkhyWDZqMcjgx5FzuAL3P9IK2YivTtQfdvygSIAhk9HVM30K"
+                    }
                 }
-            })
+                )
+                .then(response => { console.log(response) })
+                .catch(response => { console.log(response) })
+            }
+        })
+    }
+
+    const getMessage = async (user, token) => {
+        dbService.collection("notes").where("receiver", "==", `${user.uid}`).onSnapshot(querySnapshot => {
+            console.log("step1")
+            if (token) {
+                postMessage(querySnapshot, token);
+            }
+            let noteArray = querySnapshot.docs.map(doc => ({
+                id: doc.noteId,
+                ...doc.data(),
+            }))
+            noteArray.sort((a, b) => {
+                if(a.createdAt > b.createdAt) return -1;
+                if(a.createdAt === b.createdAt) return 0;
+                if(a.createdAt < b.createdAt) return 1;
+              });
+            setNoteData(noteArray);
         })
     }
 
@@ -251,8 +262,10 @@ function App() {
     authService.onAuthStateChanged(async (user) => {
       if (user) {
         if ("serviceWorker" in navigator) {
-            await requestToken();
-            postMessage(user);
+            requestToken(user);
+        } else {
+            const token = ""
+            getMessage(user, token);
         }
         dbService.collection("main").doc("counts")
         .onSnapshot((snapshot) => {
@@ -308,7 +321,7 @@ function App() {
       {init 
       ? 
       <>
-        <AppRouter tokenData={tokenData} answerCount={answerCount} questionArray={questionArray} isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} refreshFriends={refreshFriends} />
+        <AppRouter questionArray={questionArray} isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} refreshFriends={refreshFriends} answerCount={answerCount} noteData={noteData} tokenData={tokenData} />
       </>
       : <Loading />
         }

@@ -14,7 +14,7 @@ import UserAnswers from "../routes/UserAnswers";
 import SignOut from "../routes/SignOut";
 import Credit from "../routes/Credit";
 
-const AppRouter = ({ tokenData, answerCount, questionArray, isLoggedIn, userObj, refreshUser, refreshFriends }) => {
+const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFriends, answerCount, noteData, tokenData }) => {
     return (
         <Router>
             {isLoggedIn ? 
@@ -28,7 +28,7 @@ const AppRouter = ({ tokenData, answerCount, questionArray, isLoggedIn, userObj,
                         <Auth />
                     </Route>
                     <Route exact path="/community" >
-                        <Community tokenData={tokenData} userObj={userObj} refreshFriends={refreshFriends} />
+                        <Community tokenData={tokenData} userObj={userObj} refreshFriends={refreshFriends} noteData={noteData} />
                     </Route>
                     <Route exact path="/myanswers" >
                         <MyAnswers questionArray={questionArray} userObj={userObj} />
