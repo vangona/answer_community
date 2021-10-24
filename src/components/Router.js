@@ -25,7 +25,7 @@ const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFri
                         <Home tokenData={tokenData} userObj={userObj} answerCount={answerCount} refreshFriends={refreshFriends} />
                     </Route>
                     <Route exact path="/auth" >
-                        <Auth />
+                        <Auth tokenData={tokenData} />
                     </Route>
                     <Route exact path="/community" >
                         <Community tokenData={tokenData} userObj={userObj} refreshFriends={refreshFriends} noteData={noteData} />
