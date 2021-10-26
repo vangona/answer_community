@@ -99,7 +99,7 @@ const Dot = styled.div`
     }
 `;
 
-const Home = ({ userObj, answerCount, refreshFriends, tokenData }) => {
+const Home = ({ userObj, answerCount, refreshFriends }) => {
   const [isLoading, setISLoading] = useState(true);
   const [answers, setAnswers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1)
@@ -218,7 +218,7 @@ const Home = ({ userObj, answerCount, refreshFriends, tokenData }) => {
               {randomState ? "목록으로 보기" : "랜덤으로 보기"}
             </RandomBtn>
             {answers && currentPosts(answers).map(answer => (
-              <Answer key={answer.answerId} userObj={userObj} answer={answer} refreshFriends={refreshFriends} tokenData={tokenData} />
+              <Answer key={answer.answerId} userObj={userObj} answer={answer} refreshFriends={refreshFriends} />
             ))
             }
             {(currentPage*5 <= answers.length | randomState)

@@ -24,7 +24,6 @@ function App() {
   const [init, setInit] = useState(false);
   const [userObj, setUserObj] = useState(null);
   const [answerCount, setAnswerCount] = useState('');
-  const [tokenData, setTokenData] = useState('');
   const [noteData, setNoteData] = useState('');
 
   const questionArray = [
@@ -208,51 +207,58 @@ function App() {
 
     const requestToken = async (user) => {
         let token = await setToken();
-        setTokenData(token)
-        getMessage(user, token);
+        if (token !== JSON.parse(localStorage.getItem("drawerToken"))) {
+            dbService.collection("users").doc(`${user.uid}`).update({
+                token
+            })
+            localStorage.setItem("drawerToken", JSON.stringify(token))
+        }
+        // getMessage(user, token);
     }
 
-    const postMessage = (querySnapshot, token) => {
-        querySnapshot.docChanges().forEach(change => {
-            if (change.type === "added") {
-                const contentData = change.doc.data()
-                axios.post("https://fcm.googleapis.com/fcm/send", {
-                    "to": `${token}`,
-                    "notification": {
-                        "title": `${contentData.writerName}님에게 쪽지가 도착했습니다.`,
-                        "body": `${contentData.noteContent}`
-                    }
-                }, {
-                    headers:  {
-                        "Content-Type": "application/json",
-                        "Authorization": "key=AAAAbdbI9T8:APA91bHBHA83-rpRKMQChKE7FcUkvFSzbZ1qHOBZhrXNxBdo6U2cfB89xqpbsLIjYbBHVyGhOMFWwZNlRMF0I9cAshUvrkhyWDZqMcjgx5FzuAL3P9IK2YivTtQfdvygSIAhk9HVM30K"
-                    }
-                }
-                )
-                .then(response => { console.log(response) })
-                .catch(response => { console.log(response) })
-            }
-        })
-    }
+    // 쪽지 보낼때 post 요청하는 방식으로 수정
 
-    const getMessage = async (user, token) => {
-        dbService.collection("notes").where("receiver", "==", `${user.uid}`).onSnapshot(querySnapshot => {
-            console.log("step1")
-            if (token) {
-                postMessage(querySnapshot, token);
-            }
-            let noteArray = querySnapshot.docs.map(doc => ({
-                id: doc.noteId,
-                ...doc.data(),
-            }))
-            noteArray.sort((a, b) => {
-                if(a.createdAt > b.createdAt) return -1;
-                if(a.createdAt === b.createdAt) return 0;
-                if(a.createdAt < b.createdAt) return 1;
-              });
-            setNoteData(noteArray);
-        })
-    }
+    // const postMessage = (querySnapshot, token) => {
+    //     querySnapshot.docChanges().forEach(change => {
+    //         if (change.type === "added") {
+    //             const contentData = change.doc.data()
+    //             axios.post("https://fcm.googleapis.com/fcm/send", {
+    //                 "to": `${token}`,
+    //                 "notification": {
+    //                     "title": `${contentData.writerName}님에게 쪽지가 도착했습니다.`,
+    //                     "body": `${contentData.noteContent}`
+    //                 }
+    //             }, {
+    //                 headers:  {
+    //                     "Content-Type": "application/json",
+    //                     "Authorization": "key=AAAAbdbI9T8:APA91bHBHA83-rpRKMQChKE7FcUkvFSzbZ1qHOBZhrXNxBdo6U2cfB89xqpbsLIjYbBHVyGhOMFWwZNlRMF0I9cAshUvrkhyWDZqMcjgx5FzuAL3P9IK2YivTtQfdvygSIAhk9HVM30K"
+    //                 }
+    //             }
+    //             )
+    //             .then(response => { console.log(response) })
+    //             .catch(response => { console.log(response) })
+    //         }
+    //     })
+    // }
+
+    // const getMessage = async (user, token) => {
+    //     dbService.collection("notes").where("receiver", "==", `${user.uid}`).onSnapshot(querySnapshot => {
+    //         console.log("step1")
+    //         if (token) {
+    //             postMessage(querySnapshot, token);
+    //         }
+    //         let noteArray = querySnapshot.docs.map(doc => ({
+    //             id: doc.noteId,
+    //             ...doc.data(),
+    //         }))
+    //         noteArray.sort((a, b) => {
+    //             if(a.createdAt > b.createdAt) return -1;
+    //             if(a.createdAt === b.createdAt) return 0;
+    //             if(a.createdAt < b.createdAt) return 1;
+    //           });
+    //         setNoteData(noteArray);
+    //     })
+    // }
 
   useEffect(() => {
     if (isMobile) {
@@ -263,9 +269,6 @@ function App() {
       if (user) {
         if ("serviceWorker" in navigator) {
             requestToken(user);
-        } else {
-            const token = ""
-            getMessage(user, token);
         }
         dbService.collection("main").doc("counts")
         .onSnapshot((snapshot) => {
@@ -321,7 +324,7 @@ function App() {
       {init 
       ? 
       <>
-        <AppRouter questionArray={questionArray} isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} refreshFriends={refreshFriends} answerCount={answerCount} noteData={noteData} tokenData={tokenData} />
+        <AppRouter questionArray={questionArray} isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} refreshFriends={refreshFriends} answerCount={answerCount} noteData={noteData} />
       </>
       : <Loading />
         }

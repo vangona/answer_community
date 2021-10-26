@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { dbService } from "../fBase";
 import { PaperAirplaneIcon } from "@heroicons/react/outline"
 import { v4 as uuidv4} from "uuid";
+import axios from "axios";
 
 const Container = styled.div`
     margin-top: 10px;
@@ -40,14 +41,14 @@ const IconBox = styled.div`
     }
 `;
 
-const NoteFactory = ({answer, userObj, setNoteState, tokenData}) => {
+const NoteFactory = ({answer, userObj, setNoteState}) => {
     const [noteContent, setNoteContent] = useState('');
 
     const onChange = e => {
         setNoteContent(e.target.value)
     }
 
-    const onSubmit = e => {
+    const onSubmit = async (e) => {
         e.preventDefault();
         if (noteContent) {
             const noteId = uuidv4()
@@ -62,6 +63,27 @@ const NoteFactory = ({answer, userObj, setNoteState, tokenData}) => {
             isRead: false,
         }
         dbService.collection("notes").doc(`${noteId}`).set(noteObj)
+        await dbService.collection("users").doc(`${answer.userId}`).get()
+        .then(snapshot => {
+            const data = snapshot.data()
+            const token = data.token
+            axios.post("https://fcm.googleapis.com/fcm/send", {
+                "to": `${token}`,
+                "notification": {
+                    "title": `${userObj.displayName}님에게 쪽지가 도착했습니다.`,
+                    "body": `${noteContent}`
+                }
+            }, 
+            {
+                headers:  
+                {
+                    "Content-Type": "application/json",
+                    "Authorization": "key=AAAAbdbI9T8:APA91bHBHA83-rpRKMQChKE7FcUkvFSzbZ1qHOBZhrXNxBdo6U2cfB89xqpbsLIjYbBHVyGhOMFWwZNlRMF0I9cAshUvrkhyWDZqMcjgx5FzuAL3P9IK2YivTtQfdvygSIAhk9HVM30K"
+                }
+            })
+            .then(response => {console.log(response)})
+            .catch(response => {console.log(response)})
+        })
         alert("쪽지가 성공적으로 보내졌습니다 :)")
         setNoteState(false);
         setNoteContent('');
