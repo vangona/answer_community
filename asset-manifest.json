@@ -1,23 +1,23 @@
 {
   "files": {
     "main.css": "/static/css/main.478edcbf.chunk.css",
-    "main.js": "/static/js/main.07f56440.chunk.js",
-    "main.js.map": "/static/js/main.07f56440.chunk.js.map",
+    "main.js": "/static/js/main.26dae724.chunk.js",
+    "main.js.map": "/static/js/main.26dae724.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.b0034109.js",
     "runtime-main.js.map": "/static/js/runtime-main.b0034109.js.map",
-    "static/js/2.b348d288.chunk.js": "/static/js/2.b348d288.chunk.js",
-    "static/js/2.b348d288.chunk.js.map": "/static/js/2.b348d288.chunk.js.map",
+    "static/js/2.b970cdba.chunk.js": "/static/js/2.b970cdba.chunk.js",
+    "static/js/2.b970cdba.chunk.js.map": "/static/js/2.b970cdba.chunk.js.map",
     "index.html": "/index.html",
     "service-worker.js": "/service-worker.js",
     "service-worker.js.map": "/service-worker.js.map",
     "static/css/main.478edcbf.chunk.css.map": "/static/css/main.478edcbf.chunk.css.map",
-    "static/js/2.b348d288.chunk.js.LICENSE.txt": "/static/js/2.b348d288.chunk.js.LICENSE.txt",
+    "static/js/2.b970cdba.chunk.js.LICENSE.txt": "/static/js/2.b970cdba.chunk.js.LICENSE.txt",
     "static/media/Soul and Mind - E's Jammy Jams.43e78e83.mp3": "/static/media/Soul and Mind - E's Jammy Jams.43e78e83.mp3"
   },
   "entrypoints": [
     "static/js/runtime-main.b0034109.js",
-    "static/js/2.b348d288.chunk.js",
+    "static/js/2.b970cdba.chunk.js",
     "static/css/main.478edcbf.chunk.css",
-    "static/js/main.07f56440.chunk.js"
+    "static/js/main.26dae724.chunk.js"
   ]
 }
