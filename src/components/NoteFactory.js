@@ -60,6 +60,7 @@ const NoteFactory = ({answer, userObj, setNoteState}) => {
             writerName: userObj.displayName,
             receiver: answer.userId,
             answer: answer.answer,
+            answerId: answer.answerId,
             isRead: false,
         }
         dbService.collection("notes").doc(`${noteId}`).set(noteObj)

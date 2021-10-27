@@ -38,24 +38,49 @@ const NoteList = styled.div`
     }
 `;
 
-const Notes = ({userObj, noteData}) => {
+const Notes = ({userObj}) => {
+    const [isLoading, setIsLoading] = useState(true);
+    const [noteData, setNoteData] = useState('');
+
+    const getMessage = () => {
+        dbService.collection("notes").where("receiver", "==", `${userObj.uid}`).onSnapshot(querySnapshot => {
+            let noteArray = querySnapshot.docs.map(doc => ({
+                id: doc.noteId,
+                ...doc.data(),
+            }))
+            noteArray.sort((a, b) => {
+                if(a.createdAt > b.createdAt) return -1;
+                if(a.createdAt === b.createdAt) return 0;
+                if(a.createdAt < b.createdAt) return 1;
+              });
+            setNoteData(noteArray);
+            setIsLoading(false);
+        })
+    }
 
     useEffect(() => {
+        getMessage();
     }, [])
     
     return (
             <Container>
-            <Title>쪽지함</Title>
-            <hr />
+                {isLoading 
+                    ? null
+                    :
+                    <>
+                    <Title>쪽지함</Title>
+                    <hr />
 
-            {noteData.length === 0 
-            ? <NoteBox>표시할 쪽지가 없습니다.</NoteBox>
-            : (<NoteList>
-                {noteData.map(note => (
-                    <Note userObj={userObj} note={note} />
-                ))}
-            </NoteList>)
-            }
+                    {noteData.length === 0 
+                    ? <NoteBox>표시할 쪽지가 없습니다.</NoteBox>
+                    : (<NoteList>
+                        {noteData.map(note => (
+                            <Note userObj={userObj} note={note} />
+                        ))}
+                    </NoteList>)
+                    }
+                    </>
+                }
             </Container>
     )
 }

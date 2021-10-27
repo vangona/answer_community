@@ -1,6 +1,7 @@
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 import { dbService } from "../fBase";
 import Reply from "./Reply";
@@ -37,11 +38,21 @@ const NoteWriter = styled.span`
     width: 50px;
     word-break: keep-all;
     font-size: 12px;
+    transition: 0.5s all ease-in-out;
+    :hover {
+        cursor: pointer;
+        color: black;
+    }
 `;
 
 const NoteAnswer = styled.span`
     font-size: 12px;
     margin-bottom: 5px;
+    transition: 0.5s all ease-in-out;
+    :hover {
+        cursor: pointer;
+        color: black;
+    }
 `;
 
 const NoteIcon = styled.div`
@@ -63,6 +74,7 @@ const DeleteIcon = styled.div`
 
 const Note = ({note, userObj}) => {
     const [replyState, setReplyState] = useState(false);
+    const history = useHistory();
 
     const onDeleteClick = (e) => {
         if (window.confirm("삭제할까요?")) {
@@ -73,16 +85,25 @@ const Note = ({note, userObj}) => {
     const onClickReply = () => {
         setReplyState(!replyState)
     }
+
+    const onClickUser = () => {
+        history.push(`/notes/user/${note.writer}`)
+    }
+
+    const onClickAnswer = () => {
+        history.push(`/notes/user/${note.writer}/${note.answerId}`)
+    }
+
     return (
         <Column key={note.noteId}>
-            <NoteAnswer>'{note.answer.slice(0, 15)}{note.answer.length > 15 && "..."}'라고 쓴 답변에서 온 쪽지입니다.
+            <NoteAnswer onClick={onClickAnswer}>'{note.answer.slice(0, 15)}{note.answer.length > 15 && "..."}'라고 쓴 답변에서 온 쪽지입니다.
             </NoteAnswer>
             <NoteContainer>
                 <NoteTitle onClick={onClickReply}>
                     {note.noteContent}
                 </NoteTitle>
                 <NoteIcon>
-                    <NoteWriter>
+                    <NoteWriter onClick={onClickUser}>
                         - {note.writerName}
                     </NoteWriter>
                     <DeleteIcon>

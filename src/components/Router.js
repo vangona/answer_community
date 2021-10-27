@@ -13,6 +13,8 @@ import Community from "../routes/Community";
 import UserAnswers from "../routes/UserAnswers";
 import SignOut from "../routes/SignOut";
 import Credit from "../routes/Credit";
+import NotesUser from "../routes/NotesUser";
+import NotesAnswer from "../routes/NotesAnswer";
 
 const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFriends, answerCount, noteData }) => {
     return (
@@ -28,7 +30,13 @@ const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFri
                         <Auth />
                     </Route>
                     <Route exact path="/community" >
-                        <Community userObj={userObj} refreshFriends={refreshFriends} noteData={noteData} />
+                        <Community userObj={userObj} refreshFriends={refreshFriends} />
+                    </Route>
+                    <Route exact path="/notes/user/:id" >
+                        <NotesUser userObj={userObj} />
+                    </Route>
+                    <Route exact path="/notes/user/:id/:answerId" >
+                        <NotesAnswer userObj={userObj} />
                     </Route>
                     <Route exact path="/myanswers" >
                         <MyAnswers questionArray={questionArray} userObj={userObj} />
