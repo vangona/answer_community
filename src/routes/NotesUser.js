@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import Loading from "../components/Loading";
-import NoteDetail from "../components/NoteDetail";
+import NotesList from "../components/NotesList";
 import { dbService } from "../fBase";
 
 const Container = styled.div`
@@ -32,7 +32,7 @@ const NotesContainer = styled.div`
     gap: 10px;
     width: 100%;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     padding: 10px;
     box-sizing: border-box;
 `;
@@ -45,10 +45,32 @@ const NotesAnswer = ({userObj}) => {
 
     const getNotes = () => {
         dbService.collection("notes").where("receiver", "==", `${userObj.uid}`).where("writer", "==", `${id}`).onSnapshot(querySnapshot => {
+            let notesCategory = [];
+            let notesAnswer = [];
             const notesArray = querySnapshot.docs.map(doc => ({
                 ...doc.data()
             })
             )
+            notesArray.sort((a, b) => {
+                if(a.createdAt > b.createdAt) return -1;
+                if(a.createdAt === b.createdAt) return 0;
+                if(a.createdAt < b.createdAt) return 1;
+            });
+            for (let i = 0; i < notesArray.length; i++) {
+                if (!notesCategory.includes(notesArray[i].answerId) & notesArray[i].answerId !== undefined) {
+                    notesCategory.push(notesArray[i].answerId)
+                    notesAnswer.push({
+                        note : notesArray[i],
+                        answerId : notesArray[i].answerId
+                    })
+                } else if (notesCategory.indexOf(notesArray[i].answerId !== -1)) {
+                    notesAnswer.push({
+                        note : notesArray[i],
+                        answerId : notesArray[i].answerId
+                    })
+                }
+            }
+            console.log(notesAnswer)
             setUserName(notesArray[0].writerName)
             setNotesData(notesArray)
             setIsLoading(false);
@@ -68,7 +90,7 @@ const NotesAnswer = ({userObj}) => {
             <Title>{userName}님과의 쪽지들</Title>
             <NotesContainer>
                 {notesData.map(note => (
-                    <NoteDetail noteData={note} />
+                    <NotesList noteData={note} />
                 ))}
             </NotesContainer>
             </>

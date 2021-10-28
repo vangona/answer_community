@@ -49,6 +49,11 @@ const NotesAnswer = ({userObj}) => {
                 ...doc.data()
             })
             )
+            notesArray.sort((a, b) => {
+                if(a.createdAt > b.createdAt) return -1;
+                if(a.createdAt === b.createdAt) return 0;
+                if(a.createdAt < b.createdAt) return 1;
+            });
             setNotesData(notesArray)
             setQuestion(notesArray[0].answer)
             setIsLoading(false);
