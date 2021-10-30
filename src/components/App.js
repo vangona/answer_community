@@ -24,7 +24,6 @@ function App() {
   const [init, setInit] = useState(false);
   const [userObj, setUserObj] = useState(null);
   const [answerCount, setAnswerCount] = useState('');
-  const [noteData, setNoteData] = useState('');
 
   const questionArray = [
     {

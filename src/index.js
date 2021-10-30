@@ -16,4 +16,6 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-serviceWorker.register()
+if ("serviceWorker" in navigator) {
+  serviceWorker.register()
+}

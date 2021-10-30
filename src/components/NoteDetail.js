@@ -42,7 +42,7 @@ const NoteDetail = ({noteData}) => {
     return (
         <Container>
             <NoteContent>
-                {noteData.answer}
+                {noteData.noteContent}
             </NoteContent>
             <NoteTime>
                 {getTime(noteData.createdAt)}

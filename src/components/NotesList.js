@@ -10,6 +10,8 @@ const Container = styled.div`
     box-sizing: border-box;
 `;
 
+const NoteTitle = styled.h3``;
+
 const NoteContent = styled.div`
     font-size: 1rem;
 `;
@@ -42,8 +44,11 @@ const NotesList = ({noteData}) => {
 
     return (
         <Container>
+            <NoteTitle>
+                '{noteData.answer.length > 9 ? noteData.answer.slice(0, 10) + "..." : noteData.answer}'에서 시작된 쪽지
+            </NoteTitle>
             <NoteContent>
-                {noteData.noteContent} / {noteData.answer}
+                {noteData.noteContent}
             </NoteContent>
             <NoteTime>
                 {getTime(noteData.createdAt)}

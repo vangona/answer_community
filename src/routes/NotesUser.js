@@ -37,16 +37,19 @@ const NotesContainer = styled.div`
     box-sizing: border-box;
 `;
 
+const NoteCategory = styled.div``;
+
 const NotesAnswer = ({userObj}) => {
     const {id} = useParams();
     const [isLoading, setIsLoading] = useState(true);
     const [notesData, setNotesData] = useState('');
     const [userName, setUserName] = useState('');
+    const [notesCategory, setNotesCategory] = useState([]);
 
     const getNotes = () => {
         dbService.collection("notes").where("receiver", "==", `${userObj.uid}`).where("writer", "==", `${id}`).onSnapshot(querySnapshot => {
-            let notesCategory = [];
-            let notesAnswer = [];
+            let notesCategoryData = [];
+            let notesCategoryAnswer = [];
             const notesArray = querySnapshot.docs.map(doc => ({
                 ...doc.data()
             })
@@ -57,21 +60,13 @@ const NotesAnswer = ({userObj}) => {
                 if(a.createdAt < b.createdAt) return 1;
             });
             for (let i = 0; i < notesArray.length; i++) {
-                if (!notesCategory.includes(notesArray[i].answerId) & notesArray[i].answerId !== undefined) {
-                    notesCategory.push(notesArray[i].answerId)
-                    notesAnswer.push({
-                        note : notesArray[i],
-                        answerId : notesArray[i].answerId
-                    })
-                } else if (notesCategory.indexOf(notesArray[i].answerId !== -1)) {
-                    notesAnswer.push({
-                        note : notesArray[i],
-                        answerId : notesArray[i].answerId
-                    })
+                if (!notesCategoryData.includes(notesArray[i].answerId)) {
+                    notesCategoryData.push(notesArray[i].answerId);
+                    notesCategoryAnswer.push(notesArray[i]);
                 }
             }
-            console.log(notesAnswer)
             setUserName(notesArray[0].writerName)
+            setNotesCategory(notesCategoryAnswer)
             setNotesData(notesArray)
             setIsLoading(false);
         })
@@ -89,9 +84,10 @@ const NotesAnswer = ({userObj}) => {
             <>
             <Title>{userName}님과의 쪽지들</Title>
             <NotesContainer>
-                {notesData.map(note => (
-                    <NotesList noteData={note} />
-                ))}
+                {notesCategory.map(category => 
+                    <NotesList noteData={category} />
+                )
+                }
             </NotesContainer>
             </>
             }
