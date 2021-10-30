@@ -1,4 +1,7 @@
+import { faCommentAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import react from "react";
+import { useHistory } from "react-router";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -10,10 +13,18 @@ const Container = styled.div`
     box-sizing: border-box;
 `;
 
-const NoteTitle = styled.h3``;
+const NoteTitle = styled.h3`
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+`;
 
 const NoteContent = styled.div`
-    font-size: 1rem;
+    display: flex;
+    gap: 5px;
+    font-size: 0.9rem;
+    :hover {
+        cursor: pointer;
+    }
 `;
 
 const NoteWriter = styled.span`
@@ -33,6 +44,12 @@ const NoteTime = styled.span`
 `;
 
 const NotesList = ({noteData}) => {
+    const history = useHistory();
+
+    const onClickAnswer = () => {
+        history.push(`/notes/user/${noteData.writer}/${noteData.answerId}`)
+    }
+
     const getTime = (time) => {
         const Time = new Date(time) 
         const year = Time.getFullYear();
@@ -47,8 +64,8 @@ const NotesList = ({noteData}) => {
             <NoteTitle>
                 '{noteData.answer.length > 9 ? noteData.answer.slice(0, 10) + "..." : noteData.answer}'에서 시작된 쪽지
             </NoteTitle>
-            <NoteContent>
-                {noteData.noteContent}
+            <NoteContent onClick={onClickAnswer}>
+                <FontAwesomeIcon icon={faCommentAlt} size="sm" /> {noteData.noteContent}
             </NoteContent>
             <NoteTime>
                 {getTime(noteData.createdAt)}

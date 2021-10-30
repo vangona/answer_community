@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import styled from "styled-components";
 import Loading from "../components/Loading";
 import NotesList from "../components/NotesList";
@@ -37,12 +37,9 @@ const NotesContainer = styled.div`
     box-sizing: border-box;
 `;
 
-const NoteCategory = styled.div``;
-
 const NotesAnswer = ({userObj}) => {
     const {id} = useParams();
     const [isLoading, setIsLoading] = useState(true);
-    const [notesData, setNotesData] = useState('');
     const [userName, setUserName] = useState('');
     const [notesCategory, setNotesCategory] = useState([]);
 
@@ -67,7 +64,6 @@ const NotesAnswer = ({userObj}) => {
             }
             setUserName(notesArray[0].writerName)
             setNotesCategory(notesCategoryAnswer)
-            setNotesData(notesArray)
             setIsLoading(false);
         })
     }
