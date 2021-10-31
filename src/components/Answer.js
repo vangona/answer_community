@@ -122,6 +122,11 @@ const Answer = ({answer, userObj, refreshFriends}) => {
   
   const history = useHistory();
 
+  const Time = new Date(answer.createdAt) 
+  const year = Time.getFullYear();
+  const month = Time.getMonth() + 1;
+  const day = Time.getDate();
+  const date = `${year}년 ${month < 10 ? "0"+month : month}월 ${day < 10 ? "0"+day : day}일`
   const lastTime = (Date.now() - answer.createdAt) / 1000 / 60
   const lastMinutes = Math.round(lastTime)
   const lastHours = Math.round(lastTime / 60)
@@ -217,7 +222,9 @@ const Answer = ({answer, userObj, refreshFriends}) => {
         ? `${lastMinutes}분 전` 
         : lastHours < 24 
           ? `${lastHours}시간 전`
-          : `${lastDays}일 전`
+          : lastDays > 7
+            ? `${date}`
+            : `${lastDays}일 전`
         }</CreatedAt>
       <WriterContainer>
         <Writer onClick={onClickUser}>- {answer.userName}{answer.isPrivate && " (나에게만 보임)"}</Writer>

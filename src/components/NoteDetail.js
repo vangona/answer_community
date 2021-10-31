@@ -30,14 +30,16 @@ const NoteTime = styled.span`
 `;
 
 const NoteDetail = ({noteData}) => {
-    const getTime = (time) => {
-        const Time = new Date(time) 
-        const year = Time.getFullYear();
-        const month = Time.getMonth() + 1;
-        const day = Time.getDate();
-        const date = `${year}년 ${month < 10 ? "0"+month : month}월 ${day < 10 ? "0"+day : day}일`
-        return date;
-    }
+
+    const Time = new Date(noteData.createdAt) 
+    const year = Time.getFullYear();
+    const month = Time.getMonth() + 1;
+    const day = Time.getDate();
+    const date = `${year}년 ${month < 10 ? "0" + month : month}월 ${day < 10 ? "0"+day : day}일`
+    const lastTime = (Date.now() - noteData.createdAt) / 1000 / 60
+    const lastMinutes = Math.round(lastTime)
+    const lastHours = Math.round(lastTime / 60)
+    const lastDays = Math.round(lastHours / 24)
 
     return (
         <Container>
@@ -45,7 +47,14 @@ const NoteDetail = ({noteData}) => {
                 {noteData.noteContent}
             </NoteContent>
             <NoteTime>
-                {getTime(noteData.createdAt)}
+                {lastMinutes < 60 
+                    ? `${lastMinutes}분 전` 
+                    : lastHours < 24 
+                    ? `${lastHours}시간 전`
+                    : lastDays > 7
+                        ? `${date}`
+                        : `${lastDays}일 전`
+                }
             </NoteTime>
             <NoteWriter>
                 - {noteData.writerName}
