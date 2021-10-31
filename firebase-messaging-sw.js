@@ -9,6 +9,7 @@ const config =  {
 }; 
 firebase.initializeApp(config);
 
+let messaging = null;
 if (firebase.messaging.isSupported()) {
-    const messaging = firebase.messaging();
+    messaging = firebase.messaging();
 }
