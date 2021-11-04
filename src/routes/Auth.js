@@ -15,7 +15,7 @@ const Container = styled.div`
 `;
 
 const Background = styled.div`
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100vh;
   z-index: 0;
@@ -30,6 +30,7 @@ const Title = styled(animated.h1)`
   margin-bottom: 20px;
   font-size: 1.5rem;
   font-family: Jeju Myeongjo;
+  z-index: 9;
 `;
 
 const AuthBox = styled.div`
@@ -40,7 +41,7 @@ const AuthBox = styled.div`
   align-items: center;
   margin: 10px;
   width: 100%;
-  z-index: 9;
+  z-index: 5;
 `;
 
 const Notice = styled.span`
@@ -65,7 +66,7 @@ const Auth = () => {
     const [codeState, setCodeState] = useState(false);
 
     const animation = useSpring({
-      top: authState ? "150px" : "200px",
+      top: authState ? "20vh" : "35vh",
       config: config.molasses
     })
 

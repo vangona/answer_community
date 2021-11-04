@@ -6,7 +6,6 @@ import Loading from "./Loading";
 import { setToken } from "./Messaginginit";
 import AppRouter from "./Router";
 import { isMobile } from "react-device-detect";
-import axios from "axios";
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
