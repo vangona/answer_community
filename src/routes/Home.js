@@ -121,11 +121,11 @@ const Home = ({ userObj, answerCount, refreshFriends }) => {
         if(randArray[i] === randArray[l]) {
           i--;
           break;
-        }
-      }
-    }
+        };
+      };
+    };
     return randArray;
-  }
+  };
 
   const getData = () => {
     if (randomState) {
@@ -166,7 +166,7 @@ const Home = ({ userObj, answerCount, refreshFriends }) => {
           setISLoading(false)
         }
       });
-    }
+    };
   };
 
   const addBtn = e => {
@@ -179,11 +179,11 @@ const Home = ({ userObj, answerCount, refreshFriends }) => {
   }
 
   const onToggleRandom = e => {
-    setRandomState(!randomState);
-    if (randomState & answers.length < 7) {
+    if (randomState) {
       getData();
-    }
-  }
+    };
+    setRandomState(!randomState);
+  };
 
   const onSearch = async (e) => {
     await dbService.collection("answers").where("isPrivate", "==", false).where("answer", "array-contains", searchWord).get()
@@ -204,7 +204,7 @@ const Home = ({ userObj, answerCount, refreshFriends }) => {
 
   useEffect(() => {
     getData();
-  }, [])
+  }, []);
 
     return (
       <Container>
@@ -221,8 +221,8 @@ const Home = ({ userObj, answerCount, refreshFriends }) => {
               <Answer key={answer.answerId} userObj={userObj} answer={answer} refreshFriends={refreshFriends} />
             ))
             }
-            {(currentPage*5 <= answers.length | randomState)
-            ? 
+            {(answers.length < 5 | currentPage*5 <= answers.length | randomState)
+            ?
             <AddBtn onClick={addBtn}>
               {randomState 
               ? 
