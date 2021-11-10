@@ -7,7 +7,6 @@ import QuestionDetail from "../routes/QuestionDetail";
 import QuestionRegister from "../routes/QuestionRegister";
 import Questions from "../routes/Questions";
 import Navigation from "../routes/Navigation";
-import CheerRegister from "../routes/CheerRegister";
 import Settings from "../routes/Settings";
 import Community from "../routes/Community";
 import UserAnswers from "../routes/UserAnswers";
@@ -43,7 +42,7 @@ const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFri
                         <MyAnswers questionArray={questionArray} userObj={userObj} />
                     </Route>
                     <Route exact path="/questions" >
-                        <Questions questionArray={questionArray} userObj={userObj} />
+                        <Questions answerCount={answerCount} questionArray={questionArray} userObj={userObj} />
                     </Route>
                     <Route exact path="/question/:id" >
                         <QuestionDetail userObj={userObj} refreshFriends={refreshFriends} />
@@ -66,10 +65,7 @@ const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFri
                 </Switch>
                 <Switch>
                     <Route exact path="/questionregister" >
-                        <QuestionRegister />
-                    </Route>
-                    <Route exact path="/cheerregister" >
-                        <CheerRegister />
+                        <QuestionRegister userObj={userObj} />
                     </Route>
                 </Switch>
             </>

@@ -36,7 +36,7 @@ const LastQuestion = styled.div`
     padding: 15px 0;
 `;
 
-const Questions = ({questionArray, userObj}) => {
+const Questions = ({questionArray, userObj, answerCount}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [questions, setQuestions] = useState([]);
     const [searchWord, setSearchWord] = useState("");
@@ -74,7 +74,7 @@ const Questions = ({questionArray, userObj}) => {
             ? <Loading />
             : (
             <>
-                {currentPosts(questions.filter(question => question.question.includes(searchWord))).map(question => <Question key={question.questionId} userObj={userObj} question={question} /> )}
+                {currentPosts(questions.filter(question => question.question.includes(searchWord))).map(question => <Question key={question.questionId} userObj={userObj} question={question} answerCount={answerCount} /> )}
                 <Search from="question" searchWord={searchWord} setSearchWord={setSearchWord} />
                 {currentPage*5 <= questions.length 
                 ?

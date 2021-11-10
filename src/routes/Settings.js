@@ -193,8 +193,7 @@ const Settings = ({ refreshUser, userObj }) => {
     const onSubmit = async (e) => {
         e.preventDefault();
         if (displayName && userObj.displayname !== displayName) {
-            await dbService.collection("users").doc(`${userObj.uid}`).set({
-                uid: userObj.uid,
+            await dbService.collection("users").doc(`${userObj.uid}`).update({
                 displayName: displayName
             }).then(() => {
                 userObj.updateProfile({

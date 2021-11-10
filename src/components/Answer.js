@@ -86,7 +86,7 @@ const Writer = styled.span`
 
 const Content = styled.div`
   text-indent: 5px;
-  line-height: 17px;
+  line-height: 160%;
   background-color: white;
   border-radius: 10px;
   word-break: keep-all;

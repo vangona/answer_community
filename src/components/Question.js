@@ -51,7 +51,9 @@ const AnswerContainer = styled.div`
 `;
 
 const AnswerInput = styled.input`
+    padding: 4px 7px;
     transition: 0.3s all ease-in-out;
+    font-family: Jeju Myeongjo;
     :focus {
       border-radius: 10px;
     }    
@@ -60,6 +62,9 @@ const AnswerInput = styled.input`
 const AnswerTextarea = styled.textarea`
     width: 100%;
     min-height: 100px;
+    font-family: Jeju Myeongjo;
+    padding: 5px;
+    line-height: 160%;
 `;
 
 const PrivateLabel = styled.label`
@@ -82,7 +87,7 @@ const AnswerBtn = styled.div`
     }
 `;
 
-const Question = ({userObj, question}) => {
+const Question = ({userObj, question, answerCount}) => {
     const history = useHistory();
     const [isPrivate, setIsPrivate] = useState(false);
     const [answer, setAnswer] = useState('');
@@ -108,6 +113,7 @@ const Question = ({userObj, question}) => {
             createdAt: Date.now(),
             editedAt: null,
             isPrivate,
+            index: answerCount,
         }
         dbService.collection("answers").doc(`${answerId}`).set(answerObj).then(async () => {
             await dbService.collection("main").doc("counts").update({
