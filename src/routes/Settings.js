@@ -170,6 +170,10 @@ const Settings = ({ refreshUser, userObj }) => {
         history.push("/credit");
     }
 
+    const onClickManual = e => {
+        history.push('/manual');
+    }
+
     const onChange = e => {
         if (e.target.getAttribute("name") === "name") {
             setDisplayName(e.target.value)
@@ -309,7 +313,7 @@ const Settings = ({ refreshUser, userObj }) => {
                 }
             </ProfileContainer>
             <BtnContainer>
-                <ManualBtn>서랍장 사용 설명서</ManualBtn>
+                <ManualBtn onClick={onClickManual}>서랍장 사용 설명서</ManualBtn>
                 <CreditBtn onClick={onClickCredit}>명예의 전당</CreditBtn>
             </BtnContainer>
             <QnaContainer>
