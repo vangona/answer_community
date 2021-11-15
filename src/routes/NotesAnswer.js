@@ -35,6 +35,7 @@ const NotesContainer = styled.div`
     align-items: flex-start;
     padding: 10px;
     box-sizing: border-box;
+    max-height: 80vh;
 `;
 
 const NotesAnswer = ({userObj}) => {
@@ -44,18 +45,18 @@ const NotesAnswer = ({userObj}) => {
     const [question, setQuestion] = useState('');
 
     const getNotes = () => {
-        dbService.collection("notes").where("receiver", "==", `${userObj.uid}`).where("writer", "==", `${id}`).where("answerId", "==", `${answerId}`).onSnapshot(querySnapshot => {
+        dbService.collection("notes").where("receiver", "in", [`${userObj.uid}`, `${id}`]).where("answerId", "==", `${answerId}`).onSnapshot(querySnapshot => {
             const notesArray = querySnapshot.docs.map(doc => ({
                 ...doc.data()
             })
             )
             notesArray.sort((a, b) => {
-                if(a.createdAt > b.createdAt) return -1;
+                if(a.createdAt < b.createdAt) return -1;
                 if(a.createdAt === b.createdAt) return 0;
-                if(a.createdAt < b.createdAt) return 1;
+                if(a.createdAt > b.createdAt) return 1;
             });
-            setNotesData(notesArray)
-            setQuestion(notesArray[0].answer)
+            setNotesData(notesArray);
+            setQuestion(notesArray[0].answer);
             setIsLoading(false);
         })
     }
@@ -73,7 +74,7 @@ const NotesAnswer = ({userObj}) => {
             <Title>{question}로부터 시작된 쪽지</Title>
             <NotesContainer>
                 {notesData.map(note => (
-                    <NoteDetail noteData={note} />
+                    <NoteDetail noteData={note} userObj={userObj} />
                 ))}
             </NotesContainer>
             </>

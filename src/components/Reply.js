@@ -52,7 +52,9 @@ const Reply = ({note, userObj}) => {
             writer: userObj.uid,
             writerName: userObj.displayName,
             receiver: note.writer,
-            answer: note.noteContent
+            answer: note.answer,
+            answerId: note.answerId,
+            isRead: false,
         }
         dbService.collection("notes").doc(`${noteId}`).set(noteObj)
         alert("쪽지가 성공적으로 보내졌습니다 :)")

@@ -11,6 +11,7 @@ const Container = styled.div`
 
 const NoteContent = styled.div`
     font-size: 1rem;
+    padding: 10px 0;
 `;
 
 const NoteWriter = styled.span`
@@ -29,7 +30,7 @@ const NoteTime = styled.span`
     opacity: 80%;
 `;
 
-const NoteDetail = ({noteData}) => {
+const NoteDetail = ({noteData, userObj}) => {
 
     const Time = new Date(noteData.createdAt) 
     const year = Time.getFullYear();
@@ -42,7 +43,7 @@ const NoteDetail = ({noteData}) => {
     const lastDays = Math.round(lastHours / 24)
 
     return (
-        <Container>
+        <Container style={{alignSelf: noteData.writer === userObj.uid ? "flex-end" : "flex-start"}} >
             <NoteContent>
                 {noteData.noteContent}
             </NoteContent>
