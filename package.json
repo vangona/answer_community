@@ -18,6 +18,7 @@
     "firebase": "^8.9.1",
     "gh-pages": "^3.2.3",
     "lodash": "^4.17.21",
+    "pusher": "^5.0.0",
     "react": "^17.0.2",
     "react-app-polyfill": "^2.0.0",
     "react-device-detect": "^2.0.1",
