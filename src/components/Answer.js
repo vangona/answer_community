@@ -13,7 +13,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 70%;
   padding: 25px 15px 30px 15px;
   box-sizing: border-box;
   border: 1px solid black;
