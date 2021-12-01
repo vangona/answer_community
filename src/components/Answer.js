@@ -13,24 +13,29 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 70%;
+  width: 80%;
   padding: 25px 15px 30px 15px;
   box-sizing: border-box;
   border: 1px solid black;
   box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.75);
   -webkit-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.75);
   -moz-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.75);
-  color: white;
-  border-radius: 10px;
-  background-color: var(--main-color);
+  color: black;
+  border-radius: 3px;
+  background-color: white;
+  opacity: 70%;
   margin: 10px;
+  transition: 0.5s all ease-in-out;
+  transform: rotateZ(0.5deg) skewX(-0.5deg);
   :hover {
-      color: var(--gold);
+      color: var(--main-color);
+      transform: skew(0, 0);
+      opacity: 100%;
   }
 `;
 
 const Question = styled.h1`
-line-height: 20px;
+  line-height: 20px;
   text-align: center;
   word-break: keep-all;
   transition: 0.3s all ease-in-out;
@@ -38,6 +43,7 @@ line-height: 20px;
   margin-bottom: 20px;
   font-size: 0.9rem;
   :hover {
+    color: var(--gold);
     cursor: pointer;
   }
 `;
@@ -46,23 +52,31 @@ const InfoContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: 0.3s all ease-in-out;
-  color: inherit;
+  transition: 0.1s all ease-in-out;
+  color: black;
   position: absolute;
   bottom: 10px;
   right: 15px;
   font-size: 0.7rem;
+  :hover {
+    color: var(--gold);
+  }
 `;
 
 const CreatedAt = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  transition: 0.5s all ease-in-out;
+  color: black;
   position: absolute;
   top: 10px;
   right: 15px;
   font-size: 0.6rem;
+  :hover {
+    cursor: pointer;
+    color: var(--gold);
+  }
 `;
 
 const WriterContainer = styled.div`
@@ -70,6 +84,7 @@ const WriterContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  color: black;
 `;
 
 const Writer = styled.span`
@@ -80,6 +95,7 @@ const Writer = styled.span`
   margin-bottom: 10px;
   font-size: 0.7rem;
   :hover {
+    color: var(--gold);
     cursor: pointer;
   }
 `;
@@ -88,13 +104,13 @@ const Content = styled.div`
   text-indent: 5px;
   line-height: 160%;
   background-color: white;
+  opacity: inherit;
   border-radius: 10px;
   word-break: keep-all;
   font-family: Jeju Myeongjo;
   width: 100%;
   padding: 15px;
   font-size: 0.8rem;
-  opacity: 70%;
   color: black;
   box-sizing: border-box;
 `;
@@ -104,7 +120,10 @@ const IconBox = styled.div`
   justify-content: center;
   align-items: center;
   margin-left: 5px;
+  color: inherit;
+  transition: 0.5s all ease-in-out;
   :hover {
+    color: var(--gold);
     cursor: pointer;
   }
 `;
@@ -189,7 +208,7 @@ const Answer = ({answer, userObj, refreshFriends}) => {
   }
 
   return (
-    <Container>
+    <Container style={{left: `${Math.random() * 16 - 8}%`}}>
       <Question onClick={onClickDetail}>{answer.question}</Question>
       <InfoContainer>
         {answer.userId === userObj.uid 
