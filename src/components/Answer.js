@@ -24,9 +24,8 @@ const Container = styled.div`
   border-radius: 3px;
   background-color: white;
   opacity: 70%;
-  margin: 10px;
-  transition: 0.5s all ease-in-out;
-  transform: rotateZ(0.5deg) skewX(-0.5deg);
+  transition: 0.3s all ease-in-out;
+  transform: skewX(-0.5deg);
   :hover {
       color: var(--main-color);
       transform: skew(0, 0);
@@ -208,7 +207,7 @@ const Answer = ({answer, userObj, refreshFriends}) => {
   }
 
   return (
-    <Container style={{left: `${Math.random() * 16 - 8}%`}}>
+    <Container style={{margin: `${Math.random() * 10 + 7}px` ,left: `${Math.random() * 8 - 4}%`}}>
       <Question onClick={onClickDetail}>{answer.question}</Question>
       <InfoContainer>
         {answer.userId === userObj.uid 
