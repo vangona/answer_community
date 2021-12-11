@@ -1,6 +1,7 @@
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Answer from "../components/Answer";
 import Loading from "../components/Loading";
@@ -46,6 +47,24 @@ const LastAnswer = styled.div`
     font-size: 0.7rem;
     padding: 15px 0;
 `;
+
+const WriteBtn = styled.button`
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-family: Kyobo Handwriting;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    :hover {
+        cursor: pointer;
+    }
+`
 
 const MyAnswers = ({userObj}) => {
     const [isLoading, setIsLoading] = useState(true)
@@ -105,6 +124,12 @@ const MyAnswers = ({userObj}) => {
                     마지막 대답입니다.
                 </LastAnswer>
                 }
+                <Link to={"/questions"} style={{textDecoration: "none"}}>
+                <WriteBtn>
+                    <FontAwesomeIcon icon={faEdit} />
+                    답변쓰기
+                </WriteBtn>
+                </Link>
             </>
             )}
         </Container>

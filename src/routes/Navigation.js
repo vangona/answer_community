@@ -41,7 +41,7 @@ const NavTitle = styled.span`
 const NavBtn = styled(animated.button)`
     position: fixed;
     top: 20px;
-    left: 15px;
+    left: 20px;
     background-color: transparent;
     border: 0;
     opacity: 1;
@@ -96,12 +96,6 @@ const Navigation = () => {
                     <NavComponent>
                         <FontAwesomeIcon icon={faHome} />
                         <NavTitle>홈</NavTitle>
-                    </NavComponent>
-                </Link>
-                <Link to={"/questions"} style={{textDecoration: "none"}}>
-                    <NavComponent>
-                    <FontAwesomeIcon icon={faEdit} />
-                    <NavTitle>답변쓰기</NavTitle>
                     </NavComponent>
                 </Link>
                 <Link to={"/myanswers"} style={{textDecoration: "none"}}>

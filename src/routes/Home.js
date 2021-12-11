@@ -214,9 +214,9 @@ const Home = ({ userObj, answerCount, refreshFriends }) => {
           <>
             <Cheer />
             {searchWord}
-            <RandomBtn onClick={onToggleRandom}>
+            {/* <RandomBtn onClick={onToggleRandom}>
               {randomState ? "목록으로 보기" : "랜덤으로 보기"}
-            </RandomBtn>
+            </RandomBtn> */}
             {answers && currentPosts(answers).map(answer => (
               <Answer key={answer.answerId} userObj={userObj} answer={answer} refreshFriends={refreshFriends} />
             ))

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { animated, useSpring } from "react-spring";
 import { CheerComment } from "./DB/CheerDB";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled(animated.div)`
     position: relative;
@@ -22,6 +24,17 @@ const Container = styled(animated.div)`
     -moz-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.75);
 `;
 
+const CloseBtn = styled.button`
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    :hover {
+        cursor: pointer;
+    }
+`;
+
 const CheerPhrase = styled.div`
     display: flex;
     align-items: center;
@@ -36,6 +49,7 @@ const CheerPhrase = styled.div`
 
 const Cheer = () => {
     const [cheer, setCheer] = useState();
+    const [cheerState, setCheerState] = useState(true);
     const animation = useSpring({
         from: {
             opacity: 0,
@@ -47,12 +61,19 @@ const Cheer = () => {
         }
     })
 
+    const onClick = () => {
+        setCheerState(!cheerState);
+    }
+
     useEffect(() => {
         setCheer(CheerComment[Math.floor(Math.random() * CheerComment.length)])
     }, [])
 
     return (
         <Container style={animation}>
+            <CloseBtn onClick={onClick}>
+                <FontAwesomeIcon icon={faChevronDown} />
+            </CloseBtn>
             <CheerPhrase>
                 {cheer}
             </CheerPhrase>
