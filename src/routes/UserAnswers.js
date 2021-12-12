@@ -45,7 +45,7 @@ const LastAnswer = styled.div`
     padding: 15px 0;
 `;
 
-const UserAnswers = ({userObj, refreshFriends}) => {
+const UserAnswers = ({userObj, refreshFriends, refreshBookmarks}) => {
     const [isLoading, setIsLoading] = useState(true);
     const [answers, setAnswers] = useState([]);
     const { id } = useParams();
@@ -91,7 +91,7 @@ const UserAnswers = ({userObj, refreshFriends}) => {
         :
         <>
         <Writer>{answers[0].userName}의 대답들</Writer>
-        {currentPosts(answers).map(answer => <Answer answer={answer} userObj={userObj} refreshFriends={refreshFriends} />)}
+        {currentPosts(answers).map(answer => <Answer answer={answer} userObj={userObj} refreshFriends={refreshFriends} refreshBookmarks={refreshBookmarks} />)}
         {currentPage*5 <= answers.length 
         ?
         <AddBtn onClick={addPage}>

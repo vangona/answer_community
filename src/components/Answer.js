@@ -29,7 +29,7 @@ const Container = styled.div`
   :hover {
       color: var(--main-color);
       transform: skew(0, 0);
-      opacity: 100%;
+      opacity: 95%;
   }
 `;
 
@@ -128,9 +128,10 @@ const EditInput = styled.textarea`
   line-height: 17px;
   font-size: 0.7rem;
   width: 90%;
+  min-height: 100px;
 `;
 
-const Answer = ({answer, userObj, refreshFriends}) => {
+const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
   const [editState, setEditState] = useState(false);
   const [noteState, setNoteState] = useState(false);
   const [changedAnswer, setChangedAnswer] = useState('');
@@ -195,8 +196,18 @@ const Answer = ({answer, userObj, refreshFriends}) => {
       bookmarks: [...userObj.bookmarks, answer.answerId]
     })
     .then(() => {
-      refreshFriends([...userObj.bookmarks, answer.answerId])
+      refreshBookmarks([...userObj.bookmarks, answer.answerId])
     })    
+  }
+
+  const onDeleteBookmark = async (e) => {
+    e.preventDefault();
+    await dbService.collection("users").doc(`${userObj.uid}`).update({
+      bookmarks: [...userObj.bookmarks.filter((el) => el !== answer.answerId)],
+    })
+    .then(() => {
+      refreshBookmarks([...userObj.bookmarks.filter((el) => el !== answer.answerId)])
+    })       
   }
 
   const onClickDetail = e => {
@@ -230,16 +241,16 @@ const Answer = ({answer, userObj, refreshFriends}) => {
           )
         : (
           <>
-            {userObj.friends[0] && !userObj.friends.includes(answer.userId) && 
+            {userObj.friends && !userObj.friends.includes(answer.userId) && 
             <IconBox>
               <FontAwesomeIcon onClick={() => {
                 onClicekFriend(answer)
               }} icon={faUserPlus} />
             </IconBox>
             }
-            {userObj.bookmarks[0] && !userObj.bookmarks.include(answer.answerId)
+            {userObj.bookmarks && userObj.bookmarks.includes(answer.answerId)
             ? 
-            <IconBox>
+            <IconBox onClick={onDeleteBookmark}>
               <FontAwesomeIcon icon={faBookReader} />
             </IconBox>
             :

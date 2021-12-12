@@ -1,4 +1,4 @@
-import { faEdit, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faEdit, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -60,7 +60,7 @@ const WriteBtn = styled.button`
     background: none;
     border: none;
     color: white;
-    font-size: 1rem;
+    font-size: 0.9rem;
     :hover {
         cursor: pointer;
     }

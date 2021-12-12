@@ -47,7 +47,7 @@ const LastAnswer = styled.div`
     padding: 15px 0;
 `;
 
-const QuestionDetail = ({userObj, refreshFriends}) => {
+const QuestionDetail = ({userObj, refreshFriends, refreshBookmarks}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [answers, setAnswers] = useState([]);
   const { id } = useParams();
@@ -94,7 +94,7 @@ const QuestionDetail = ({userObj, refreshFriends}) => {
       :
       <>
       <Question>{answers[0].question}</Question>
-      {currentPosts(answers).map(answer => <Answer answer={answer} userObj={userObj} refreshFriends={refreshFriends} />)}
+      {currentPosts(answers).map(answer => <Answer answer={answer} userObj={userObj} refreshFriends={refreshFriends} refreshBookmarks={refreshBookmarks} />)}
       {currentPage*5 <= answers.length 
       ?
       <AddBtn onClick={addPage}>

@@ -95,7 +95,7 @@ const Navigation = () => {
                 <Link to={"/"} style={{textDecoration: "none", marginLeft: "5%"}}>
                     <NavComponent>
                         <FontAwesomeIcon icon={faHome} />
-                        <NavTitle>홈</NavTitle>
+                        <NavTitle>담벼락</NavTitle>
                     </NavComponent>
                 </Link>
                 <Link to={"/myanswers"} style={{textDecoration: "none"}}>

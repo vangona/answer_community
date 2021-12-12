@@ -16,7 +16,7 @@ import NotesUser from "../routes/NotesUser";
 import NotesAnswer from "../routes/NotesAnswer";
 import Manual from "../routes/Manual";
 
-const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFriends, answerCount, noteData }) => {
+const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFriends, answerCount, refreshBookmarks }) => {
     return (
         <Router>
             {isLoggedIn ? 
@@ -24,7 +24,7 @@ const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFri
                 <Navigation />
                 <Switch>
                     <Route exact path="/" >
-                        <Home userObj={userObj} answerCount={answerCount} refreshFriends={refreshFriends} />
+                        <Home userObj={userObj} answerCount={answerCount} refreshFriends={refreshFriends} refreshBookmarks={refreshBookmarks} />
                     </Route>
                     <Route exact path="/auth" >
                         <Auth />
@@ -45,10 +45,10 @@ const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFri
                         <Questions answerCount={answerCount} questionArray={questionArray} userObj={userObj} />
                     </Route>
                     <Route exact path="/question/:id" >
-                        <QuestionDetail userObj={userObj} refreshFriends={refreshFriends} />
+                        <QuestionDetail userObj={userObj} refreshFriends={refreshFriends} refreshBookmarks={refreshBookmarks} />
                     </Route>
                     <Route exact path="/useranswer/:id" >
-                        <UserAnswers userObj={userObj} refreshFriends={refreshFriends} />
+                        <UserAnswers userObj={userObj} refreshFriends={refreshFriends} refreshBookmarks={refreshBookmarks} />
                     </Route>
                     <Route exact path="/settings" >
                         <Settings refreshUser={refreshUser} userObj={userObj} />

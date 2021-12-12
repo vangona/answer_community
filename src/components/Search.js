@@ -88,7 +88,7 @@ const SearchBtn = styled.button`
   position: fixed;
   bottom: 20px;
   right: 20px;
-  font-size: 20px;
+  font-size: 1rem;
   font-family: Kyobo Handwriting;
   transition: 0.5s all ease-in-out;
   :hover {

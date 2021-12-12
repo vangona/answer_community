@@ -1,6 +1,7 @@
-import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Loading from "../components/Loading";
 import Question from "../components/Question";
@@ -30,6 +31,24 @@ const AddBtn = styled.button`
     }
 `;
 
+const BackBtn = styled.button`
+    position: fixed;
+    bottom: 30px;
+    left: 20px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.1rem;
+    transition: all 0.5s ease-in-out;
+    :hover {
+        cursor: pointer;
+        color: var(--gold);
+    }
+    :active {
+        transform: scale(0.98);
+    }
+`;
+
 const LastQuestion = styled.div`
     color: white;
     font-size: 12px;
@@ -37,6 +56,7 @@ const LastQuestion = styled.div`
 `;
 
 const Questions = ({questionArray, userObj, answerCount}) => {
+    const history = useHistory();
     const [isLoading, setIsLoading] = useState(true)
     const [questions, setQuestions] = useState([]);
     const [searchWord, setSearchWord] = useState("");
@@ -75,6 +95,9 @@ const Questions = ({questionArray, userObj, answerCount}) => {
             : (
             <>
                 {currentPosts(questions.filter(question => question.question.includes(searchWord))).map(question => <Question key={question.questionId} userObj={userObj} question={question} answerCount={answerCount} /> )}
+                <BackBtn onClick={history.goBack}>
+                    <FontAwesomeIcon icon={faChevronLeft} />
+                </BackBtn>
                 <Search from="question" searchWord={searchWord} setSearchWord={setSearchWord} />
                 {currentPage*5 <= questions.length 
                 ?
