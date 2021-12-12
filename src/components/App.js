@@ -233,9 +233,10 @@ function App() {
             const userData= snapshot.data()
             setUserObj({
                 uid: user.uid,
-                friends : (userData.friends 
+                friends : userData.friends 
                     ? userData.friends 
-                    : []),
+                    : [],
+                bookmarks : userData.bookmarks && userData.bookmarks,
                 isPassword : userData.isPassword,
                 displayName: (user.displayName ? user.displayName : "익명"),
                 updateProfile: (args) => user.updateProfile(args),
@@ -256,6 +257,7 @@ function App() {
       uid:user.uid,
       isPassword: user.isPassword,
       friends: user.friends,
+      bookmarks: user.bookmarks,
       updateProfile: (args) => user.updateProfile(args),
     });
   };

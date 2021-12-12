@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { MailIcon } from "@heroicons/react/outline"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencilAlt, faTrashAlt, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark, faBookOpen, faBookReader, faPencilAlt, faTrashAlt, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { dbService, firebaseInstance } from "../fBase";
 import NoteFactory from "./NoteFactory";
 import { useHistory } from "react-router";
@@ -57,9 +57,6 @@ const InfoContainer = styled.div`
   bottom: 10px;
   right: 15px;
   font-size: 0.7rem;
-  :hover {
-    color: var(--gold);
-  }
 `;
 
 const CreatedAt = styled.span`
@@ -159,7 +156,7 @@ const Answer = ({answer, userObj, refreshFriends}) => {
         window.confirm("내용을 수정하시겠어요?") 
         && dbService.collection("answers").doc(answer.answerId).update({
           answer: changedAnswer,
-          modifedAt: Date.now()
+          editedAt: Date.now()
         }) 
       }
     }
@@ -190,6 +187,16 @@ const Answer = ({answer, userObj, refreshFriends}) => {
   const onClickNote = e => {
     e.preventDefault();
     setNoteState(!noteState);
+  }
+
+  const onClickBookmark = async (e) => {
+    e.preventDefault();
+    await dbService.collection("users").doc(`${userObj.uid}`).update({
+      bookmarks: [...userObj.bookmarks, answer.answerId]
+    })
+    .then(() => {
+      refreshFriends([...userObj.bookmarks, answer.answerId])
+    })    
   }
 
   const onClickDetail = e => {
@@ -223,11 +230,21 @@ const Answer = ({answer, userObj, refreshFriends}) => {
           )
         : (
           <>
-            {userObj.friends && !userObj.friends.includes(answer.userId) && 
+            {userObj.friends[0] && !userObj.friends.includes(answer.userId) && 
             <IconBox>
               <FontAwesomeIcon onClick={() => {
                 onClicekFriend(answer)
               }} icon={faUserPlus} />
+            </IconBox>
+            }
+            {userObj.bookmarks[0] && !userObj.bookmarks.include(answer.answerId)
+            ? 
+            <IconBox>
+              <FontAwesomeIcon icon={faBookReader} />
+            </IconBox>
+            :
+            <IconBox onClick={onClickBookmark}>
+              <FontAwesomeIcon icon={faBookOpen} />
             </IconBox>
             }
             <IconBox onClick={onClickNote}>
@@ -236,14 +253,17 @@ const Answer = ({answer, userObj, refreshFriends}) => {
           </>
         )}
       </InfoContainer>
-      <CreatedAt>{lastMinutes < 60 
+      <CreatedAt>
+        {lastMinutes < 60 
         ? `${lastMinutes}분 전` 
         : lastHours < 24 
           ? `${lastHours}시간 전`
           : lastDays > 7
             ? `${date}`
             : `${lastDays}일 전`
-        }</CreatedAt>
+        }
+        {answer.editedAt && "(수정됨)"}
+      </CreatedAt>
       <WriterContainer>
         <Writer onClick={onClickUser}>- {answer.userName}{answer.isPrivate && " (나에게만 보임)"}</Writer>
       </WriterContainer>
