@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { MailIcon } from "@heroicons/react/outline"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookmark, faBookOpen, faBookReader, faPencilAlt, faTrashAlt, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { faBookOpen, faBookReader, faPencilAlt, faReply, faTrashAlt, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { dbService, firebaseInstance } from "../fBase";
 import NoteFactory from "./NoteFactory";
 import { useHistory } from "react-router";
+import { useParams } from "react-router-dom";
 
 const Container = styled.div`
   position: relative;
@@ -27,6 +28,7 @@ const Container = styled.div`
   transition: 0.3s all ease-in-out;
   transform: skewX(-0.5deg);
   :hover {
+      cursor: pointer;
       color: var(--main-color);
       transform: skew(0, 0);
       opacity: 95%;
@@ -56,7 +58,7 @@ const InfoContainer = styled.div`
   position: absolute;
   bottom: 10px;
   right: 15px;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
 `;
 
 const CreatedAt = styled.span`
@@ -69,10 +71,6 @@ const CreatedAt = styled.span`
   top: 10px;
   right: 15px;
   font-size: 0.6rem;
-  :hover {
-    cursor: pointer;
-    color: var(--gold);
-  }
 `;
 
 const WriterContainer = styled.div`
@@ -124,6 +122,23 @@ const IconBox = styled.div`
   }
 `;
 
+const ReplyIcon = styled.div`
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  color: inherit;
+  transition: 0.5s all ease-in-out;
+  bottom: 10px;
+  left: 10px;
+  font-size: 0.8rem;
+  :hover {
+    color: var(--gold);
+    cursor: pointer;
+  }
+`;
+
 const EditInput = styled.textarea`
   line-height: 17px;
   font-size: 0.7rem;
@@ -132,6 +147,7 @@ const EditInput = styled.textarea`
 `;
 
 const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
+  const { id } = useParams();
   const [editState, setEditState] = useState(false);
   const [noteState, setNoteState] = useState(false);
   const [changedAnswer, setChangedAnswer] = useState('');
@@ -202,6 +218,7 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
 
   const onDeleteBookmark = async (e) => {
     e.preventDefault();
+    window.confirm('책갈피를 빼시겠어요?') &&
     await dbService.collection("users").doc(`${userObj.uid}`).update({
       bookmarks: [...userObj.bookmarks.filter((el) => el !== answer.answerId)],
     })
@@ -224,8 +241,18 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
     setChangedAnswer(e.target.value)
   }
 
+  const onClickAnswer = e => {
+    if (id) {
+      if (id !== answer.answerId) {
+        history.push(`/answer/${answer.answerId}`)
+      }
+    } else {
+      history.push(`/answer/${answer.answerId}`)
+    }
+  }
+
   return (
-    <Container style={{margin: `${Math.random() * 10 + 7}px` ,left: `${Math.random() * 8 - 4}%`}}>
+    <Container onClick={onClickAnswer} style={{margin: `${Math.random() * 10 + 7}px` ,left: `${Math.random() * 8 - 4}%`}}>
       <Question onClick={onClickDetail}>{answer.question}</Question>
       <InfoContainer>
         {answer.userId === userObj.uid 
@@ -258,12 +285,13 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
               <FontAwesomeIcon icon={faBookOpen} />
             </IconBox>
             }
-            <IconBox onClick={onClickNote}>
-              <MailIcon style={{width: "15px", marginLeft: "5px"}} />
-            </IconBox>
           </>
         )}
       </InfoContainer>
+      <ReplyIcon onClick={onClickNote}>
+        <FontAwesomeIcon icon={faReply} style={{ transform: 'rotate(180deg)' }} />
+        {/* <MailIcon style={{width: "15px", marginLeft: "5px"}} /> */}
+      </ReplyIcon>
       <CreatedAt>
         {lastMinutes < 60 
         ? `${lastMinutes}분 전` 

@@ -31,10 +31,7 @@ const NoteTextarea = styled.textarea`
 
 const IconBox = styled.div`
     display: flex;
-    position: absolute;
-    width: 20px;
-    right: 5px;
-    top: 5px;
+    width: 100%;
     justify-content: flex-end;
     :hover {
         cursor: pointer;
@@ -71,7 +68,7 @@ const NoteFactory = ({answer, userObj, setNoteState}) => {
             axios.post("https://fcm.googleapis.com/fcm/send", {
                 "to": `${token}`,
                 "notification": {
-                    "title": `${userObj.displayName}님에게 쪽지가 도착했습니다.`,
+                    "title": `${answer.answer}에 쪽지가 달렸습니다.`,
                     "body": `${noteContent}`
                 }
             }, 
@@ -82,21 +79,19 @@ const NoteFactory = ({answer, userObj, setNoteState}) => {
                     "Authorization": "key=AAAAbdbI9T8:APA91bHBHA83-rpRKMQChKE7FcUkvFSzbZ1qHOBZhrXNxBdo6U2cfB89xqpbsLIjYbBHVyGhOMFWwZNlRMF0I9cAshUvrkhyWDZqMcjgx5FzuAL3P9IK2YivTtQfdvygSIAhk9HVM30K"
                 }
             })
-            .then(response => {console.log(response)})
-            .catch(response => {console.log(response)})
         })
-        alert("쪽지가 성공적으로 보내졌습니다 :)")
+        alert("쪽지가 성공적으로 남겨졌습니다 :)")
         setNoteState(false);
         setNoteContent('');
     }
     }
     return (
         <Container>
-            <Title>쪽지</Title>
+            <Title>답변에 쪽지 남기기</Title>
             <hr />
             <NoteTextarea value={noteContent} onChange={onChange} />
             <IconBox onClick={(e) => {
-                if(window.confirm(`${answer.userName}님께 쪽지를 보낼까요?`)){
+                if(window.confirm(`${answer.answer.slice(0, 9)}${answer.answer.length > 10 ? '...' : ''}에 쪽지를 남길까요?`)){
                     onSubmit(e)
                 }
                 

@@ -34,7 +34,7 @@ const AddBtn = styled.button`
 const BackBtn = styled.button`
     position: fixed;
     bottom: 30px;
-    left: 20px;
+    left: 30px;
     background: none;
     border: none;
     color: white;

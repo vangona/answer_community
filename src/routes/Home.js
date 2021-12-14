@@ -148,7 +148,7 @@ const Home = ({ userObj, answerCount, refreshFriends, refreshBookmarks }) => {
           }
         });
         setDiceState(false);
-      }, 1500)
+      }, 500)
     }
     else {
       dbService.collection("answers").where("isPrivate", "==", false).orderBy("createdAt").limitToLast(currentPage*5 + 10).onSnapshot(snapshot => {
@@ -213,7 +213,6 @@ const Home = ({ userObj, answerCount, refreshFriends, refreshBookmarks }) => {
         : (
           <>
             <Cheer />
-            {searchWord}
             {/* <RandomBtn onClick={onToggleRandom}>
               {randomState ? "목록으로 보기" : "랜덤으로 보기"}
             </RandomBtn> */}

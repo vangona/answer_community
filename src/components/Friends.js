@@ -85,7 +85,7 @@ const Friends = ({userObj, refreshFriends, getFriendLoading, loading}) => {
 
     const getFriends = async () => {
         if(userObj.friends && userObj.friends.length !== 0) {
-            await dbService.collection("users").where("uid", "in", userObj.friends).get().then(
+            await dbService.collection("users").where("uid", "in", userObj.friends).onSnapshot(
             snapshot => {
                 const friendArray = snapshot.docs.map(doc => ({...doc.data()})
                 )
@@ -127,7 +127,7 @@ const Friends = ({userObj, refreshFriends, getFriendLoading, loading}) => {
         {loading ?
 
             <Container>
-            <Title>누군가의 서랍장</Title>
+            <Title>내가 아끼는 누군가들</Title>
             <hr />
             <FriendList>
                 {friends.length !== 0 

@@ -17,7 +17,13 @@ const Container = styled.div`
     height: 100vh;
 `;
 
-const Community = ({userObj, refreshFriends, noteData}) => {
+const Title = styled.h1`
+    color: white;
+    margin: 20px;
+    font-size: 1.2rem;
+`;
+
+const Community = ({userObj, refreshFriends, refreshBookmarks, noteData}) => {
     const [isLoading, setIsLoading] = useState(true);
     const [friendLoading, setFriendLoading] = useState(false);
     const [someoneAnswers, setSomeoneAnswers] = useState('');
@@ -27,7 +33,7 @@ const Community = ({userObj, refreshFriends, noteData}) => {
     }
 
     const getSomeoneAnswers = async () => {
-        await dbService.collection("answers").where("answerId", "in", userObj.bookmarks).get()
+        userObj.bookmarks.length && await dbService.collection("answers").where("answerId", "in", userObj.bookmarks).get()
         .then(snapshot => {
             const someoneAnswerArray = snapshot.docs.map(doc => ({
                 id: doc.answerId,
@@ -39,11 +45,12 @@ const Community = ({userObj, refreshFriends, noteData}) => {
                 if(a.createdAt < b.createdAt) return 1;
               });
             setSomeoneAnswers(someoneAnswerArray);
-            setIsLoading(!isLoading);
         })
+        setIsLoading(!isLoading);
     }
 
     useEffect(()=>{
+        getFriendLoading();
         getSomeoneAnswers();
     }, [])
 
@@ -54,10 +61,16 @@ const Community = ({userObj, refreshFriends, noteData}) => {
             : 
                 <>
                     <Friends userObj={userObj} loading={friendLoading} refreshFriends={refreshFriends} getFriendLoading={getFriendLoading} />
-                    <Notes userObj={userObj} noteData={noteData} />
-                    {someoneAnswers.map(answer => 
-                        <Answer key={answer.answerId} answer={answer} userObj={userObj}/>
-                    )
+                    {/* <Notes userObj={userObj} noteData={noteData} /> */}
+                    {someoneAnswers && 
+                    <>
+                        <Title>
+                            책갈피함
+                        </Title>
+                        {someoneAnswers.map(answer => 
+                            <Answer key={answer.answerId} answer={answer} refreshFriends={refreshFriends} refreshBookmarks={refreshBookmarks} userObj={userObj}/>
+                        )}
+                    </>
                     }
                 </>
             }

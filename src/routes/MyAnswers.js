@@ -50,8 +50,8 @@ const LastAnswer = styled.div`
 
 const WriteBtn = styled.button`
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    bottom: 30px;
+    right: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -60,9 +60,11 @@ const WriteBtn = styled.button`
     background: none;
     border: none;
     color: white;
-    font-size: 0.9rem;
+    font-size: 1rem;
+    transition: all 0.5s ease-in-out;
     :hover {
         cursor: pointer;
+        color: var(--gold);
     }
 `
 
@@ -127,7 +129,7 @@ const MyAnswers = ({userObj}) => {
                 <Link to={"/questions"} style={{textDecoration: "none"}}>
                 <WriteBtn>
                     <FontAwesomeIcon icon={faEdit} />
-                    답변쓰기
+                    대답쓰기
                 </WriteBtn>
                 </Link>
             </>

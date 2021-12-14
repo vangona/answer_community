@@ -86,8 +86,8 @@ const SearchBtn = styled.button`
   background-color: transparent;
   border: 0;
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 30px;
+  right: 30px;
   font-size: 1rem;
   font-family: Kyobo Handwriting;
   transition: 0.5s all ease-in-out;
