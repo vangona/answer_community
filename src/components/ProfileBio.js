@@ -1,13 +1,16 @@
+import { faPencilAlt, faSave } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { dbService } from "../fBase";
 
 const Container = styled.div`
+    position: relative;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 15px;
+    padding: 20px;
     justify-content: center;
     align-items: center;
     background-color: rgba(255,255,255,0.5);
@@ -15,9 +18,45 @@ const Container = styled.div`
     box-sizing: border-box;
 `;
 
-const EditBtn = styled.button``;
+const EditBtn = styled.button`
+    align-self: flex-end;
+    border: none;
+    background: none;
+    color: white;
+    transition: all 0.5s ease-in-out;
+    margin-top: 10px;
+    font-size: 1rem;
+    :hover {
+        cursor: pointer;
+        color: var(--gold);
+    }
+`;
 
-const BioTextarea = styled.textarea``;
+const BioContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    justify-content: center;
+    align-items: flex-start;
+`;
+
+const BioTitle = styled.h1`
+    color: white;
+    font-size: 1.2rem;
+`;
+
+const BioLine = styled.hr`
+    width: 100%;
+`;
+
+const BioContent = styled.div`
+    color: white;
+`;
+
+const BioTextarea = styled.textarea`
+    width: 100%;
+    min-height: 100px;
+`;
 
 const ProfileBio = ({ userObj, refreshBio }) => {
     const [editState, setEditState] = useState(false);
@@ -42,11 +81,25 @@ const ProfileBio = ({ userObj, refreshBio }) => {
 
     return (
         <Container>
+            <BioContainer>
+                <BioTitle>
+                    소개
+                </BioTitle>
+                <BioLine />
             {editState 
             ? <BioTextarea onChange={onChange} value={bio} />
-            : `${userObj.bio}`
+            : 
+                <BioContent>
+                    {userObj.bio}
+                </BioContent>
             }
-            <EditBtn onClick={onClickEdit}>edit</EditBtn>
+            <EditBtn onClick={onClickEdit}>
+                {editState 
+                ? <FontAwesomeIcon icon={faSave} />
+                : <FontAwesomeIcon icon={faPencilAlt} />
+                }
+            </EditBtn>
+            </BioContainer>
         </Container>
     )
 }
