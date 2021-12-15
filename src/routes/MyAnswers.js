@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Answer from "../components/Answer";
 import Loading from "../components/Loading";
+import ProfileBio from "../components/ProfileBio";
 import { dbService } from "../fBase";
 
 const Container = styled.div`
@@ -62,13 +63,14 @@ const WriteBtn = styled.button`
     color: white;
     font-size: 1rem;
     transition: all 0.5s ease-in-out;
+    z-index: 9;
     :hover {
         cursor: pointer;
         color: var(--gold);
     }
 `
 
-const MyAnswers = ({userObj}) => {
+const MyAnswers = ({userObj, refreshBio}) => {
     const [isLoading, setIsLoading] = useState(true)
     const [myAnswers, setMyAnswers] = useState(null);
     const [currentPage, setCurrentPage] = useState(1)
@@ -87,8 +89,7 @@ const MyAnswers = ({userObj}) => {
     }
 
     const getMyAnswers = async () => {
-        await dbService.collection("answers").where("userId", "==", `${userObj.uid}`).orderBy("createdAt").limitToLast(currentPage*5 + 10).get()
-        .then(snapshot => {
+        await dbService.collection("answers").where("userId", "==", `${userObj.uid}`).orderBy("createdAt").limitToLast(currentPage*5 + 10).onSnapshot(snapshot => {
             const myAnswerArray = snapshot.docs.map(doc => ({
                 id: doc.answerId,
                 ...doc.data()    
@@ -116,6 +117,7 @@ const MyAnswers = ({userObj}) => {
                 <Title>
                     나만의 서랍장
                 </Title>
+                <ProfileBio userObj={userObj} refreshBio={refreshBio} isProfile={true} />
                 {currentPosts(myAnswers).map(myAnswer => <Answer key={myAnswer.answerId} answer={myAnswer} userObj={userObj}/>)}
                 {currentPage*5 <= myAnswers.length 
                 ?

@@ -4,6 +4,8 @@ import styled from "styled-components";
 import { dbService, firebaseInstance } from "../fBase";
 import { v4 as uuidv4} from "uuid";
 import { PaperAirplaneIcon } from "@heroicons/react/outline"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled.div`
     display: flex;
@@ -77,13 +79,12 @@ const AnswerBtn = styled.div`
     margin-left: 5px;
     width: 20px;
     height: 20px;
-    transform: rotateZ(45deg);
     :hover {
         cursor: pointer;
     }
     :active {
         background-color: var(--main-color);
-        transform: scale(0.9) rotateZ(45deg);
+        transform: scale(0.9);
     }
 `;
 
@@ -113,7 +114,7 @@ const Question = ({userObj, question, answerCount}) => {
             createdAt: Date.now(),
             editedAt: null,
             isPrivate,
-            index: answerCount,
+            index: answerCount + 1,
         }
         dbService.collection("answers").doc(`${answerId}`).set(answerObj).then(async () => {
             await dbService.collection("main").doc("counts").update({
@@ -152,7 +153,7 @@ const Question = ({userObj, question, answerCount}) => {
                 <AnswerInput onChange={onChange} value={answer} name={question.question} type="text" />
                 )}
                 <AnswerBtn onClick={onSubmit}>
-                    <PaperAirplaneIcon />
+                    <FontAwesomeIcon icon={faPencilAlt} />
                 </AnswerBtn>
             </AnswerContainer>
             <AnswerContainer style={{marginBottom: "0"}}>

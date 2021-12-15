@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 import styled from "styled-components";
 import Answer from "../components/Answer";
 import Loading from "../components/Loading";
+import ProfileBio from "../components/ProfileBio";
 import { dbService } from "../fBase";
 
 const Container = styled.div`
@@ -91,7 +92,8 @@ const UserAnswers = ({userObj, refreshFriends, refreshBookmarks}) => {
         :
         <>
         <Writer>{answers[0].userName}의 대답들</Writer>
-        {currentPosts(answers).map(answer => <Answer answer={answer} userObj={userObj} refreshFriends={refreshFriends} refreshBookmarks={refreshBookmarks} />)}
+        <ProfileBio userObj={userObj} refreshBio='' isProfile={false} />
+        {currentPosts(answers).map((answer, index) => <Answer key={index} answer={answer} userObj={userObj} refreshFriends={refreshFriends} refreshBookmarks={refreshBookmarks} />)}
         {currentPage*5 <= answers.length 
         ?
         <AddBtn onClick={addPage}>

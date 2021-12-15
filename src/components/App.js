@@ -228,6 +228,7 @@ function App() {
             const countData = snapshot.data();
             setAnswerCount(countData.answers);
         });
+        const { bio } = (await dbService.collection('profiles').doc(`${user.uid}`).get()).data();
         await dbService.collection("users").doc(`${user.uid}`).get()
         .then(snapshot => {
             const userData= snapshot.data()
@@ -238,7 +239,7 @@ function App() {
                     : [],
                 bookmarks : userData.bookmarks ? userData.bookmarks : [],
                 isPassword : userData.isPassword,
-                bio: userData.bio,
+                bio,
                 displayName: (user.displayName ? user.displayName : "익명"),
                 updateProfile: (args) => user.updateProfile(args),
               })

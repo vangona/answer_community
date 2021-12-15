@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { MailIcon } from "@heroicons/react/outline"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookOpen, faBookReader, faPencilAlt, faReply, faTrashAlt, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { faBookOpen, faBookReader, faPencilAlt, faReply, faSave, faTrashAlt, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { dbService, firebaseInstance } from "../fBase";
 import NoteFactory from "./NoteFactory";
 import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
+import { IoTelescopeSharp } from "react-icons/io5";
 
 const Container = styled.div`
   position: relative;
@@ -193,10 +194,11 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
     e.preventDefault();
     if (answer.userId === userObj.uid) {
       window.confirm("정말 지우실건가요?") && 
-      dbService.collection("answers").doc(answer.answerId).delete().then(() => {
+      dbService.collection("answers").doc(`${answer.answerId}`).delete().then(() => {
         dbService.collection("main").doc("counts").update({
           answers: firebaseInstance.firestore.FieldValue.increment(-1)
         })
+        alert('삭제되었습니다.')
       })
     }
   }
@@ -271,7 +273,9 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
         ? (
         <>
           <IconBox onClick={onClickEdit}>
-            <FontAwesomeIcon style={{marginLeft: "5px"}} icon={faPencilAlt} />
+            {editState
+            ? <FontAwesomeIcon style={{marginLeft: "5px"}} icon={faSave} />
+            : <FontAwesomeIcon style={{marginLeft: "5px"}} icon={faPencilAlt} />}
           </IconBox>
           <IconBox onClick={onClickDelete}>
             <FontAwesomeIcon style={{marginLeft: "5px"}} icon={faTrashAlt} />
@@ -281,10 +285,10 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
         : (
           <>
             {userObj.friends && !userObj.friends.includes(answer.userId) && 
-            <IconBox>
-              <FontAwesomeIcon onClick={() => {
-                onClicekFriend(answer)
-              }} icon={faUserPlus} />
+            <IconBox onClick={() => {
+              onClicekFriend(answer)
+            }}>
+              <IoTelescopeSharp />
             </IconBox>
             }
             {userObj.bookmarks && userObj.bookmarks.includes(answer.answerId)

@@ -6,6 +6,7 @@ import styled from "styled-components";
 import Loading from "../components/Loading";
 import Question from "../components/Question";
 import Search from "../components/Search";
+import { dbService } from "../fBase";
 
 const Container = styled.div`
     padding-top: 30px;
@@ -55,12 +56,13 @@ const LastQuestion = styled.div`
     padding: 15px 0;
 `;
 
-const Questions = ({questionArray, userObj, answerCount}) => {
+const Questions = ({questionArray, userObj}) => {
     const history = useHistory();
     const [isLoading, setIsLoading] = useState(true)
     const [questions, setQuestions] = useState([]);
     const [searchWord, setSearchWord] = useState("");
     const [currentPage, setCurrentPage] = useState(1)
+    const [answerCount, setAnswerCount] = useState('');
 
     const currentPosts = (posts) => {
       let currentPosts = 0;
@@ -69,15 +71,13 @@ const Questions = ({questionArray, userObj, answerCount}) => {
     }
   
     const getQuestions = async () => {
-    //     await dbService.collection("questions").get()
-    //     .then(querySnapshot => {
-    //         const questionArray = querySnapshot.docs.map(doc => ({
-    //             id: doc.questionId,
-    //             ...doc.data()
-    //         }))
-            setQuestions(questionArray.sort(() => Math.random() - 0.5))
-            setIsLoading(!isLoading)
-    //     })
+        dbService.collection("main").doc("counts")
+        .onSnapshot((snapshot) => {
+            const countData = snapshot.data();
+            setAnswerCount(countData.answers);
+        });
+        setQuestions(questionArray.sort(() => Math.random() - 0.5))
+        setIsLoading(!isLoading)
     }
 
     const addPage = e => {

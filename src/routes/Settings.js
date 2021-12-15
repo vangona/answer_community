@@ -51,6 +51,20 @@ const ProfileForm = styled.form`
     align-items: center;
 `;
 
+const PasswordForm = styled.form`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;
+
+const ProfileBox = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+`;
+
 const ProfileInput = styled.input`
     font-family: Kyobo Handwriting;
 `;
@@ -157,6 +171,11 @@ const QnaSubmitBtn = styled.button`
     }
 `;
 
+const Error = styled.span`
+    font-size: 0.8rem;
+    margin: 10px;
+`;
+
 const Settings = ({ refreshUser, userObj, refreshBio }) => {
     const history = useHistory();
     const [displayName, setDisplayName] = useState("");
@@ -166,6 +185,8 @@ const Settings = ({ refreshUser, userObj, refreshBio }) => {
     const [nameState, setNameState] = useState(false);
     const [emailState, setEmailState] = useState(false);
     const [passwordState, setPasswordState] = useState(false);
+    const [passwordCheck, setPasswordCheck] = useState('');
+    const [error, setError] = useState('');
 
     const onClickCredit = e => {
         history.push("/credit");
@@ -184,6 +205,9 @@ const Settings = ({ refreshUser, userObj, refreshBio }) => {
         }
         if (e.target.getAttribute("name") === "password") {
             setPassword(e.target.value)
+        }
+        if (e.target.getAttribute("name") === "passwordCheck") {
+            setPasswordCheck(e.target.value)
         }
     }
 
@@ -225,12 +249,17 @@ const Settings = ({ refreshUser, userObj, refreshBio }) => {
 
     const onSubmitPassword = async (e) => {
         e.preventDefault();
-        if (window.confirm("비밀번호를 변경할까요?")) 
-        authService.currentUser.updatePassword(password).then(()=>{
-            alert("비밀번호 변경에 성공했습니다.")
-            refreshUser();
-            setPassword("");
-        })
+        if (password === passwordCheck) {
+            if (window.confirm("비밀번호를 변경할까요?")) 
+            authService.currentUser.updatePassword(password).then(()=>{
+                alert("비밀번호 변경에 성공했습니다.")
+                refreshUser();
+                setPassword("");
+                setError('');
+            })
+        } else {
+            setError('비밀번호가 다릅니다.');
+        }
     }
 
     const onReport = async e => {
@@ -270,7 +299,6 @@ const Settings = ({ refreshUser, userObj, refreshBio }) => {
             <Title>
                 {userObj.displayName}의 서랍장
             </Title>
-            <ProfileBio userObj={userObj} refreshBio={refreshBio} />
             <ProfileContainer>
                 {!(emailState | passwordState) && 
                 <> 
@@ -306,10 +334,18 @@ const Settings = ({ refreshUser, userObj, refreshBio }) => {
                 </>
                 }
                 {passwordState &&
-                <ProfileForm onSubmit={onSubmitPassword}>
-                    <ProfileInput required name="password" onChange={onChange} value={password} type="password" />
+                <PasswordForm onSubmit={onSubmitPassword}>
+                    <ProfileBox>
+                        <ProfileLabel name="password">비밀번호 : </ProfileLabel>
+                        <ProfileInput required name="password" onChange={onChange} value={password} type="password" />
+                    </ProfileBox>
+                    <ProfileBox>
+                        <ProfileLabel name="passwordCheck">비밀번호 확인 : </ProfileLabel>
+                        <ProfileInput required name="passwordCheck" onChange={onChange} value={passwordCheck} type="password" />
+                    </ProfileBox>
+                    <Error>{error}</Error>
                     <ProfileSubmitBtn value="변경하기" type="submit" name="password" />
-                </ProfileForm>
+                </PasswordForm>
                 }
             </ProfileContainer>
             <BtnContainer>

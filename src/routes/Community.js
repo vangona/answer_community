@@ -33,8 +33,7 @@ const Community = ({userObj, refreshFriends, refreshBookmarks, noteData}) => {
     }
 
     const getSomeoneAnswers = async () => {
-        userObj.bookmarks.length && await dbService.collection("answers").where("answerId", "in", userObj.bookmarks).get()
-        .then(snapshot => {
+        userObj.bookmarks && dbService.collection("answers").where("answerId", "in", userObj.bookmarks).onSnapshot(snapshot => {
             const someoneAnswerArray = snapshot.docs.map(doc => ({
                 id: doc.answerId,
                 ...doc.data()    

@@ -1,15 +1,18 @@
 import { faPencilAlt, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react/cjs/react.development";
 import styled from "styled-components";
 import { dbService } from "../fBase";
+import Loading from "./Loading";
 
 const Container = styled.div`
     position: relative;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 80%;
     padding: 20px;
     justify-content: center;
     align-items: center;
@@ -25,7 +28,7 @@ const EditBtn = styled.button`
     color: white;
     transition: all 0.5s ease-in-out;
     margin-top: 10px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     :hover {
         cursor: pointer;
         color: var(--gold);
@@ -50,6 +53,7 @@ const BioLine = styled.hr`
 `;
 
 const BioContent = styled.div`
+    margin-top: 5px;
     color: white;
 `;
 
@@ -58,48 +62,92 @@ const BioTextarea = styled.textarea`
     min-height: 100px;
 `;
 
-const ProfileBio = ({ userObj, refreshBio }) => {
+const TextCounter = styled.span`
+    margin-top: 10px;
+`;
+
+const ProfileBio = ({ userObj, refreshBio, isProfile }) => {
+    const { id } = useParams();
+    const [isLoading, setIsLoading] = useState(true);
     const [editState, setEditState] = useState(false);
     const [bio, setBio] = useState('');
+    const [count, setCount] = useState(0);
 
     const onClickEdit = () => {
         setEditState(!editState)
         setBio(userObj.bio);
         if (editState && bio !== userObj.bio) {
             window.confirm('소개를 바꾸시겠어요?') &&
-            dbService.collection("users").doc(`${userObj.uid}`)
+            dbService.collection("profiles").doc(`${userObj.uid}`)
             .update({
                 bio,
             })
-            .then(refreshBio(bio))            
+            .then(() => {
+                refreshBio(bio)
+                setCount(bio.length)
+            })            
         }
     }
 
     const onChange = (e) => {
-        setBio(e.target.value)
+        setBio(e.target.value);
+        setCount(e.target.value.length);
     }
+
+    const getBio = async () => {
+        await dbService.collection("profiles").doc(`${id}`).get().then(snapshot => {
+            const data = snapshot.data();
+            setBio(data.bio);
+            setIsLoading(false);
+        })
+    };
+
+    useEffect(() => {
+        if (!isProfile) {
+            getBio();
+        } else {
+            setIsLoading(false);
+        }
+    }, [])
 
     return (
         <Container>
-            <BioContainer>
-                <BioTitle>
-                    소개
-                </BioTitle>
-                <BioLine />
-            {editState 
-            ? <BioTextarea onChange={onChange} value={bio} />
+            {isLoading
+            ? ''
             : 
-                <BioContent>
-                    {userObj.bio}
-                </BioContent>
-            }
-            <EditBtn onClick={onClickEdit}>
+            <>
+                <BioContainer>
+                    <BioTitle>
+                        소개
+                    </BioTitle>
+                    <BioLine />
                 {editState 
-                ? <FontAwesomeIcon icon={faSave} />
-                : <FontAwesomeIcon icon={faPencilAlt} />
+                ? 
+                <>
+                <BioTextarea maxLength={200} onChange={onChange} value={bio} />
+                <TextCounter>{count} / 200</TextCounter>
+                </>
+                : 
+                    <BioContent>
+                        {isProfile 
+                        ? userObj.bio
+                        : bio
+                        ? bio
+                        : "소개말이 없습니다."
+                        }                    
+                    </BioContent>
                 }
-            </EditBtn>
-            </BioContainer>
+                {isProfile &&
+                <EditBtn onClick={onClickEdit}>
+                    {editState 
+                    ? <FontAwesomeIcon icon={faSave} />
+                    : <FontAwesomeIcon icon={faPencilAlt} />
+                    }
+                </EditBtn>
+                }
+                </BioContainer>
+            </>
+            }
         </Container>
     )
 }

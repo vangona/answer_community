@@ -99,7 +99,7 @@ const Dot = styled.div`
     }
 `;
 
-const Home = ({ userObj, answerCount, refreshFriends, refreshBookmarks }) => {
+const Home = ({ userObj, refreshFriends, refreshBookmarks, answerCount }) => {
   const [isLoading, setISLoading] = useState(true);
   const [answers, setAnswers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1)
@@ -127,7 +127,7 @@ const Home = ({ userObj, answerCount, refreshFriends, refreshBookmarks }) => {
     return randArray;
   };
 
-  const getData = () => {
+  const getData = async () => {
     if (randomState) {
       setDiceState(true);
       setTimeout(() => {

@@ -25,7 +25,7 @@ const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFri
                 <Navigation />
                 <Switch>
                     <Route exact path="/" >
-                        <Home userObj={userObj} answerCount={answerCount} refreshFriends={refreshFriends} refreshBookmarks={refreshBookmarks} />
+                        <Home userObj={userObj} refreshFriends={refreshFriends} refreshBookmarks={refreshBookmarks} answerCount={answerCount} />
                     </Route>
                     <Route exact path="/auth" >
                         <Auth />
@@ -43,10 +43,10 @@ const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFri
                         <AnswerDetail userObj={userObj} refreshFriends={refreshFriends} refreshBookmarks={refreshBookmarks} />
                     </Route>
                     <Route exact path="/myanswers" >
-                        <MyAnswers questionArray={questionArray} userObj={userObj} />
+                        <MyAnswers questionArray={questionArray} userObj={userObj} refreshBio={refreshBio} />
                     </Route>
                     <Route exact path="/questions" >
-                        <Questions answerCount={answerCount} questionArray={questionArray} userObj={userObj} />
+                        <Questions questionArray={questionArray} userObj={userObj} />
                     </Route>
                     <Route exact path="/question/:id" >
                         <QuestionDetail userObj={userObj} refreshFriends={refreshFriends} refreshBookmarks={refreshBookmarks} />
