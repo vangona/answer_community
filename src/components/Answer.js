@@ -27,8 +27,8 @@ const Container = styled.div`
   opacity: 70%;
   transition: 0.3s all ease-in-out;
   transform: skewX(-0.5deg);
+  z-index: 1;
   :hover {
-      cursor: pointer;
       color: var(--main-color);
       transform: skew(0, 0);
       opacity: 95%;
@@ -59,6 +59,7 @@ const InfoContainer = styled.div`
   bottom: 10px;
   right: 15px;
   font-size: 0.8rem;
+  z-index: 9;
 `;
 
 const CreatedAt = styled.span`
@@ -79,6 +80,7 @@ const WriterContainer = styled.div`
   align-items: center;
   justify-content: flex-end;
   color: black;
+  z-index: 9;
 `;
 
 const Writer = styled.span`
@@ -107,6 +109,11 @@ const Content = styled.div`
   font-size: 0.8rem;
   color: black;
   box-sizing: border-box;
+  transition: all 0.5s ease-in-out;
+  :hover {
+    cursor: pointer;
+    color: var(--gold);
+  }
 `;
 
 const IconBox = styled.div`
@@ -116,6 +123,7 @@ const IconBox = styled.div`
   margin-left: 5px;
   color: inherit;
   transition: 0.5s all ease-in-out;
+  z-index: 9;
   :hover {
     color: var(--gold);
     cursor: pointer;
@@ -133,6 +141,7 @@ const ReplyIcon = styled.div`
   bottom: 10px;
   left: 10px;
   font-size: 0.8rem;
+  z-index: 9;
   :hover {
     color: var(--gold);
     cursor: pointer;
@@ -144,6 +153,7 @@ const EditInput = styled.textarea`
   font-size: 0.7rem;
   width: 90%;
   min-height: 100px;
+  z-index: 9;
 `;
 
 const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
@@ -242,17 +252,19 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
   }
 
   const onClickAnswer = e => {
-    if (id) {
-      if (id !== answer.answerId) {
+    if (!editState) {
+      if (id) {
+        if (id !== answer.answerId) {
+          history.push(`/answer/${answer.answerId}`)
+        }
+      } else {
         history.push(`/answer/${answer.answerId}`)
       }
-    } else {
-      history.push(`/answer/${answer.answerId}`)
     }
   }
 
   return (
-    <Container onClick={onClickAnswer} style={{margin: `${Math.random() * 10 + 7}px` ,left: `${Math.random() * 8 - 4}%`}}>
+    <Container style={{margin: `${Math.random() * 10 + 7}px` ,left: `${Math.random() * 8 - 4}%`}}>
       <Question onClick={onClickDetail}>{answer.question}</Question>
       <InfoContainer>
         {answer.userId === userObj.uid 
@@ -306,7 +318,7 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
       <WriterContainer>
         <Writer onClick={onClickUser}>- {answer.userName}{answer.isPrivate && " (나에게만 보임)"}</Writer>
       </WriterContainer>
-      <Content>
+      <Content onClick={onClickAnswer}>
         {editState 
         ? <EditInput autoFocus onChange={onChange} value={changedAnswer} />
         : answer.answer}

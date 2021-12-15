@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { authService, dbService } from "../fBase";
 import styled from "styled-components";
 import { useHistory } from "react-router";
+import ProfileBio from "../components/ProfileBio";
 
 const Container = styled.div`
     display: flex;
@@ -156,7 +157,7 @@ const QnaSubmitBtn = styled.button`
     }
 `;
 
-const Settings = ({ refreshUser, userObj }) => {
+const Settings = ({ refreshUser, userObj, refreshBio }) => {
     const history = useHistory();
     const [displayName, setDisplayName] = useState("");
     const [email, setEmail] = useState("");
@@ -269,7 +270,7 @@ const Settings = ({ refreshUser, userObj }) => {
             <Title>
                 {userObj.displayName}의 서랍장
             </Title>
-
+            <ProfileBio userObj={userObj} refreshBio={refreshBio} />
             <ProfileContainer>
                 {!(emailState | passwordState) && 
                 <> 
