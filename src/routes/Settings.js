@@ -171,6 +171,24 @@ const QnaSubmitBtn = styled.button`
     }
 `;
 
+const PurchaseBtn = styled.a`
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+    border-radius: 15px;
+    padding: 5px 10px;
+    border: 1px solid rgba(255,255,255,0.5);
+    color: white;
+    background-color: transparent;
+    font-family: Kyobo Handwriting;
+    transition: 0.5s all ease-in-out;
+    text-decoration: none;
+    :hover {
+        cursor: pointer;
+        border: 1px solid var(--gold);
+        color: var(--gold);
+    }
+`;
+
 const Error = styled.span`
     font-size: 0.8rem;
     margin: 10px;
@@ -351,6 +369,7 @@ const Settings = ({ refreshUser, userObj, refreshBio }) => {
             <BtnContainer>
                 <ManualBtn onClick={onClickManual}>서랍장 사용 설명서</ManualBtn>
                 <CreditBtn onClick={onClickCredit}>명예의 전당</CreditBtn>
+                <PurchaseBtn target="_blank" href="https://smartstore.naver.com/myowndrawer/products/5772880639">책 선물 & 구매하러 가기</PurchaseBtn>
             </BtnContainer>
             <QnaContainer>
                 <QnaLabel>문의하기 & 버그리포트</QnaLabel>
