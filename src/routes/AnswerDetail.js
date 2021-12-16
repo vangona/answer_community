@@ -36,7 +36,7 @@ const NotesConatiner = styled.div`
 
 const BackBtn = styled.button`
   display: flex;
-  position: absolute;
+  position: fixed;
   bottom: 30px;
   left: 20px;
   border: none;

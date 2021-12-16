@@ -9,7 +9,7 @@ import { dbService } from "../fBase";
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    margin-top: 40px;
+    margin-top: 50px;
     padding: 10px 0; 
     justify-content: flex-start;
     align-items: center;
@@ -33,7 +33,7 @@ const Community = ({userObj, refreshFriends, refreshBookmarks, noteData}) => {
     }
 
     const getSomeoneAnswers = async () => {
-        userObj.bookmarks && dbService.collection("answers").where("answerId", "in", userObj.bookmarks).onSnapshot(snapshot => {
+        userObj.bookmarks.length && dbService.collection("answers").where("answerId", "in", userObj.bookmarks).onSnapshot(snapshot => {
             const someoneAnswerArray = snapshot.docs.map(doc => ({
                 id: doc.answerId,
                 ...doc.data()    

@@ -35,7 +35,7 @@ const NavComponent = styled.div`
 `;
 
 const NavTitle = styled.span`
-    font-size: 0.5rem;
+    font-size: 0.7rem;
 `;
 
 const NavBtn = styled(animated.button)`

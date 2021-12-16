@@ -38,7 +38,7 @@ const Title = styled.div`
     text-align: center;
     word-break: keep-all;
     font-family: Jeju Myeongjo;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     :hover {
         cursor: pointer;
     }

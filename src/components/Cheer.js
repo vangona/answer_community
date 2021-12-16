@@ -57,10 +57,10 @@ const CheerPhrase = styled.div`
     align-items: center;
     justify-content: center;
     text-align: center;
-    width: 80%;
+    width: 90%;
     word-break: keep-all;
     line-height: 25px;
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     font-family: Kyobo Handwriting;
 `;
 
@@ -75,7 +75,7 @@ const Cheer = () => {
         to: {
             minHeight: cheerState ? '100px' : '0px',
             padding: cheerState ? '30px' : '0px',
-            opacity: 0.5,
+            opacity: 0.7,
             y: 0
         }
     })

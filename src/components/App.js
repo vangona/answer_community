@@ -216,7 +216,7 @@ function App() {
   useEffect(() => {
     if (isMobile) {
         const htmlCss = document.querySelector("html")
-        htmlCss.style.fontSize = "16px";
+        htmlCss.style.fontSize = "18px";
     }
     authService.onAuthStateChanged(async (user) => {
       if (user) {

@@ -1,4 +1,4 @@
-import { faChevronLeft, faEdit, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -24,7 +24,7 @@ const Title = styled.div`
     margin: 20px;
     display: flex;
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-family: Kyobo Handwriting;
     flex-direction: column;
 `;
@@ -61,7 +61,7 @@ const WriteBtn = styled.button`
     background: none;
     border: none;
     color: white;
-    font-size: 1rem;
+    font-size: 0.8rem;
     transition: all 0.5s ease-in-out;
     z-index: 9;
     :hover {

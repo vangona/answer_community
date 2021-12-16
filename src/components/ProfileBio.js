@@ -1,8 +1,7 @@
 import { faPencilAlt, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react/cjs/react.development";
 import styled from "styled-components";
 import { dbService } from "../fBase";
 import Loading from "./Loading";
@@ -45,7 +44,7 @@ const BioContainer = styled.div`
 
 const BioTitle = styled.h1`
     color: white;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 `;
 
 const BioLine = styled.hr`
@@ -55,6 +54,7 @@ const BioLine = styled.hr`
 const BioContent = styled.div`
     margin-top: 5px;
     color: white;
+    font-size: 1rem;
 `;
 
 const BioTextarea = styled.textarea`

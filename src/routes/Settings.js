@@ -85,12 +85,12 @@ const ProfileSubmitBtn = styled.input`
 
 const BtnContainer = styled.div`
     display: flex;
-    gap: 10px;
+    gap: 5px;
 `;
 
 const ManualBtn = styled.button`
     margin-bottom: 10px;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     border-radius: 15px;
     padding: 5px 10px;
     border: 1px solid rgba(255,255,255,0.5);
@@ -107,7 +107,7 @@ const ManualBtn = styled.button`
 
 const CreditBtn = styled.button`
     margin-bottom: 10px;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     border-radius: 15px;
     padding: 5px 10px;
     border: 1px solid rgba(255,255,255,0.5);
@@ -124,7 +124,7 @@ const CreditBtn = styled.button`
 
 const LogOutBtn = styled.button`
     margin-top: 10px;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     border-radius: 15px;
     padding: 5px 10px;
     border: 1px solid rgba(255,255,255,0.5);
@@ -159,7 +159,7 @@ const QnaInput = styled.textarea`
 
 const QnaSubmitBtn = styled.button`
     margin-top: 10px;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     border-radius: 10px;
     padding: 5px 10px;
     border: 1px solid rgba(0,0,0,0.5);
@@ -172,8 +172,10 @@ const QnaSubmitBtn = styled.button`
 `;
 
 const PurchaseBtn = styled.a`
+    display: flex;
+    align-items: center;
     margin-bottom: 10px;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     border-radius: 15px;
     padding: 5px 10px;
     border: 1px solid rgba(255,255,255,0.5);
