@@ -13,7 +13,7 @@ const Container = styled.div`
     gap: 15px;
 `;
 
-const Pic = styled.div``;
+const Pic = styled.img``;
 
 const Notice = styled.div`
     font-family: Kyobo Handwriting;
