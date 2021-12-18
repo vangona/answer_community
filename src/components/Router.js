@@ -16,6 +16,7 @@ import NotesUser from "../routes/NotesUser";
 import NotesAnswer from "../routes/NotesAnswer";
 import Manual from "../routes/Manual";
 import AnswerDetail from "../routes/AnswerDetail";
+import NotFound from "./NotFound";
 
 const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFriends, answerCount, refreshBookmarks, refreshBio }) => {
     return (
@@ -66,10 +67,14 @@ const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFri
                     <Route exact path="/signout" >
                         <SignOut />
                     </Route>
-                </Switch>
-                <Switch>
                     <Route exact path="/questionregister" >
-                        <QuestionRegister userObj={userObj} />
+                        {userObj.uid === "oaQ2Ruq5mVZbFDb9t5E2fukKhox2"
+                            ? <QuestionRegister userObj={userObj} />
+                            : <NotFound />
+                        }                            
+                    </Route>
+                    <Route>
+                        <NotFound />
                     </Route>
                 </Switch>
             </>

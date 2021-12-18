@@ -6,6 +6,7 @@ import Loading from "./Loading";
 import { setToken } from "./Messaginginit";
 import AppRouter from "./Router";
 import { isMobile } from "react-device-detect";
+import ErrorBoundary from "./ErrorBoundary";
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -299,16 +300,18 @@ function App() {
   }
 
   return (
-    <Container>
-      <GlobalStyle />
-      {init 
-      ? 
-      <>
-        <AppRouter questionArray={questionArray} isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} refreshFriends={refreshFriends} refreshBookmarks={refreshBookmarks} refreshBio={refreshBio} answerCount={answerCount} />
-      </>
-      : <Loading />
-        }
-    </Container>
+    <ErrorBoundary>
+        <Container>
+        <GlobalStyle />
+        {init 
+        ? 
+        <>
+            <AppRouter questionArray={questionArray} isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} refreshFriends={refreshFriends} refreshBookmarks={refreshBookmarks} refreshBio={refreshBio} answerCount={answerCount} />
+        </>
+        : <Loading />
+            }
+        </Container>
+`    </ErrorBoundary>
   );
 }
 
