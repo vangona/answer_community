@@ -105,7 +105,6 @@ const MyAnswers = ({userObj, refreshBio}) => {
     }
 
     useEffect(()=>{
-        throw new Error("에러 확인")
         getMyAnswers();
     }, [])
 

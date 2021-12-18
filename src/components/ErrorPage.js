@@ -13,7 +13,9 @@ const Container = styled.div`
     gap: 15px;
 `;
 
-const Pic = styled.img``;
+const Pic = styled.img`
+    width: 50%;
+`;
 
 const Notice = styled.div`
     font-family: Kyobo Handwriting;
@@ -55,9 +57,10 @@ const ErrorPage = () => {
 
     return (
         <Container>
+            <Pic src="https://cdn.jsdelivr.net/gh/vangona/answer_community/src/img/error_mouse.png" />
             <Notice>
                 {error} {<br />}
-                에러는 주인장에게 전달되었습니다 :)
+                에러가 주인장에게 전달되었습니다. <br/>
             </Notice>
             <BackBtn onClick={onClick}>
                 나의 서랍장으로 돌아가기
