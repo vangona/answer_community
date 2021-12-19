@@ -147,6 +147,15 @@ const ReplyIcon = styled.div`
   }
 `;
 
+const PrivateBtn = styled.button`
+  font-family: Kyobo Handwriting;
+  background: none;
+  border: none;
+  :hover {
+    cursor: pointer;
+  }
+`;
+
 const EditInput = styled.textarea`
   line-height: 17px;
   font-size: 0.7rem;
@@ -251,6 +260,15 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
     setChangedAnswer(e.target.value)
   }
 
+  const onClickPrivate = async () => {
+    window.confirm('공개 상태를 바꾸시겠어요?') &&
+    await dbService.collection("answers").doc(`${answer.answerId}`).update({
+      isPrivate: !answer.isPrivate
+    }).then(() => {
+      alert('성공적으로 변경되었습니다!')
+    })
+  }
+
   const onClickAnswer = e => {
     if (!editState) {
       if (id) {
@@ -270,6 +288,12 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
         {answer.userId === userObj.uid 
         ? (
         <>
+          <PrivateBtn onClick={onClickPrivate}>
+            {answer.isPrivate 
+              ? "공개하기"
+              : "나만 보기"
+            }
+          </PrivateBtn>
           <IconBox onClick={onClickEdit}>
             {editState
             ? <FontAwesomeIcon style={{marginLeft: "5px"}} icon={faSave} />
