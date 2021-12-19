@@ -5,7 +5,6 @@ import styled, { keyframes } from "styled-components";
 import Answer from "../components/Answer";
 import Cheer from "../components/Cheer";
 import Loading from "../components/Loading";
-import Search from "../components/Search";
 import { dbService } from "../fBase";
 
 const Container = styled.div`
@@ -17,22 +16,22 @@ const Container = styled.div`
   background-color: var(--main-color);
 `;
 
-const RandomBtn = styled.button`
-    margin-bottom: 10px;
-    font-size: 0.8rem;
-    border-radius: 15px;
-    padding: 5px 10px;
-    border: 1px solid rgba(255,255,255,0.5);
-    color: white;
-    background-color: transparent;
-    font-family: Kyobo Handwriting;
-    transition: 0.5s all ease-in-out;
-    :hover {
-        cursor: pointer;
-        border: 1px solid var(--gold);
-        color: var(--gold);
-    }
-`;
+// const RandomBtn = styled.button`
+//     margin-bottom: 10px;
+//     font-size: 0.8rem;
+//     border-radius: 15px;
+//     padding: 5px 10px;
+//     border: 1px solid rgba(255,255,255,0.5);
+//     color: white;
+//     background-color: transparent;
+//     font-family: Kyobo Handwriting;
+//     transition: 0.5s all ease-in-out;
+//     :hover {
+//         cursor: pointer;
+//         border: 1px solid var(--gold);
+//         color: var(--gold);
+//     }
+// `;
 
 const AddBtn = styled.button`
     background-color: transparent;
@@ -178,29 +177,29 @@ const Home = ({ userObj, refreshFriends, refreshBookmarks, answerCount }) => {
     }
   }
 
-  const onToggleRandom = e => {
-    if (randomState) {
-      getData();
-    };
-    setRandomState(!randomState);
-  };
+  // const onToggleRandom = e => {
+  //   if (randomState) {
+  //     getData();
+  //   };
+  //   setRandomState(!randomState);
+  // };
 
-  const onSearch = async (e) => {
-    await dbService.collection("answers").where("isPrivate", "==", false).where("answer", "array-contains", searchWord).get()
-    .then(snapshot => {
-      console.log(snapshot.docs)
-      const answerArray = snapshot.docs.map(doc => ({
-        id:doc.answerId,
-        ...doc.data(),
-      }));
-      answerArray.sort((a, b) => {
-        if(a.createdAt > b.createdAt) return -1;
-        if(a.createdAt === b.createdAt) return 0;
-        if(a.createdAt < b.createdAt) return 1;
-      });
-      setAnswers(answerArray)
-    });
-  }
+  // const onSearch = async (e) => {
+  //   await dbService.collection("answers").where("isPrivate", "==", false).where("answer", "array-contains", searchWord).get()
+  //   .then(snapshot => {
+  //     console.log(snapshot.docs)
+  //     const answerArray = snapshot.docs.map(doc => ({
+  //       id:doc.answerId,
+  //       ...doc.data(),
+  //     }));
+  //     answerArray.sort((a, b) => {
+  //       if(a.createdAt > b.createdAt) return -1;
+  //       if(a.createdAt === b.createdAt) return 0;
+  //       if(a.createdAt < b.createdAt) return 1;
+  //     });
+  //     setAnswers(answerArray)
+  //   });
+  // }
 
   useEffect(() => {
     getData();

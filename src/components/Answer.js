@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { MailIcon } from "@heroicons/react/outline"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookOpen, faBookReader, faPencilAlt, faReply, faSave, faTrashAlt, faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { faBookOpen, faBookReader, faPencilAlt, faReply, faSave, faTrashAlt, faUserFriends } from "@fortawesome/free-solid-svg-icons";
 import { dbService, firebaseInstance } from "../fBase";
 import NoteFactory from "./NoteFactory";
 import { useHistory } from "react-router";
 import { useParams } from "react-router-dom";
-import { IoTelescopeSharp } from "react-icons/io5";
 
 const Container = styled.div`
   position: relative;
@@ -288,7 +286,7 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
             <IconBox onClick={() => {
               onClicekFriend(answer)
             }}>
-              <IoTelescopeSharp />
+              <FontAwesomeIcon icon={faUserFriends} />
             </IconBox>
             }
             {userObj.bookmarks && userObj.bookmarks.includes(answer.answerId)

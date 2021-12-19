@@ -4,7 +4,6 @@ import { useSpring, animated } from "react-spring";
 import { authService } from "../fBase";
 import { useState } from "react";
 import { config } from "@fortawesome/fontawesome-svg-core";
-import { PaperAirplaneIcon } from "@heroicons/react/outline"
 
 
 const Container = styled(animated.div)`

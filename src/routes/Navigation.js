@@ -1,10 +1,9 @@
-import { faBars, faChevronLeft, faChevronRight, faChevronUp, faCog, faDoorOpen, faEdit, faHome, faInbox, faQuestion, faUserFriends } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faChevronRight, faCog, faHome, faInbox, faUserFriends } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { useSpring, animated, config } from "react-spring"
-import { authService } from "../fBase";
 
 const Container = styled(animated.div)`
     position: fixed;

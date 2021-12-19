@@ -229,7 +229,15 @@ function App() {
             const countData = snapshot.data();
             setAnswerCount(countData.answers);
         });
-        const { bio } = (await dbService.collection('profiles').doc(`${user.uid}`).get()).data();
+
+        let bio;
+        await dbService.collection('profiles').doc(`${user.uid}`).get()
+        .then((snapshot) => {
+            bio = snapshot.data().bio;
+        }).catch(() => {
+            bio = ''
+        });
+
         await dbService.collection("users").doc(`${user.uid}`).get()
         .then(snapshot => {
             const userData= snapshot.data()

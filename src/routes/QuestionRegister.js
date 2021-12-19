@@ -150,6 +150,7 @@ const QuestionRegister = ({userObj}) => {
                 isPassword: false,
                 initCode: `${randomstring}@drawer.book`,
                 friends: [],
+                bookmarks: [],
                 token: "",
             }
             await dbService.collection("users").doc(`${data.user.uid}`).set(newUserObj).then(alert("성공했습니다."))

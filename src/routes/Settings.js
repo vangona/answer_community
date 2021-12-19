@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { authService, dbService } from "../fBase";
 import styled from "styled-components";
 import { useHistory } from "react-router";
-import ProfileBio from "../components/ProfileBio";
 
 const Container = styled.div`
     display: flex;

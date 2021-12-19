@@ -1,7 +1,6 @@
 import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import { useEffect } from "react/cjs/react.development";
 import styled from "styled-components";
 
 const Container = styled.div`

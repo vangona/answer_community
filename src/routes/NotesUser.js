@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router";
+import { useParams } from "react-router";
 import styled from "styled-components";
 import Loading from "../components/Loading";
 import NotesList from "../components/NotesList";

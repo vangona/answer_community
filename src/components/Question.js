@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { dbService, firebaseInstance } from "../fBase";
 import { v4 as uuidv4} from "uuid";
-import { PaperAirplaneIcon } from "@heroicons/react/outline"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 

@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Answer from "../components/Answer";
 import Friends from "../components/Friends";
 import Loading from "../components/Loading";
-import Notes from "../components/Notes";
 import { dbService } from "../fBase";
 
 const Container = styled.div`

@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { dbService } from "../fBase";
-import Loading from "./Loading";
 
 const Container = styled.div`
     position: relative;
@@ -79,7 +78,7 @@ const ProfileBio = ({ userObj, refreshBio, isProfile }) => {
         if (editState && bio !== userObj.bio) {
             window.confirm('소개를 바꾸시겠어요?') &&
             dbService.collection("profiles").doc(`${userObj.uid}`)
-            .update({
+            .set({
                 bio,
             })
             .then(() => {
@@ -98,6 +97,7 @@ const ProfileBio = ({ userObj, refreshBio, isProfile }) => {
         await dbService.collection("profiles").doc(`${id}`).get().then(snapshot => {
             const data = snapshot.data();
             setBio(data.bio);
+            console.log(data.bio)
             setIsLoading(false);
         })
     };
@@ -130,10 +130,12 @@ const ProfileBio = ({ userObj, refreshBio, isProfile }) => {
                 : 
                     <BioContent>
                         {isProfile 
-                        ? userObj.bio
-                        : bio
-                        ? bio
-                        : "소개말이 없습니다."
+                        ? userObj.bio 
+                            ? userObj.bio
+                            : "소개말이 없습니다."
+                        : bio !== ''
+                            ? bio
+                            : "소개말이 없습니다."
                         }                    
                     </BioContent>
                 }

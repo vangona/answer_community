@@ -1,6 +1,6 @@
 import { faCommentAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import react from "react";
+import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 
