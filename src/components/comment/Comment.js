@@ -1,5 +1,8 @@
-import React from "react";
+import { faPencilAlt, faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { dbService } from "../../fBase";
 
 const Container = styled.div`
     display: flex;
@@ -13,7 +16,26 @@ const Container = styled.div`
     color: black;
 `;
 
+const EditInput = styled.textarea`
+    height: 1rem;
+`;
+
 const Content = styled.div``;
+
+const IconContainer = styled.div`
+    display: flex;
+    gap: 5px;
+    opacity: 70%;
+`;
+
+const Icon = styled.div`
+    transition: all 0.5s ease-in-out;
+    :hover {
+        cursor: pointer;
+        color: var(--gold);
+    }
+`;
+
 const InfoContainer = styled.div`
     display: flex;
     align-items: flex-end;
@@ -23,7 +45,10 @@ const InfoContainer = styled.div`
 const Writer = styled.span``;
 const Time = styled.span``;
 
-const Comment = ({note}) => {
+const Comment = ({userObj, note}) => {
+    const [editState, setEditState] = useState(false);
+    const [editContent, setEditContent] = useState('');
+
     const dttm = new Date(note.createdAt) 
     const year = dttm.getFullYear();
     const month = dttm.getMonth() + 1;
@@ -34,10 +59,34 @@ const Comment = ({note}) => {
     const lastHours = Math.round(lastTime / 60)
     const lastDays = Math.round(lastHours / 24)
 
+    const onChange = e => {
+        setEditContent(e.target.value);
+    }
+
+    const onClickEdit = () => {
+        if (!editState) {
+            setEditContent(note.noteContent);
+        } else if (editContent !== note.noteContent) {
+            window.confirm('쪽지를 수정하시겠어요?') &&
+            dbService.collection("notes").doc(`${note.noteId}`).update({
+                noteContent: editContent
+            })
+        }
+        setEditState(!editState);
+    }
+
+    const onClickDelete = () => {
+        window.confirm('쪽지를 떼시겠어요?') &&
+        dbService.collection("notes").doc(`${note.noteId}`).delete();
+    }
+
     return (
         <Container>
             <Content>
-                {note.noteContent}
+                {editState
+                    ? <EditInput onChange={onChange} value={editContent} />
+                    : note.noteContent
+                }
             </Content>
             <InfoContainer>
                 <Writer>
@@ -54,6 +103,17 @@ const Comment = ({note}) => {
                     }
                     {note.editedAt && "(수정됨)"}
                 </Time>
+                {userObj.uid === note.writer && <IconContainer>
+                    <Icon onClick={onClickEdit}>
+                        {editState 
+                        ? <FontAwesomeIcon icon={faSave} />
+                        : <FontAwesomeIcon icon={faPencilAlt} />
+                        }
+                    </Icon>
+                    <Icon onClick={onClickDelete}>
+                        <FontAwesomeIcon icon={faTrash} />
+                    </Icon>
+                </IconContainer>}
             </InfoContainer>
         </Container>
     )

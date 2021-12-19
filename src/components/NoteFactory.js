@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { dbService } from "../fBase";
-import { PaperAirplaneIcon } from "@heroicons/react/outline"
 import { v4 as uuidv4} from "uuid";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSave } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled.div`
     margin-top: 10px;
@@ -26,15 +27,17 @@ const Title = styled.div``;
 
 const NoteTextarea = styled.textarea`
     font-size: 12px;
-    width: 95%;
+    width: 100%;
 `;
 
 const IconBox = styled.div`
     display: flex;
     width: 100%;
     justify-content: flex-end;
+    transition: all 0.5s ease-in-out;
     :hover {
         cursor: pointer;
+        color: var(--gold);
     }
 `;
 
@@ -91,12 +94,12 @@ const NoteFactory = ({answer, userObj, setNoteState}) => {
             <hr />
             <NoteTextarea value={noteContent} onChange={onChange} />
             <IconBox onClick={(e) => {
-                if(window.confirm(`${answer.answer.slice(0, 9)}${answer.answer.length > 10 ? '...' : ''}에 쪽지를 남길까요?`)){
+                if(noteContent && window.confirm(`${answer.answer.slice(0, 9)}${answer.answer.length > 10 ? '...' : ''}에 쪽지를 남길까요?`)){
                     onSubmit(e)
                 }
                 
             }}>
-                <PaperAirplaneIcon style={{width:"16px", height:"16px", transform: "rotateZ(45deg)"}} />
+                <FontAwesomeIcon icon={faSave} />
             </IconBox>
         </Container>
     )

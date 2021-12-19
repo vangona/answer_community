@@ -95,7 +95,7 @@ const AnswerDetail = ({userObj, refreshFriends, refreshBookmarks}) => {
           <NotesConatiner>
             {notes.length !== 0 
             ?
-            notes.map(note => <Comment note={note} />)
+            notes.map(note => <Comment key={note.noteId} userObj={userObj} note={note} />)
             : "아직 남겨진 쪽지가 없습니다."
             }
           </NotesConatiner>
