@@ -248,6 +248,7 @@ function App() {
                     : [],
                 bookmarks : userData.bookmarks ? userData.bookmarks : [],
                 isPassword : userData.isPassword,
+                isFirst: userData.isFirst,
                 bio,
                 displayName: (user.displayName ? user.displayName : "익명"),
                 updateProfile: (args) => user.updateProfile(args),
@@ -269,6 +270,7 @@ function App() {
       isPassword: user.isPassword,
       friends: user.friends,
       bookmarks: user.bookmarks,
+      isFirst: user.isFirst,
       bio: user.bio,
       updateProfile: (args) => user.updateProfile(args),
     });
@@ -307,6 +309,17 @@ function App() {
     });
   }
 
+  const refreshFirst = (isFirst) => {
+    const user = authService.currentUser;
+    setUserObj({
+      displayName:user.displayName,
+      uid:user.uid,
+      isPassword: user.isPassword,
+      isFirst,
+      updateProfile: (args) => user.updateProfile(args),
+    });
+  }
+
   return (
     <ErrorBoundary>
         <Container>
@@ -314,7 +327,7 @@ function App() {
         {init 
         ? 
         <>
-            <AppRouter questionArray={questionArray} isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} refreshFriends={refreshFriends} refreshBookmarks={refreshBookmarks} refreshBio={refreshBio} answerCount={answerCount} />
+            <AppRouter questionArray={questionArray} isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} refreshFriends={refreshFriends} refreshBookmarks={refreshBookmarks} refreshBio={refreshBio} refreshFirst={refreshFirst} answerCount={answerCount} />
         </>
         : <Loading />
             }

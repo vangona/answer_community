@@ -18,7 +18,7 @@ import Manual from "../routes/Manual";
 import AnswerDetail from "../routes/AnswerDetail";
 import NotFound from "./NotFound";
 
-const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFriends, answerCount, refreshBookmarks, refreshBio }) => {
+const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFriends, answerCount, refreshBookmarks, refreshBio, refreshFirst }) => {
     return (
         <Router>
             {isLoggedIn ? 
@@ -59,7 +59,7 @@ const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFri
                         <Settings refreshUser={refreshUser} userObj={userObj} refreshBio={refreshBio} />
                     </Route>
                     <Route exact path="/manual">
-                        <Manual />
+                        <Manual userObj={userObj} refreshFirst={refreshFirst} />
                     </Route>                    
                     <Route exact path="/credit">
                         <Credit />

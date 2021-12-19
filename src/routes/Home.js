@@ -1,6 +1,7 @@
 import { faDice, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import Answer from "../components/Answer";
 import Cheer from "../components/Cheer";
@@ -99,12 +100,12 @@ const Dot = styled.div`
 `;
 
 const Home = ({ userObj, refreshFriends, refreshBookmarks, answerCount }) => {
+  const history = useHistory();
   const [isLoading, setISLoading] = useState(true);
   const [answers, setAnswers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1)
   const [diceState, setDiceState] = useState(false);
   const [randomState, setRandomState] = useState(true);
-  const [searchWord, setSearchWord] = useState('');
 
   const currentPosts = (posts) => {
     let currentPosts = 0;
@@ -202,6 +203,9 @@ const Home = ({ userObj, refreshFriends, refreshBookmarks, answerCount }) => {
   // }
 
   useEffect(() => {
+    if (userObj.isFirst) {
+      history.push("/manual")
+    }
     getData();
   }, []);
 

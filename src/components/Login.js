@@ -4,6 +4,7 @@ import { useSpring, animated } from "react-spring";
 import { authService } from "../fBase";
 import { useState } from "react";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import TermModal from "./TermModal";
 
 
 const Container = styled(animated.div)`
@@ -45,6 +46,19 @@ const LoginInput = styled.input`
     }    
 `;
 
+const Notice = styled.span`
+  margin: 10px;
+  color: white;
+  font-size: 0.7rem;
+`;
+
+const Terms = styled.a`
+  text-decoration: underline;
+  :hover {
+    cursor: pointer;
+  }
+`;
+
 const LoginBtn = styled.button`
   color: var(--gold);
   background-color: transparent;
@@ -52,7 +66,7 @@ const LoginBtn = styled.button`
   padding : 3px 10px;
   border-radius: 10px;
   margin-top: 10px;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-family: Kyobo Handwriting;
   transition: 0.5s all ease-in-out;
     :hover {
@@ -90,7 +104,7 @@ const PasswordBtn = styled.div`
   opacity: 70%;
   padding: 5px;
   margin-bottom: 10px;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   :hover {
     cursor: pointer;
   }
@@ -112,6 +126,7 @@ const Login = ({setCodeState, codeState}) => {
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [modalState, setModalState] = useState(false);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -139,6 +154,11 @@ const Login = ({setCodeState, codeState}) => {
     setPassword(e.target.value)
   }
 
+
+  const closeModal = (e) => {
+    setModalState(e);
+}
+
   const animation = useSpring({
       from : {
           opacity : 0
@@ -156,6 +176,7 @@ const Login = ({setCodeState, codeState}) => {
 
   return (
     <Container style={animation}>
+      {modalState && <TermModal closeModal={closeModal} />}
       <PasswordBtn onClick={() => {
         setCodeState(!codeState)
       }}>
@@ -178,9 +199,15 @@ const Login = ({setCodeState, codeState}) => {
       </AuthConatiner>
       <Error style={errorAni}>{error}</Error>
       {code && 
-      <LoginBtn onClick={onSubmit}>
-          들어가기
-      </LoginBtn>}
+      <>
+        <Notice>
+          입장과 함께 <Terms onClick={() => {setModalState(true)}}>이용약관</Terms>에 동의합니다.
+        </Notice>
+        <LoginBtn onClick={onSubmit}>
+            들어가기
+        </LoginBtn>
+      </>
+      }
     </Container>
   );
 }

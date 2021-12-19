@@ -151,7 +151,8 @@ const QuestionRegister = ({userObj}) => {
                 initCode: `${randomstring}@drawer.book`,
                 friends: [],
                 bookmarks: [],
-                token: "",
+                token: "",  
+                isFirst: true,
             }
             await dbService.collection("users").doc(`${data.user.uid}`).set(newUserObj).then(alert("성공했습니다."))
         })

@@ -47,7 +47,7 @@ const AuthBox = styled.div`
 const Notice = styled.span`
   color: var(--gold);
   margin-bottom: 15px;
-  font-size: 0.9rem;
+  font-size: 1rem;
   z-index: 9;
   :hover {
     cursor: pointer;
