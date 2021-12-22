@@ -240,13 +240,11 @@ function App() {
 
         await dbService.collection("users").doc(`${user.uid}`).get()
         .then(snapshot => {
-            const userData= snapshot.data()
+            const userData = snapshot.data();
             setUserObj({
                 uid: user.uid,
-                friends : userData.friends 
-                    ? userData.friends 
-                    : [],
-                bookmarks : userData.bookmarks ? userData.bookmarks : [],
+                friends : userData.friends,
+                bookmarks : userData.bookmarks,
                 isPassword : userData.isPassword,
                 isFirst: userData.isFirst,
                 bio,

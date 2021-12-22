@@ -96,8 +96,11 @@ const ProfileBio = ({ userObj, refreshBio, isProfile }) => {
     const getBio = async () => {
         await dbService.collection("profiles").doc(`${id}`).get().then(snapshot => {
             const data = snapshot.data();
-            setBio(data.bio);
-            console.log(data.bio)
+            if (data) {
+                setBio(data.bio);
+            } else {
+                setBio('');
+            }
             setIsLoading(false);
         })
     };

@@ -274,7 +274,10 @@ const Settings = ({ refreshUser, userObj, refreshBio }) => {
                 alert("비밀번호 변경에 성공했습니다.")
                 refreshUser();
                 setPassword("");
+                setPasswordCheck("");
                 setError('');
+            }).catch((e) => {
+                setError(e.message);
             })
         } else {
             setError('비밀번호가 다릅니다.');
@@ -332,11 +335,12 @@ const Settings = ({ refreshUser, userObj, refreshBio }) => {
                     <ProfileSubmitBtn value="변경하기" type="submit" name="name" />
                 </ProfileForm>
                 }
-                {userObj.isPassword ? !(nameState | passwordState) && 
-                <>
-                <ProfileLabel name="email" onClick={onClick}>접속 코드 변경</ProfileLabel>
-                <hr style={{width:"70%", opacity:"70%"}} />
-                </>
+                {userObj.isPassword 
+                ? !(nameState | passwordState) && 
+                    <>
+                    <ProfileLabel name="email" onClick={onClick}>접속 코드 변경</ProfileLabel>
+                    <hr style={{width:"70%", opacity:"70%"}} />
+                    </>
                 : null
                 }
                 {emailState &&

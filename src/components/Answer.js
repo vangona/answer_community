@@ -227,12 +227,22 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
 
   const onClickBookmark = async (e) => {
     e.preventDefault();
-    await dbService.collection("users").doc(`${userObj.uid}`).update({
-      bookmarks: [...userObj.bookmarks, answer.answerId]
-    })
-    .then(() => {
-      refreshBookmarks([...userObj.bookmarks, answer.answerId])
-    })    
+    if (userObj.bookmarks.length === 0) {
+      await dbService.collection("users").doc(`${userObj.uid}`).update({
+        bookmarks: [answer.answerId]
+      })
+      .then(() => {
+        refreshBookmarks([answer.answerId])
+      })         
+    } else {
+      await dbService.collection("users").doc(`${userObj.uid}`).update({
+        bookmarks: [...userObj.bookmarks, answer.answerId]
+      })
+      .then(() => {
+        refreshBookmarks([...userObj.bookmarks, answer.answerId])
+      })  
+    }
+
   }
 
   const onDeleteBookmark = async (e) => {

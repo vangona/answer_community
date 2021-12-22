@@ -11,9 +11,10 @@ const Container = styled.div`
     background: white;
     opacity: 80%;
     border-radius: 5px;
-    padding: 5px;
+    padding: 10px;
     margin: 5px;
     color: black;
+    box-sizing: border-box;
 `;
 
 const EditInput = styled.textarea`
