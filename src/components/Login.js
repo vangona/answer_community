@@ -102,11 +102,15 @@ const PasswordInput = styled.input`
 const PasswordBtn = styled.div`
   color: white;
   opacity: 70%;
-  padding: 5px;
-  margin-bottom: 10px;
+  padding: 7px;
+  margin: 10px 0 20px 0;
   font-size: 0.8rem;
+  border: 1px solid;
+  border-radius: 10px;
+  transition: all 0.5s ease-in-out;
   :hover {
     cursor: pointer;
+    color: var(--gold);
   }
 `;
 
@@ -186,16 +190,16 @@ const Login = ({setCodeState, codeState}) => {
         }
       </PasswordBtn>
       <AuthConatiner>
-      <LoginContainer>
-        <LoginLabel style={{width: !codeState && "auto"}}>Code :</LoginLabel>
-        <LoginInput onChange={onChange} value={code} type="text" />
-      </LoginContainer>
-      {codeState && 
-        <PasswordContainer>
-          <PasswordLabel>Password :</PasswordLabel>
-          <PasswordInput value={password} onChange={onChangePassword} type="password" />
-        </PasswordContainer>
-      }
+        <LoginContainer>
+          <LoginLabel style={{width: !codeState && "auto"}}>Code :</LoginLabel>
+          <LoginInput onChange={onChange} value={code} type="text" />
+        </LoginContainer>
+        {codeState && 
+          <PasswordContainer>
+            <PasswordLabel>Password :</PasswordLabel>
+            <PasswordInput value={password} onChange={onChangePassword} type="password" />
+          </PasswordContainer>
+        }
       </AuthConatiner>
       <Error style={errorAni}>{error}</Error>
       {code && 

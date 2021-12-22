@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { dbService, firebaseInstance } from "../fBase";
 import { v4 as uuidv4} from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import { faSave } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled.div`
     display: flex;
@@ -78,8 +78,10 @@ const AnswerBtn = styled.div`
     margin-left: 5px;
     width: 20px;
     height: 20px;
+    transition: all 0.5s ease-in-out;
     :hover {
         cursor: pointer;
+        color: var(--gold);
     }
     :active {
         background-color: var(--main-color);
@@ -152,7 +154,7 @@ const Question = ({userObj, question, answerCount}) => {
                 <AnswerInput onChange={onChange} value={answer} name={question.question} type="text" />
                 )}
                 <AnswerBtn onClick={onSubmit}>
-                    <FontAwesomeIcon icon={faPencilAlt} />
+                    <FontAwesomeIcon icon={faSave} />
                 </AnswerBtn>
             </AnswerContainer>
             <AnswerContainer style={{marginBottom: "0"}}>

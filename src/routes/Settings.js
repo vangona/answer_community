@@ -256,29 +256,32 @@ const Settings = ({ refreshUser, userObj, refreshBio }) => {
         e.preventDefault();
         if (window.confirm(`${email}로 로그인 코드를 변경할까요?`)) {
         await authService.currentUser.updateEmail(email).then(()=>{
-            dbService.collection("users").doc(`${userObj.uid}`).update({
-                isPassword: true
-            }).then(()=>{
                 alert("코드 변경에 성공했습니다.", email)
                 refreshUser();
                 setEmail("");
-            })
-        })}
+        }).catch((e) => {
+            setError(e.message);
+        })
+    }
     }
 
     const onSubmitPassword = async (e) => {
         e.preventDefault();
         if (password === passwordCheck) {
-            if (window.confirm("비밀번호를 변경할까요?")) 
-            authService.currentUser.updatePassword(password).then(()=>{
-                alert("비밀번호 변경에 성공했습니다.")
-                refreshUser();
-                setPassword("");
-                setPasswordCheck("");
-                setError('');
-            }).catch((e) => {
-                setError(e.message);
-            })
+            if (window.confirm("비밀번호를 변경할까요?")) {
+                await dbService().collection("users").doc(`${userObj.uid}`).update({
+                    isPassword: true,
+                })
+                authService.currentUser.updatePassword(password).then(()=>{
+                    alert("비밀번호 변경에 성공했습니다.")
+                    refreshUser();
+                    setPassword("");
+                    setPasswordCheck("");
+                    setError('');
+                }).catch((e) => {
+                    setError(e.message);
+                })
+        }
         } else {
             setError('비밀번호가 다릅니다.');
         }
@@ -348,6 +351,7 @@ const Settings = ({ refreshUser, userObj, refreshBio }) => {
                     <ProfileInput required name="email" onChange={onChange} value={email} type="email" />
                     <ProfileLabel style={{marginTop: "5px", fontSize:"10px"}}>접속코드는 이메일 형태여야 합니다.</ProfileLabel>
                     <ProfileSubmitBtn value="변경하기" type="submit" name="email" />
+                    <Error>{error}</Error>
                 </ProfileForm>
                 }
                 {!(nameState | emailState) && 
