@@ -71,20 +71,26 @@ const ProfileBio = ({ userObj, refreshBio, isProfile }) => {
     const [editState, setEditState] = useState(false);
     const [bio, setBio] = useState('');
     const [count, setCount] = useState(0);
+    const [error, setError] = useState('');
 
-    const onClickEdit = () => {
+    const onClickEdit = async () => {
         setEditState(!editState)
         setBio(userObj.bio);
         if (editState && bio !== userObj.bio) {
-            window.confirm('소개를 바꾸시겠어요?') &&
-            dbService.collection("profiles").doc(`${userObj.uid}`)
-            .set({
-                bio,
-            })
-            .then(() => {
-                refreshBio(bio)
-                setCount(bio.length)
-            })            
+            if (window.confirm('소개를 바꾸시겠어요?')) {
+                await dbService.collection("profiles").doc(`${userObj.uid}`)
+                .set({
+                    bio,
+                })
+                .then(() => {
+                    refreshBio(bio)
+                    setCount(bio.length)
+                    alert('소개를 적었습니다 :)')
+                    setError('에러');
+                }).catch((e) => {
+                    alert(e.message);
+                })    
+            }
         }
     }
 
