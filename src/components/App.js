@@ -24,6 +24,7 @@ function App() {
   const [init, setInit] = useState(false);
   const [userObj, setUserObj] = useState(null);
   const [answerCount, setAnswerCount] = useState('');
+  const [bioData, setBioData] = useState('');
 
   const questionArray = [
     {
@@ -224,41 +225,47 @@ function App() {
         if ("serviceWorker" in navigator) {
             requestToken(user);
         }
+        
         dbService.collection("main").doc("counts")
         .onSnapshot((snapshot) => {
             const countData = snapshot.data();
             setAnswerCount(countData.answers);
+            localStorage.setItem("drawerAnswers", JSON.stringify(countData.answers));
         });
 
-        let bio;
         await dbService.collection('profiles').doc(`${user.uid}`).get()
         .then((snapshot) => {
-            bio = snapshot.data().bio;
+            if (snapshot) {
+                const { bio } = snapshot.data();
+                setBioData(bio);
+            }
         }).catch(() => {
-            bio = ''
+            setBioData('');
         });
 
-        await dbService.collection("users").doc(`${user.uid}`).get()
-        .then(snapshot => {
-            const userData = snapshot.data();
-            setUserObj({
-                uid: user.uid,
-                friends : userData.friends,
-                bookmarks : userData.bookmarks,
-                isPassword : userData.isPassword,
-                isFirst: userData.isFirst,
-                bio,
-                displayName: (user.displayName ? user.displayName : "익명"),
-                updateProfile: (args) => user.updateProfile(args),
-              })
-            setInit(true)
-        })
+        if (!userObj) {
+            await dbService.collection("users").doc(`${user.uid}`).get()
+            .then(snapshot => {
+                const userData = snapshot.data();
+                setUserObj({
+                    uid: user.uid,
+                    friends : userData.friends,
+                    bookmarks : userData.bookmarks,
+                    isPassword : userData.isPassword,
+                    isFirst: userData.isFirst,
+                    bio: bioData,
+                    displayName: (user.displayName ? user.displayName : "익명"),
+                    updateProfile: (args) => user.updateProfile(args),
+                  })
+                setInit(true)
+            })
+        }
       } else {
         setUserObj(null)
         setInit(true)
       }
     })
-  }, [])
+  }, [bioData])
 
   const refreshUser = () => {
     const user = authService.currentUser;

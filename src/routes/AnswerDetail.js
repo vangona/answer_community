@@ -96,7 +96,7 @@ const AnswerDetail = ({userObj, refreshFriends, refreshBookmarks}) => {
             {notes.length !== 0 
             ?
             notes.map(note => <Comment key={note.noteId} userObj={userObj} note={note} />)
-            : "아직 남겨진 쪽지가 없습니다."
+            : "아직 달린 메모가 없습니다."
             }
           </NotesConatiner>
           <BackBtn onClick={() => {history.goBack()}}>

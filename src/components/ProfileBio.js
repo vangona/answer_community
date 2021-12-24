@@ -71,7 +71,6 @@ const ProfileBio = ({ userObj, refreshBio, isProfile }) => {
     const [editState, setEditState] = useState(false);
     const [bio, setBio] = useState('');
     const [count, setCount] = useState(0);
-    const [error, setError] = useState('');
 
     const onClickEdit = async () => {
         setEditState(!editState)
@@ -86,7 +85,6 @@ const ProfileBio = ({ userObj, refreshBio, isProfile }) => {
                     refreshBio(bio)
                     setCount(bio.length)
                     alert('소개를 적었습니다 :)')
-                    setError('에러');
                 }).catch((e) => {
                     alert(e.message);
                 })    
@@ -142,7 +140,7 @@ const ProfileBio = ({ userObj, refreshBio, isProfile }) => {
                         ? userObj.bio 
                             ? userObj.bio
                             : "소개말이 없습니다."
-                        : bio !== ''
+                        : bio
                             ? bio
                             : "소개말이 없습니다."
                         }                    

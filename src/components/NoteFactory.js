@@ -71,7 +71,7 @@ const NoteFactory = ({answer, userObj, setNoteState}) => {
             axios.post("https://fcm.googleapis.com/fcm/send", {
                 "to": `${token}`,
                 "notification": {
-                    "title": `${answer.answer}에 쪽지가 달렸습니다.`,
+                    "title": `${answer.answer}에 메모가 달렸습니다.`,
                     "body": `${noteContent}`
                 }
             }, 
@@ -83,18 +83,18 @@ const NoteFactory = ({answer, userObj, setNoteState}) => {
                 }
             })
         })
-        alert("쪽지가 성공적으로 남겨졌습니다 :)")
+        alert("메모가 성공적으로 남겨졌습니다 :)")
         setNoteState(false);
         setNoteContent('');
     }
     }
     return (
         <Container>
-            <Title>답변에 쪽지 남기기</Title>
+            <Title>답변에 메모 달기</Title>
             <hr />
             <NoteTextarea value={noteContent} onChange={onChange} />
             <IconBox onClick={(e) => {
-                if(noteContent && window.confirm(`${answer.answer.slice(0, 9)}${answer.answer.length > 10 ? '...' : ''}에 쪽지를 남길까요?`)){
+                if(noteContent && window.confirm(`${answer.answer.slice(0, 9)}${answer.answer.length > 10 ? '...' : ''}에 메모를 달아놓을까요?`)){
                     onSubmit(e)
                 }
                 

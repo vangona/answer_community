@@ -68,7 +68,7 @@ const Comment = ({userObj, note}) => {
         if (!editState) {
             setEditContent(note.noteContent);
         } else if (editContent !== note.noteContent) {
-            window.confirm('쪽지를 수정하시겠어요?') &&
+            window.confirm('메모를 수정하시겠어요?') &&
             dbService.collection("notes").doc(`${note.noteId}`).update({
                 noteContent: editContent
             })
@@ -77,7 +77,7 @@ const Comment = ({userObj, note}) => {
     }
 
     const onClickDelete = () => {
-        window.confirm('쪽지를 떼시겠어요?') &&
+        window.confirm('메모를 떼시겠어요?') &&
         dbService.collection("notes").doc(`${note.noteId}`).delete();
     }
 

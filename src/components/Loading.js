@@ -60,7 +60,7 @@ const DotBlink = keyframes`
 
 const Title = styled.h1`
     position: absolute;
-    bottom: 55vh;
+    bottom: 60vh;
     display: flex;
     margin-bottom: 30px;
     font-family: Kyobo Handwriting;
@@ -80,7 +80,7 @@ const Drawer = styled.img`
     height: 35vh;
     width: auto;
     opacity: 80%;
-    bottom: 20vh;
+    bottom: 25vh;
     object-fit: cover;
 `;
 
@@ -92,6 +92,11 @@ const Dot = styled.div`
     :last-child {
         animation-delay: 1s;
     }
+`;
+
+const AnswerCount = styled.span`
+    position: absolute;
+    bottom: 15vh;
 `;
 
 const comment = [
@@ -110,9 +115,13 @@ const comment = [
 
 const Loading = () => {
     const [num, setNum] = useState("");
+    const [answerCount, setAnswerCount] = useState('');
+
     useEffect(() => {
-        setNum(Math.floor(Math.random()*comment.length))
+        localStorage.getItem("drawerAnswers") && setAnswerCount(JSON.parse(localStorage.getItem("drawerAnswers")));
+        setNum(Math.floor(Math.random()*comment.length));
     }, [])
+
     return (
        <LoadingBox>
            <Bulb class="loading__bulb" src="https://cdn.jsdelivr.net/gh/vangona/answer_community/src/img/loading_bulb.png" alt="" />
@@ -120,6 +129,7 @@ const Loading = () => {
                {comment[num]}<Dot>.</Dot><Dot>.</Dot><Dot>.</Dot>
             </Title>
            <Drawer class="loading__drawer" src="https://cdn.jsdelivr.net/gh/vangona/answer_community/src/img/loading_drawer.png" alt="" />
+           <AnswerCount>지금까지 {answerCount}칸의 서랍장이 정리되었습니다.</AnswerCount>
        </LoadingBox>
     )
 }
