@@ -154,7 +154,15 @@ const QuestionRegister = ({userObj}) => {
                 token: "",  
                 isFirst: true,
             }
-            await dbService.collection("users").doc(`${data.user.uid}`).set(newUserObj).then(alert("성공했습니다."))
+            
+            await data.user.updateProfile({
+                displayName: "익명",
+            })
+
+            await dbService.collection("users").doc(`${data.user.uid}`).set(newUserObj)
+            .then(() => {
+                alert("성공했습니다.")
+            })
         })
         setCode(`${randomstring}@drawer.book`)
     }

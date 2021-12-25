@@ -225,7 +225,7 @@ function App() {
         if ("serviceWorker" in navigator) {
             requestToken(user);
         }
-        
+
         dbService.collection("main").doc("counts")
         .onSnapshot((snapshot) => {
             const countData = snapshot.data();
@@ -243,23 +243,22 @@ function App() {
             setBioData('');
         });
 
-        if (!userObj) {
-            await dbService.collection("users").doc(`${user.uid}`).get()
-            .then(snapshot => {
-                const userData = snapshot.data();
-                setUserObj({
-                    uid: user.uid,
-                    friends : userData.friends,
-                    bookmarks : userData.bookmarks,
-                    isPassword : userData.isPassword,
-                    isFirst: userData.isFirst,
-                    bio: bioData,
-                    displayName: (user.displayName ? user.displayName : "익명"),
-                    updateProfile: (args) => user.updateProfile(args),
-                  })
-                setInit(true)
-            })
-        }
+        await dbService.collection("users").doc(`${user.uid}`).get()
+        .then(snapshot => {
+            const userData = snapshot.data();
+            setUserObj({
+                uid: user.uid,
+                friends : userData.friends,
+                bookmarks : userData.bookmarks,
+                isPassword : userData.isPassword,
+                isFirst: userData.isFirst,
+                bio: bioData,
+                displayName: userData.displayName,
+                updateProfile: (args) => user.updateProfile(args),
+                })
+            setInit(true)
+        })
+        
       } else {
         setUserObj(null)
         setInit(true)

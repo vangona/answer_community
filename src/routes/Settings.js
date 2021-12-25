@@ -243,8 +243,8 @@ const Settings = ({ refreshUser, userObj, refreshBio }) => {
                 userObj.updateProfile({
                     displayName
                 })
+                refreshUser();
                 setTimeout(() => {
-                    refreshUser();
                     alert("이름이 성공적으로 변경되었습니다 :)")
                 })
             })
@@ -269,7 +269,7 @@ const Settings = ({ refreshUser, userObj, refreshBio }) => {
         e.preventDefault();
         if (password === passwordCheck) {
             if (window.confirm("비밀번호를 변경할까요?")) {
-                await dbService().collection("users").doc(`${userObj.uid}`).update({
+                await dbService.collection("users").doc(`${userObj.uid}`).update({
                     isPassword: true,
                 })
                 authService.currentUser.updatePassword(password).then(()=>{

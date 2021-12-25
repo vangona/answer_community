@@ -227,7 +227,7 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
 
   const onClickBookmark = async (e) => {
     e.preventDefault();
-    if (userObj.bookmarks.length === 0) {
+    if (!userObj.bookmarks) {
       await dbService.collection("users").doc(`${userObj.uid}`).update({
         bookmarks: [answer.answerId]
       })
