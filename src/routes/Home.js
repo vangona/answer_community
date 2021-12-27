@@ -17,22 +17,22 @@ const Container = styled.div`
   background-color: var(--main-color);
 `;
 
-// const RandomBtn = styled.button`
-//     margin-bottom: 10px;
-//     font-size: 0.8rem;
-//     border-radius: 15px;
-//     padding: 5px 10px;
-//     border: 1px solid rgba(255,255,255,0.5);
-//     color: white;
-//     background-color: transparent;
-//     font-family: Kyobo Handwriting;
-//     transition: 0.5s all ease-in-out;
-//     :hover {
-//         cursor: pointer;
-//         border: 1px solid var(--gold);
-//         color: var(--gold);
-//     }
-// `;
+const RandomBtn = styled.button`
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+    border-radius: 15px;
+    padding: 5px 10px;
+    border: 1px solid rgba(255,255,255,0.5);
+    color: white;
+    background-color: transparent;
+    font-family: Kyobo Handwriting;
+    transition: 0.5s all ease-in-out;
+    :hover {
+        cursor: pointer;
+        border: 1px solid var(--gold);
+        color: var(--gold);
+    }
+`;
 
 const AddBtn = styled.button`
     background-color: transparent;
@@ -105,7 +105,7 @@ const Home = ({ userObj, refreshFriends, refreshBookmarks, answerCount }) => {
   const [answers, setAnswers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1)
   const [diceState, setDiceState] = useState(false);
-  const [randomState, setRandomState] = useState(true);
+  const [randomState, setRandomState] = useState(false);
 
   const currentPosts = (posts) => {
     let currentPosts = 0;
@@ -128,6 +128,7 @@ const Home = ({ userObj, refreshFriends, refreshBookmarks, answerCount }) => {
   };
 
   const getData = async () => {
+    console.log(1);
     if (randomState) {
       setDiceState(true);
       setTimeout(() => {
@@ -178,12 +179,9 @@ const Home = ({ userObj, refreshFriends, refreshBookmarks, answerCount }) => {
     }
   }
 
-  // const onToggleRandom = e => {
-  //   if (randomState) {
-  //     getData();
-  //   };
-  //   setRandomState(!randomState);
-  // };
+  const onToggleRandom = e => {
+    setRandomState(!randomState);
+  };
 
   // const onSearch = async (e) => {
   //   await dbService.collection("answers").where("isPrivate", "==", false).where("answer", "array-contains", searchWord).get()
@@ -207,7 +205,7 @@ const Home = ({ userObj, refreshFriends, refreshBookmarks, answerCount }) => {
       history.push("/manual")
     }
     getData();
-  }, []);
+  }, [randomState]);
 
     return (
       <Container>
@@ -216,9 +214,9 @@ const Home = ({ userObj, refreshFriends, refreshBookmarks, answerCount }) => {
         : (
           <>
             <Cheer />
-            {/* <RandomBtn onClick={onToggleRandom}>
-              {randomState ? "목록으로 보기" : "랜덤으로 보기"}
-            </RandomBtn> */}
+            <RandomBtn onClick={onToggleRandom}>
+              {randomState ? "시간 순서대로 보기" : "랜덤으로 보기"}
+            </RandomBtn>
             {answers && currentPosts(answers).map(answer => (
               <Answer key={answer.answerId} userObj={userObj} answer={answer} refreshFriends={refreshFriends} refreshBookmarks={refreshBookmarks} />
             ))

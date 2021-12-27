@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { authService, dbService } from "../fBase";
 import styled from "styled-components";
 import { useHistory } from "react-router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCrown } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled.div`
     display: flex;
@@ -105,6 +107,7 @@ const ManualBtn = styled.button`
 `;
 
 const CreditBtn = styled.button`
+    position: relative;
     margin-bottom: 10px;
     font-size: 0.7rem;
     border-radius: 15px;
@@ -188,6 +191,13 @@ const PurchaseBtn = styled.a`
         border: 1px solid var(--gold);
         color: var(--gold);
     }
+`;
+
+const Crown = styled.div`
+    position: absolute;
+    top: -10px;
+    right: -3px;
+    transform: rotate(20deg);
 `;
 
 const Error = styled.span`
@@ -377,7 +387,12 @@ const Settings = ({ refreshUser, userObj, refreshBio }) => {
             </ProfileContainer>
             <BtnContainer>
                 <ManualBtn onClick={onClickManual}>서랍장 사용 설명서</ManualBtn>
-                <CreditBtn onClick={onClickCredit}>명예의 전당</CreditBtn>
+                <CreditBtn onClick={onClickCredit}>
+                    명예의 전당
+                    <Crown>
+                        <FontAwesomeIcon icon={faCrown } />
+                    </Crown>
+                </CreditBtn>
                 <PurchaseBtn target="_blank" href="https://smartstore.naver.com/myowndrawer/products/5772880639">책 선물 & 구매하러 가기</PurchaseBtn>
             </BtnContainer>
             <QnaContainer>
