@@ -116,6 +116,7 @@ const Question = ({userObj, question, answerCount}) => {
             editedAt: null,
             isPrivate,
             index: answerCount + 1,
+            bookmarkCount: 0,
         }
         dbService.collection("answers").doc(`${answerId}`).set(answerObj).then(async () => {
             await dbService.collection("main").doc("counts").update({

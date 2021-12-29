@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookOpen, faBookReader, faPencilAlt, faReply, faSave, faTrashAlt, faUserFriends } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark, faBookOpen, faBookReader,  faPencilAlt, faReply, faSave, faTrashAlt, faUserFriends } from "@fortawesome/free-solid-svg-icons";
 import { dbService, firebaseInstance } from "../fBase";
 import NoteFactory from "./NoteFactory";
 import { useHistory } from "react-router";
@@ -13,7 +13,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 80%;
+  width: 90%;
   padding: 25px 15px 30px 15px;
   box-sizing: border-box;
   border: 1px solid black;
@@ -164,6 +164,13 @@ const EditInput = styled.textarea`
   z-index: 9;
 `;
 
+const PaperClip = styled.div`
+  position: absolute;
+  top: -7px;
+  left: 0;
+  font-size: 20px;
+`;
+
 const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
   const { id } = useParams();
   const [editState, setEditState] = useState(false);
@@ -231,14 +238,20 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
       await dbService.collection("users").doc(`${userObj.uid}`).update({
         bookmarks: [answer.answerId]
       })
-      .then(() => {
+      .then(async () => {
+        await dbService.collection("answers").doc(`${answer.answerId}`).update({
+          bookmarkCount: firebaseInstance.firestore.FieldValue.increment(1)
+        })
         refreshBookmarks([answer.answerId])
       })         
     } else {
       await dbService.collection("users").doc(`${userObj.uid}`).update({
         bookmarks: [...userObj.bookmarks, answer.answerId]
       })
-      .then(() => {
+      .then(async () => {
+        await dbService.collection("answers").doc(`${answer.answerId}`).update({
+          bookmarkCount: firebaseInstance.firestore.FieldValue.increment(1)
+        })
         refreshBookmarks([...userObj.bookmarks, answer.answerId])
       })  
     }
@@ -251,7 +264,10 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
     await dbService.collection("users").doc(`${userObj.uid}`).update({
       bookmarks: [...userObj.bookmarks.filter((el) => el !== answer.answerId)],
     })
-    .then(() => {
+    .then(async () => {
+      await dbService.collection("answers").doc(`${answer.answerId}`).update({
+        bookmarkCount: firebaseInstance.firestore.FieldValue.increment(-1)
+      })
       refreshBookmarks([...userObj.bookmarks.filter((el) => el !== answer.answerId)])
     })       
   }
@@ -293,6 +309,20 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
 
   return (
     <Container style={{margin: `${Math.random() * 10 + 7}px` ,left: `${Math.random() * 8 - 4}%`}}>
+      {answer.bookmarkCount 
+      ? 
+      <PaperClip>
+      {[...Array(answer.bookmarkCount)].map(() => {
+        return (
+          
+            <FontAwesomeIcon icon={faBookmark} />
+          
+        )
+      })
+      }
+      </PaperClip>
+      : null
+      }
       <Question onClick={onClickDetail}>{answer.question}</Question>
       <InfoContainer>
         {answer.userId === userObj.uid 
