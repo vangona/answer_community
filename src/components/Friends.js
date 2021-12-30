@@ -78,28 +78,29 @@ const Notice = styled.div`
     line-height: 130%;
 `;
 
-const Friends = ({userObj, refreshFriends, getFriendLoading, loading}) => {
+const Friends = ({userObj, refreshFriends}) => {
+    const [isLoading, setIsLoading] = useState(true);
     const [friends, setFriends] = useState([]);
-    const [friendsId, SetFriendsId] = useState([]);
     const history = useHistory();
 
     const getFriends = async () => {
         if(userObj.friends && userObj.friends.length !== 0) {
-            await dbService.collection("users").where("uid", "in", userObj.friends).onSnapshot(
-            snapshot => {
-                const friendArray = snapshot.docs.map(doc => ({...doc.data()})
-                )
-                let friendIdArray = [];
-                snapshot.docs.forEach(doc => {
-                    friendIdArray.push(doc.data().uid)
-                })
-                setFriends(friendArray)
-                SetFriendsId(friendIdArray)
+            let friendsArray = [];
+            userObj.friends.forEach(async (friend) => {
+                await dbService.collection("users").where("uid", "==", friend)
+                    .get()
+                    .then(
+                        snapshot => {
+                            friendsArray.push(...snapshot.docs.map((doc) => ({
+                                ...doc.data()
+                            })))
+                    })
             })
-        getFriendLoading(true)
+            setFriends(friendsArray);
+            setIsLoading(false);
         } else {
             setFriends([]);
-            getFriendLoading(true)
+            setIsLoading(false);
         }
     }
 
@@ -108,14 +109,15 @@ const Friends = ({userObj, refreshFriends, getFriendLoading, loading}) => {
     }
       
     const onDeleteFriend = async (friend) => {
-        const newFriends = friendsId.filter(data => data !== friend.uid)
+        const newFriends = friends.filter(data => data !== friend.uid)
         await dbService.collection("users").doc(`${userObj.uid}`).update(
             {friends : newFriends}
         )
         .then(() => {
-            console.log(newFriends)
             refreshFriends(newFriends);
             alert(`${friend.displayName}님을 서랍장에서 꺼냈습니다.`)
+        }).catch(() => {
+            throw new Error('친구 삭제 에러');
         })
     }
 
@@ -124,8 +126,7 @@ const Friends = ({userObj, refreshFriends, getFriendLoading, loading}) => {
     }, [])
     return (
         <>
-        {loading ?
-
+        {!isLoading ?
             <Container>
             <Title>내가 아끼는 누군가들</Title>
             <hr />

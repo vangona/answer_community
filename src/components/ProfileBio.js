@@ -55,6 +55,7 @@ const BioContent = styled.div`
     margin-top: 5px;
     color: white;
     font-size: 1rem;
+    line-height: 140%;
 `;
 
 const BioTextarea = styled.textarea`

@@ -24,12 +24,8 @@ const Title = styled.h1`
 
 const Community = ({userObj, refreshFriends, refreshBookmarks, noteData}) => {
     const [isLoading, setIsLoading] = useState(true);
-    const [friendLoading, setFriendLoading] = useState(false);
+    const [bookmarkLoading, setBookmarkLoading] = useState(false);
     const [someoneAnswers, setSomeoneAnswers] = useState('');
-
-    const getFriendLoading = (loading) => {
-        setFriendLoading(loading);
-    }
 
     const getSomeoneAnswers = async () => {
         if (userObj.bookmarks) {
@@ -57,14 +53,17 @@ const Community = ({userObj, refreshFriends, refreshBookmarks, noteData}) => {
                 if(a.createdAt < b.createdAt) return 1;
             });
             setSomeoneAnswers(someoneAnswerArray);
+            setBookmarkLoading(true);
+            setIsLoading(false);
         } else {
             setSomeoneAnswers([]);
+            setBookmarkLoading(true);
+            setIsLoading(false);
         }
-        setIsLoading(!isLoading);
+        
     }
 
     useEffect(()=>{
-        getFriendLoading();
         getSomeoneAnswers();
     }, [])
 
@@ -74,9 +73,9 @@ const Community = ({userObj, refreshFriends, refreshBookmarks, noteData}) => {
             ? <Loading />
             : 
                 <>
-                    <Friends userObj={userObj} loading={friendLoading} refreshFriends={refreshFriends} getFriendLoading={getFriendLoading} />
+                    <Friends userObj={userObj} refreshFriends={refreshFriends} />
                     {/* <Notes userObj={userObj} noteData={noteData} /> */}
-                    {someoneAnswers && 
+                    {bookmarkLoading && someoneAnswers && 
                     <>
                         <Title>
                             책갈피함
