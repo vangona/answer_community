@@ -166,6 +166,8 @@ const EditInput = styled.textarea`
 `;
 
 const PaperClip = styled.div`
+  display: flex;
+  gap: 3px;
   position: absolute;
   top: -7px;
   left: 0;
