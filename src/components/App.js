@@ -253,7 +253,7 @@ function App() {
                 isPassword : userData.isPassword,
                 isFirst: userData.isFirst,
                 bio: bioData,
-                displayName: userData.displayName,
+                displayName: userData.displayName ? userData.displayName : "익명",
                 updateProfile: (args) => user.updateProfile(args),
                 })
             setInit(true)

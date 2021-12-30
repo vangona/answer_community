@@ -50,7 +50,8 @@ const BioLine = styled.hr`
     width: 100%;
 `;
 
-const BioContent = styled.div`
+const BioContent = styled.div`  
+    white-space: pre-wrap;
     margin-top: 5px;
     color: white;
     font-size: 1rem;

@@ -124,11 +124,11 @@ const Loading = () => {
 
     return (
        <LoadingBox>
-           <Bulb class="loading__bulb" src="https://cdn.jsdelivr.net/gh/vangona/answer_community/src/img/loading_bulb.png" alt="" />
+           <Bulb className="loading__bulb" src="https://cdn.jsdelivr.net/gh/vangona/answer_community/src/img/loading_bulb.png" alt="" />
            <Title>
                {comment[num]}<Dot>.</Dot><Dot>.</Dot><Dot>.</Dot>
             </Title>
-           <Drawer class="loading__drawer" src="https://cdn.jsdelivr.net/gh/vangona/answer_community/src/img/loading_drawer.png" alt="" />
+           <Drawer className="loading__drawer" src="https://cdn.jsdelivr.net/gh/vangona/answer_community/src/img/loading_drawer.png" alt="" />
            <AnswerCount>지금까지 {answerCount}칸의 서랍장이 정리되었습니다.</AnswerCount>
        </LoadingBox>
     )

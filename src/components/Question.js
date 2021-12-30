@@ -48,10 +48,20 @@ const AnswerContainer = styled.div`
     align-items: center;
     justify-content: center;
     margin-bottom: 15px;
-    width: 80%;
+    width: 90%;
 `;
 
 const AnswerInput = styled.input`
+    padding: 4px 7px;
+    transition: 0.3s all ease-in-out;
+    font-family: Jeju Myeongjo;
+    width: 100%;
+    :focus {
+      border-radius: 10px;
+    }    
+`;
+
+const AnswerCheckbox = styled.input`
     padding: 4px 7px;
     transition: 0.3s all ease-in-out;
     font-family: Jeju Myeongjo;
@@ -159,10 +169,10 @@ const Question = ({userObj, question, answerCount}) => {
                 </AnswerBtn>
             </AnswerContainer>
             <AnswerContainer style={{marginBottom: "0"}}>
-                <AnswerInput onChange={onChangeAnswerType} type="checkbox"/>
-                <PrivateLabel>길게 쓰기</PrivateLabel>
-                <AnswerInput onChange={onChangeCheckbox} type="checkbox" />
-                <PrivateLabel>답변 비공개하기</PrivateLabel>
+                <AnswerCheckbox id="long-answer" onChange={onChangeAnswerType} type="checkbox"/>
+                <PrivateLabel for="long-answer">길게 쓰기</PrivateLabel>
+                <AnswerCheckbox id="private-answer" onChange={onChangeCheckbox} type="checkbox" />
+                <PrivateLabel for="private-answer">답변 비공개하기</PrivateLabel>
             </AnswerContainer>
         </Container>
     );

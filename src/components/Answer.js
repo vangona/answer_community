@@ -96,6 +96,7 @@ const Writer = styled.span`
 `;
 
 const Content = styled.div`
+  white-space: pre-wrap;
   text-indent: 5px;
   line-height: 160%;
   background-color: white;
@@ -308,15 +309,13 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
   }
 
   return (
-    <Container style={{margin: `${Math.random() * 10 + 7}px` ,left: `${Math.random() * 8 - 4}%`}}>
+    <Container style={{margin: `${Math.random() * 10 + 5}px` ,left: `${Math.random() * 6 - 3}%`}}>
       {answer.bookmarkCount 
       ? 
       <PaperClip>
-      {[...Array(answer.bookmarkCount)].map(() => {
+      {[...Array(answer.bookmarkCount)].map((el, index) => {
         return (
-          
-            <FontAwesomeIcon icon={faBookmark} />
-          
+            <FontAwesomeIcon key={index} icon={faBookmark} />
         )
       })
       }

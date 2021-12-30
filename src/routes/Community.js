@@ -32,18 +32,34 @@ const Community = ({userObj, refreshFriends, refreshBookmarks, noteData}) => {
     }
 
     const getSomeoneAnswers = async () => {
-        userObj.bookmarks && userObj.bookmarks.length && dbService.collection("answers").where("answerId", "in", userObj.bookmarks).onSnapshot(snapshot => {
-            const someoneAnswerArray = snapshot.docs.map(doc => ({
-                id: doc.answerId,
-                ...doc.data()    
-            }))
+        if (userObj.bookmarks) {
+            let someoneAnswerArray = [];
+            userObj.bookmarks.forEach(async (element) => {
+                await dbService.collection("answers").where("answerId", "==", element)
+                .get()
+                .then(snapshot => {
+                    someoneAnswerArray.push(...snapshot.docs
+                        .map(
+                            doc => ({
+                                id: doc.answerId,
+                                ...doc.data()    
+                            })
+                        )
+                    )
+                }).catch((e) => {
+                    throw new Error('책갈피 로딩 에러');
+                })
+            })
+            
             someoneAnswerArray.sort((a, b) => {
                 if(a.createdAt > b.createdAt) return -1;
                 if(a.createdAt === b.createdAt) return 0;
                 if(a.createdAt < b.createdAt) return 1;
-              });
+            });
             setSomeoneAnswers(someoneAnswerArray);
-        })
+        } else {
+            setSomeoneAnswers([]);
+        }
         setIsLoading(!isLoading);
     }
 
