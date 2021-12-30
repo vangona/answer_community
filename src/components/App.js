@@ -264,7 +264,7 @@ function App() {
         setInit(true)
       }
     })
-  }, [bioData])
+  }, [init])
 
   const refreshUser = () => {
     const user = authService.currentUser;

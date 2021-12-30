@@ -100,7 +100,7 @@ const MyAnswers = ({userObj, refreshBio}) => {
                 if(a.createdAt < b.createdAt) return 1;
               });
             setMyAnswers(myAnswerArray)
-            setIsLoading(!isLoading)
+            setIsLoading(false);
         })
     }
 

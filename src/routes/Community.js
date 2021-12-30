@@ -28,7 +28,7 @@ const Community = ({userObj, refreshFriends, refreshBookmarks, noteData}) => {
     const [someoneAnswers, setSomeoneAnswers] = useState('');
 
     const getSomeoneAnswers = async () => {
-        if (userObj.bookmarks) {
+        if (userObj.bookmarks && userObj.bookmarks.length !== 0) {
             let someoneAnswerArray = [];
             userObj.bookmarks.forEach(async (element) => {
                 await dbService.collection("answers").where("answerId", "==", element)
@@ -53,14 +53,11 @@ const Community = ({userObj, refreshFriends, refreshBookmarks, noteData}) => {
                 if(a.createdAt < b.createdAt) return 1;
             });
             setSomeoneAnswers(someoneAnswerArray);
-            setBookmarkLoading(true);
-            setIsLoading(false);
         } else {
             setSomeoneAnswers([]);
-            setBookmarkLoading(true);
-            setIsLoading(false);
         }
-        
+        setBookmarkLoading(true);
+        setIsLoading(false);
     }
 
     useEffect(()=>{
