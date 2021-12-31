@@ -1,12 +1,13 @@
 import { faDice, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import Answer from "../components/Answer";
 import Cheer from "../components/Cheer";
 import Loading from "../components/Loading";
 import { dbService } from "../fBase";
+import useScrollMove from "../hooks/useScrollMove";
 
 const Container = styled.div`
   padding: 40px 0;
@@ -101,11 +102,17 @@ const Dot = styled.div`
 
 const Home = ({ userObj, refreshFriends, refreshBookmarks, answerCount }) => {
   const history = useHistory();
+  const match = useRouteMatch();
   const [isLoading, setISLoading] = useState(true);
   const [answers, setAnswers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1)
   const [diceState, setDiceState] = useState(false);
   const [randomState, setRandomState] = useState(false);
+
+  const { scrollInfos, scrollRemove } = useScrollMove({
+    page: `home`,
+    path: `/`
+  });
 
   const currentPosts = (posts) => {
     let currentPosts = 0;
@@ -152,7 +159,7 @@ const Home = ({ userObj, refreshFriends, refreshBookmarks, answerCount }) => {
       }, 500)
     }
     else {
-      dbService.collection("answers").where("isPrivate", "==", false).orderBy("createdAt").limitToLast(currentPage*5 + 10).onSnapshot(snapshot => {
+      dbService.collection("answers").where("isPrivate", "==", false).orderBy("createdAt").limitToLast(currentPage*5 + 10).get().then(snapshot => {
         const answerArray = snapshot.docs.map(doc => ({
           id:doc.answerId,
           ...doc.data(),
@@ -166,7 +173,9 @@ const Home = ({ userObj, refreshFriends, refreshBookmarks, answerCount }) => {
         if (isLoading) {
           setISLoading(false)
         }
-      });
+      }).catch(error => {
+        console.log(error);
+      })
     };
   };
 
@@ -205,7 +214,15 @@ const Home = ({ userObj, refreshFriends, refreshBookmarks, answerCount }) => {
       history.push("/manual")
     }
     getData();
-  }, [randomState]);
+    if (scrollInfos && match?.isExact) {
+      console.log(scrollInfos)
+      window.scrollTo(0, scrollInfos);
+      const scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+      if (scrollTop === scrollInfos) {
+        scrollRemove();
+      }
+    }
+  }, [randomState, scrollInfos, scrollRemove, match, isLoading]);
 
     return (
       <Container>
