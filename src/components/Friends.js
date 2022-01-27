@@ -88,16 +88,23 @@ const Friends = ({userObj, refreshFriends}) => {
             let friendsArray = [];
             userObj.friends.forEach(async (friend) => {
                 await dbService.collection("users").where("uid", "==", friend)
-                    .get()
-                    .then(
-                        snapshot => {
-                            friendsArray.push(...snapshot.docs.map((doc) => ({
-                                ...doc.data()
-                            })))
-                    })
+                .get()
+                .then(snapshot => {
+                        friendsArray.push(
+                            ...snapshot.docs
+                                .map((doc) => 
+                                    ({
+                                        ...doc.data()
+                                    })
+                        ));
+
+                        if (friendsArray.length === userObj.friends.length) {
+                            setFriends(friendsArray);
+                            setIsLoading(false);    
+                        }
+                    }
+                )
             })
-            setFriends(friendsArray);
-            setIsLoading(false);
         } else {
             setFriends([]);
             setIsLoading(false);

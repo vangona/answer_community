@@ -42,27 +42,30 @@ const Community = ({userObj, refreshFriends, refreshBookmarks, noteData}) => {
                             })
                         )
                     )
+            
+                    someoneAnswerArray.sort((a, b) => {
+                        return b.createdAt - a.createdAt;
+                    });
+
+                    setBookmarkLoading(true);
+                    setIsLoading(false);
+                    setSomeoneAnswers(someoneAnswerArray);
                 }).catch((e) => {
                     throw new Error('책갈피 로딩 에러');
                 })
             })
-            
-            someoneAnswerArray.sort((a, b) => {
-                if(a.createdAt > b.createdAt) return -1;
-                if(a.createdAt === b.createdAt) return 0;
-                if(a.createdAt < b.createdAt) return 1;
-            });
-            setSomeoneAnswers(someoneAnswerArray);
         } else {
+            setBookmarkLoading(true);
+            setIsLoading(false);
             setSomeoneAnswers([]);
         }
-        setBookmarkLoading(true);
-        setIsLoading(false);
     }
 
     useEffect(()=>{
-        getSomeoneAnswers();
-    }, [])
+        if (!someoneAnswers) {
+            getSomeoneAnswers();
+        }
+    }, [isLoading])
 
     return (
         <Container>
