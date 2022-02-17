@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
+import App from 'components/App';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
-import "./styles.css"
-import * as serviceWorker from "./serviceWorkerRegistration";
+import "styles/styles.css"
+import * as serviceWorker from "utils/serviceWorkerRegistration";
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import 'react-app-polyfill/ie11';

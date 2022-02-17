@@ -2,7 +2,7 @@ import { faPencilAlt, faSave, faTrash } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { dbService } from "../../fBase";
+import { dbService } from "utils/fBase";
 
 const Container = styled.div`
     display: flex;

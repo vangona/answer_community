@@ -1,22 +1,22 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
-import Home from "../routes/Home";
-import Auth from "../routes/Auth";
-import MyAnswers from "../routes/MyAnswers";
-import QuestionDetail from "../routes/QuestionDetail";
-import QuestionRegister from "../routes/QuestionRegister";
-import Questions from "../routes/Questions";
-import Navigation from "../routes/Navigation";
-import Settings from "../routes/Settings";
-import Community from "../routes/Community";
-import UserAnswers from "../routes/UserAnswers";
-import SignOut from "../routes/SignOut";
-import Credit from "../routes/Credit";
-import NotesUser from "../routes/NotesUser";
-import NotesAnswer from "../routes/NotesAnswer";
-import Manual from "../routes/Manual";
-import AnswerDetail from "../routes/AnswerDetail";
-import NotFound from "./NotFound";
+import Home from "pages/Home";
+import Auth from "pages/Auth";
+import MyAnswers from "pages/MyAnswers";
+import QuestionDetail from "pages/QuestionDetail";
+import QuestionRegister from "pages/QuestionRegister";
+import Questions from "pages/Questions";
+import Navigation from "pages/Navigation";
+import Settings from "pages/Settings";
+import Community from "pages/Community";
+import UserAnswers from "pages/UserAnswers";
+import SignOut from "pages/SignOut";
+import Credit from "pages/Credit";
+import NotesUser from "pages/NotesUser";
+import NotesAnswer from "pages/NotesAnswer";
+import Manual from "pages/Manual";
+import AnswerDetail from "pages/AnswerDetail";
+import NotFound from "components/error/NotFound";
 
 const AppRouter = ({ questionArray, isLoggedIn, userObj, refreshUser, refreshFriends, answerCount, refreshBookmarks, refreshBio, refreshFirst }) => {
     return (

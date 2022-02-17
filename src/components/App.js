@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
-import { authService, dbService } from "../fBase";
-import Loading from "./Loading";
-import { setToken } from "./Messaginginit";
-import AppRouter from "./Router";
 import { isMobile } from "react-device-detect";
-import ErrorBoundary from "./ErrorBoundary";
+import AppRouter from "components/Router";
+import Loading from "components/loading/Loading";
+import ErrorBoundary from "components/error/ErrorBoundary";
+import { setToken } from "lib/Messaginginit";
+import { authService, dbService } from "utils/fBase";
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
