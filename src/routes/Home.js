@@ -3,11 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
-import Answer from "../components/Answer";
-import Cheer from "../components/Cheer";
-import Loading from "../components/Loading";
-import { dbService } from "../fBase";
-import useScrollMove from "../hooks/useScrollMove";
+import Answer from "components/Answer";
+import Cheer from "components/Cheer";
+import Loading from "components/Loading";
+import { dbService } from "fBase";
+import useScrollMove from "components/hooks/useScrollMove";
 
 const Container = styled.div`
   padding: 40px 0;

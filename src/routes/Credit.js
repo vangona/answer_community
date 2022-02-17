@@ -2,10 +2,10 @@ import { faBackward, faForward, faPause, faPlay } from "@fortawesome/free-solid-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Sponsor } from "../components/DB/Sponsor";
-import { useInterval } from "../hooks/UseInterval";
+import { Sponsor } from "components/DB/Sponsor";
+import { useInterval } from "components/hooks/UseInterval";
 import { isMobile } from "react-device-detect";
-import bgm from "../music/Soul and Mind - E's Jammy Jams.mp3"
+import bgm from "music/Soul and Mind - E's Jammy Jams.mp3"
 
 const Container = styled.div`
     display: flex;
