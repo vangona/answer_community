@@ -15,12 +15,12 @@ html {
 
 @font-face {
   font-family: "Kyobo Handwriting";
-  src: url("https://cdn.jsdelivr.net/gh/vangona/answer_community/src/fonts/KyoboHandwriting2020pdy.ttf")
+  src: url("https://cdn.jsdelivr.net/gh/vangona/answer_community/src/assets/fonts/KyoboHandwriting2020pdy.ttf")
     format("truetype");
 }
 
 @font-face {
   font-family: "Jeju Myeongjo";
-  src: url("https://cdn.jsdelivr.net/gh/vangona/answer_community/src/fonts/JejuMyeongjo.ttf")
+  src: url("https://cdn.jsdelivr.net/gh/vangona/answer_community/src/assets/fonts/JejuMyeongjo.ttf")
     format("truetype");
 }
