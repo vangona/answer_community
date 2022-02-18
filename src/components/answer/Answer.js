@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router";
-import { useParams } from "react-router-dom";
-import styled from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookmark, faBookOpen, faBookReader,  faPencilAlt, faReply, faSave, faTrashAlt, faUserFriends } from "@fortawesome/free-solid-svg-icons";
-import NoteFactory from "components/comment/CommentFactory";
-import { dbService, firebaseInstance } from "utils/fBase";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router';
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBookmark, faBookOpen, faBookReader,  faPencilAlt, faReply, faSave, faTrashAlt, faUserFriends } from '@fortawesome/free-solid-svg-icons';
+import FriendBtn from 'components/answer/FriendBtn';
+import BookmarkBtn from 'components/answer/BookmarkBtn';
+import NoteFactory from 'components/comment/CommentFactory';
+import { dbService, firebaseInstance } from 'utils/fBase';
 
 const Container = styled.div`
   position: relative;
@@ -174,7 +176,7 @@ const PaperClip = styled.div`
   font-size: 20px;
 `;
 
-const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
+const Answer = ({ answer, userObj, refreshFriends, refreshBookmarks }) => {
   const { id } = useParams();
   const [editState, setEditState] = useState(false);
   const [noteState, setNoteState] = useState(false);
@@ -186,7 +188,7 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
   const year = Time.getFullYear();
   const month = Time.getMonth() + 1;
   const day = Time.getDate();
-  const date = `${year}년 ${month < 10 ? "0"+month : month}월 ${day < 10 ? "0"+day : day}일`
+  const date = `${year}년 ${month < 10 ? '0'+month : month}월 ${day < 10 ? '0'+day : day}일`
   const lastTime = (Date.now() - answer.createdAt) / 1000 / 60
   const lastMinutes = Math.round(lastTime)
   const lastHours = Math.round(lastTime / 60)
@@ -198,11 +200,12 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
     if (answer.userId === userObj.uid) {
       setEditState(!editState);
       if(changedAnswer !== answer.answer & editState === true) {
-        window.confirm("내용을 수정하시겠어요?") 
-        && dbService.collection("answers").doc(answer.answerId).update({
+        window.confirm('내용을 수정하시겠어요?') && dbService.collection('answers')
+        .doc(answer.answerId)
+        .update({
           answer: changedAnswer,
           editedAt: Date.now()
-        }) 
+        });
       }
     }
   }
@@ -210,24 +213,20 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
   const onClickDelete = e => {
     e.preventDefault();
     if (answer.userId === userObj.uid) {
-      window.confirm("정말 지우실건가요?") && 
-      dbService.collection("answers").doc(`${answer.answerId}`).delete().then(() => {
-        dbService.collection("main").doc("counts").update({
-          answers: firebaseInstance.firestore.FieldValue.increment(-1)
-        })
-        alert('삭제되었습니다.')
+      window.confirm('정말 지우실건가요?') && 
+      dbService.collection('answers')
+        .doc(`${answer.answerId}`)
+        .delete()
+      .then(() => {
+        dbService.collection('main')
+          .doc('counts')
+          .update({
+            answers: firebaseInstance.firestore.FieldValue.increment(-1)
+          })
+        
+        alert('삭제되었습니다.');
       })
     }
-  }
-
-  const onClicekFriend = async (answer) => {
-    await dbService.collection("users").doc(`${userObj.uid}`).update({
-      friends: [...userObj.friends, answer.userId]
-    })
-    .then(() => {
-      refreshFriends([...userObj.friends, answer.userId])
-      alert(`${answer.userName}님을 서랍장에 추가했습니다.`)
-    })
   }
   
   const onClickNote = e => {
@@ -235,141 +234,96 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
     setNoteState(!noteState);
   }
 
-  const onClickBookmark = async (e) => {
-    e.preventDefault();
-    if (!userObj.bookmarks) {
-      await dbService.collection("users").doc(`${userObj.uid}`).update({
-        bookmarks: [answer.answerId]
-      })
-      .then(async () => {
-        await dbService.collection("answers").doc(`${answer.answerId}`).update({
-          bookmarkCount: firebaseInstance.firestore.FieldValue.increment(1)
-        })
-        refreshBookmarks([answer.answerId])
-      })         
-    } else {
-      await dbService.collection("users").doc(`${userObj.uid}`).update({
-        bookmarks: [...userObj.bookmarks, answer.answerId]
-      })
-      .then(async () => {
-        await dbService.collection("answers").doc(`${answer.answerId}`).update({
-          bookmarkCount: firebaseInstance.firestore.FieldValue.increment(1)
-        })
-        refreshBookmarks([...userObj.bookmarks, answer.answerId])
-      })  
-    }
-
-  }
-
-  const onDeleteBookmark = async (e) => {
-    e.preventDefault();
-    window.confirm('책갈피를 빼시겠어요?') &&
-    await dbService.collection("users").doc(`${userObj.uid}`).update({
-      bookmarks: [...userObj.bookmarks.filter((el) => el !== answer.answerId)],
-    })
-    .then(async () => {
-      await dbService.collection("answers").doc(`${answer.answerId}`).update({
-        bookmarkCount: firebaseInstance.firestore.FieldValue.increment(-1)
-      })
-      refreshBookmarks([...userObj.bookmarks.filter((el) => el !== answer.answerId)])
-    })       
-  }
-
   const onClickDetail = e => {
     e.preventDefault();
-    history.push(`/question/${answer.questionId}`)
+    history.push(`/question/${answer.questionId}`);
   }
 
   const onClickUser = e => {
     e.preventDefault();
-    history.push(`/useranswer/${answer.userId}`)
+    history.push(`/useranswer/${answer.userId}`);
   }
 
   const onChange = e => {
-    setChangedAnswer(e.target.value)
+    setChangedAnswer(e.target.value);
   }
 
   const onClickPrivate = async () => {
     window.confirm('공개 상태를 바꾸시겠어요?') &&
-    await dbService.collection("answers").doc(`${answer.answerId}`).update({
-      isPrivate: !answer.isPrivate
-    }).then(() => {
-      alert('성공적으로 변경되었습니다!')
+    await dbService.collection('answers')
+      .doc(`${answer.answerId}`)
+      .update({
+        isPrivate: !answer.isPrivate
+      })
+    .then(() => {
+      alert('성공적으로 변경되었습니다!');
     })
   }
 
   const onClickAnswer = e => {
     if (!editState) {
       if (id) {
-        if (id !== answer.answerId) {
-          history.push(`/answer/${answer.answerId}`)
-        }
+        if (id !== answer.answerId) history.push(`/answer/${answer.answerId}`);
       } else {
-        history.push(`/answer/${answer.answerId}`)
+        history.push(`/answer/${answer.answerId}`);
       }
     }
   }
 
   return (
-    <Container style={{margin: `${Math.random() * 10 + 5}px` ,left: `${Math.random() * 6 - 3}%`}}>
+    <Container style={{margin: `${Math.random() * 10 + 5}px`, left: `${Math.random() * 6 - 3}%`}}>
       {answer.bookmarkCount 
-      ? 
-      <PaperClip>
-      {[...Array(answer.bookmarkCount)].map((el, index) => {
-        return (
-            <FontAwesomeIcon key={index} icon={faBookmark} />
-        )
-      })
+        ? 
+          <PaperClip>
+            {[...Array(answer.bookmarkCount)].map((el, index) => {
+                  return <FontAwesomeIcon key={index} icon={faBookmark} />
+                }
+              )
+            }
+          </PaperClip>
+        : null
       }
-      </PaperClip>
-      : null
-      }
-      <Question onClick={onClickDetail}>{answer.question}</Question>
+      <Question onClick={onClickDetail}>
+        {answer.question}
+      </Question>
       <InfoContainer>
         {answer.userId === userObj.uid 
         ? (
         <>
           <PrivateBtn onClick={onClickPrivate}>
             {answer.isPrivate 
-              ? "공개하기"
-              : "나만 보기"
+              ? '공개하기'
+              : '나만 보기'
             }
           </PrivateBtn>
           <IconBox onClick={onClickEdit}>
             {editState
-            ? <FontAwesomeIcon style={{marginLeft: "5px"}} icon={faSave} />
-            : <FontAwesomeIcon style={{marginLeft: "5px"}} icon={faPencilAlt} />}
+              ? <FontAwesomeIcon style={{marginLeft: '5px'}} icon={faSave} />
+              : <FontAwesomeIcon style={{marginLeft: '5px'}} icon={faPencilAlt} />
+            }
           </IconBox>
           <IconBox onClick={onClickDelete}>
-            <FontAwesomeIcon style={{marginLeft: "5px"}} icon={faTrashAlt} />
+            <FontAwesomeIcon style={{marginLeft: '5px'}} icon={faTrashAlt} />
           </IconBox>
         </>
           )
         : (
           <>
-            {userObj.friends && !userObj.friends.includes(answer.userId) && 
-            <IconBox onClick={() => {
-              onClicekFriend(answer)
-            }}>
-              <FontAwesomeIcon icon={faUserFriends} />
-            </IconBox>
-            }
-            {userObj.bookmarks && userObj.bookmarks.includes(answer.answerId)
-            ? 
-            <IconBox onClick={onDeleteBookmark}>
-              <FontAwesomeIcon icon={faBookReader} />
-            </IconBox>
-            :
-            <IconBox onClick={onClickBookmark}>
-              <FontAwesomeIcon icon={faBookOpen} />
-            </IconBox>
-            }
+            <FriendBtn 
+              answer={answer} 
+              userObj={userObj} 
+              refreshFriends={refreshFriends} 
+            />
+            <BookmarkBtn 
+              answer={answer} 
+              userObj={userObj} 
+              refreshBookmarks={refreshBookmarks} 
+            />
           </>
         )}
       </InfoContainer>
       <ReplyIcon onClick={onClickNote}>
         <FontAwesomeIcon icon={faReply} style={{ transform: 'rotate(180deg)' }} />
-        {/* <MailIcon style={{width: "15px", marginLeft: "5px"}} /> */}
       </ReplyIcon>
       <CreatedAt>
         {lastMinutes < 60 
@@ -380,17 +334,22 @@ const Answer = ({answer, userObj, refreshFriends, refreshBookmarks}) => {
             ? `${date}`
             : `${lastDays}일 전`
         }
-        {answer.editedAt && "(수정됨)"}
+        {answer.editedAt && '(수정됨)'}
       </CreatedAt>
       <WriterContainer>
-        <Writer onClick={onClickUser}>- {answer.userName}{answer.isPrivate && " (나에게만 보임)"}</Writer>
+        <Writer onClick={onClickUser}>
+          - {answer.userName}{answer.isPrivate && ' (나에게만 보임)'}
+        </Writer>
       </WriterContainer>
       <Content onClick={onClickAnswer}>
         {editState 
-        ? <EditInput autoFocus onChange={onChange} value={changedAnswer} />
-        : answer.answer}
+          ? <EditInput autoFocus onChange={onChange} value={changedAnswer} />
+          : answer.answer
+        }
       </Content>
-      {noteState && <NoteFactory userObj={userObj} answer={answer} setNoteState={setNoteState} />}
+      {noteState && 
+        <NoteFactory userObj={userObj} answer={answer} setNoteState={setNoteState} />
+      }
     </Container>
   );
 }
