@@ -56,7 +56,7 @@ const ErrorPage = () => {
 
     return (
         <Container>
-            <Pic src="https://cdn.jsdelivr.net/gh/vangona/answer_community/src/img/error_mouse.png" />
+            <Pic src="https://cdn.jsdelivr.net/gh/vangona/answer_community/src/assets/img/error_mouse.png" />
             <Notice>
                 {error} {<br />}
                 에러가 주인장에게 전달되었습니다. <br/>
