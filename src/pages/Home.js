@@ -135,7 +135,6 @@ const Home = ({ userObj, refreshFriends, refreshBookmarks, answerCount }) => {
   };
 
   const getData = async () => {
-    console.log(1);
     if (randomState) {
       setDiceState(true);
       setTimeout(() => {
@@ -215,7 +214,6 @@ const Home = ({ userObj, refreshFriends, refreshBookmarks, answerCount }) => {
     }
     getData();
     if (scrollInfos && match?.isExact) {
-      console.log(scrollInfos)
       window.scrollTo(0, scrollInfos);
       const scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
       if (scrollTop === scrollInfos) {

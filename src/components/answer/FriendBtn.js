@@ -19,23 +19,22 @@ const Container = styled.div`
 `;
 
 const FriendBtn = ({ answer, userObj, refreshFriends }) => {
-    const onClicekFriend = async (answer) => {
+    const onClickFriend = async (answer) => {
         await dbService.collection('users')
           .doc(`${userObj.uid}`)
           .update({
             friends: [...userObj.friends, answer.userId]
           })
         .then(() => {
-          refreshFriends([...userObj.friends, answer.userId])
+          refreshFriends(userObj, [...userObj.friends, answer.userId])
           alert(`${answer.userName}님을 서랍장에 추가했습니다.`)
         })
       }
 
     return (
       <>
-        {userObj.friends && 
-        !userObj.friends.includes(answer.userId) && 
-          <Container onClick={() => {onClicekFriend(answer)}}>
+        {userObj.friends && !userObj.friends.includes(answer.userId) && 
+          <Container onClick={() => {onClickFriend(answer)}}>
               <FontAwesomeIcon icon={faUserFriends} />
           </Container>
         }

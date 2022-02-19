@@ -78,8 +78,7 @@ const Notice = styled.div`
     line-height: 130%;
 `;
 
-const Friends = ({userObj, refreshFriends}) => {
-    const [isLoading, setIsLoading] = useState(true);
+const Friends = ({ userObj, refreshFriends, friendsLoading, setFriendsLoading }) => {
     const [friends, setFriends] = useState([]);
     const history = useHistory();
 
@@ -97,17 +96,15 @@ const Friends = ({userObj, refreshFriends}) => {
                                         ...doc.data()
                                     })
                         ));
-
-                        if (friendsArray.length === userObj.friends.length) {
-                            setFriends(friendsArray);
-                            setIsLoading(false);    
-                        }
                     }
                 )
             })
+
+            setFriends(friendsArray);
+            setFriendsLoading(false);
         } else {
             setFriends([]);
-            setIsLoading(false);
+            setFriendsLoading(false);
         }
     }
 
@@ -134,40 +131,40 @@ const Friends = ({userObj, refreshFriends}) => {
 
     return (
         <>
-        {!isLoading 
-        ?
-            <Container>
-                <Title>내가 아끼는 누군가들</Title>
-                <hr />
-                <FriendList>
-                    {friends.length !== 0 
-                    ? friends.map(friend => (
-                        <Friend key={friend.uid}>
-                            <FriendName id={friend.uid} onClick={onClickUser}>
-                                {friend.displayName}
-                            </FriendName>
-                            <FriendRight>                        
-                                <FriendCode>
-                                #{friend.uid.slice(-4).toLowerCase()}
-                                </FriendCode>
-                                <FriendIcon>
-                                    <FontAwesomeIcon onClick={() => {
-                                        if (window.confirm(`${friend.displayName}님을 목록에서 삭제하시겠어요?`)) {
-                                            onDeleteFriend(friend)
-                                        }}
-                                        } icon={faTrashAlt} size="sm" />
-                                </FriendIcon>
-                            </FriendRight>
-                        </Friend>
-                    ))
-                    : 
-                        <Notice>
-                            다른 사람의 답변을 통해 <br /> 다른 누군가의 서랍장을 추가 할 수 있어요.
-                        </Notice>
-                    }
-                </FriendList>
-            </Container>
-        : null
+        {friendsLoading 
+        ? null
+        :
+        <Container>
+            <Title>내가 아끼는 누군가들</Title>
+            <hr />
+            <FriendList>
+                {friends.length !== 0 
+                ? friends.map(friend => (
+                    <Friend key={friend.uid}>
+                        <FriendName id={friend.uid} onClick={onClickUser}>
+                            {friend.displayName}
+                        </FriendName>
+                        <FriendRight>                        
+                            <FriendCode>
+                            #{friend.uid.slice(-4).toLowerCase()}
+                            </FriendCode>
+                            <FriendIcon>
+                                <FontAwesomeIcon onClick={() => {
+                                    if (window.confirm(`${friend.displayName}님을 목록에서 삭제하시겠어요?`)) {
+                                        onDeleteFriend(friend)
+                                    }}
+                                    } icon={faTrashAlt} size="sm" />
+                            </FriendIcon>
+                        </FriendRight>
+                    </Friend>
+                ))
+                : 
+                    <Notice>
+                        다른 사람의 답변을 통해 <br /> 다른 누군가의 서랍장을 추가 할 수 있어요.
+                    </Notice>
+                }
+            </FriendList>
+        </Container>
         }
         </>
     )

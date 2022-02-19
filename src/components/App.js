@@ -280,23 +280,19 @@ function App() {
     });
   };
 
-  const refreshFriends = (friends) => {
+  const refreshFriends = (userObj, friends) => {
     const user = authService.currentUser;
     setUserObj({
-      displayName:user.displayName,
-      uid:user.uid,
-      isPassword: user.isPassword,
+      ...userObj,
       friends,
       updateProfile: (args) => user.updateProfile(args),
     });
   }
 
-  const refreshBookmarks = (bookmarks) => {
+  const refreshBookmarks = (userObj, bookmarks) => {
     const user = authService.currentUser;
     setUserObj({
-      displayName:user.displayName,
-      uid:user.uid,
-      isPassword: user.isPassword,
+      ...userObj,
       bookmarks,
       updateProfile: (args) => user.updateProfile(args),
     });
@@ -329,12 +325,12 @@ function App() {
         <Container>
         <GlobalStyle />
         {init 
-        ? 
-        <>
-            <AppRouter questionArray={questionArray} isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} refreshFriends={refreshFriends} refreshBookmarks={refreshBookmarks} refreshBio={refreshBio} refreshFirst={refreshFirst} answerCount={answerCount} />
-        </>
-        : <Loading />
-            }
+            ? 
+            <>
+                <AppRouter questionArray={questionArray} isLoggedIn={Boolean(userObj)} userObj={userObj} refreshUser={refreshUser} refreshFriends={refreshFriends} refreshBookmarks={refreshBookmarks} refreshBio={refreshBio} refreshFirst={refreshFirst} answerCount={answerCount} />
+            </>
+            : <Loading />
+        }
         </Container>
 `    </ErrorBoundary>
   );

@@ -34,7 +34,7 @@ const BookmarkBtn = ({answer, userObj, refreshBookmarks}) => {
                 bookmarkCount: firebaseInstance.firestore.FieldValue.increment(1)
               });
     
-            refreshBookmarks([answer.answerId]);
+            refreshBookmarks(userObj, [answer.answerId]);
           }) 
         } else {
           await dbService.collection('users')
@@ -49,13 +49,14 @@ const BookmarkBtn = ({answer, userObj, refreshBookmarks}) => {
                 bookmarkCount: firebaseInstance.firestore.FieldValue.increment(1)
               })
     
-            refreshBookmarks([...userObj.bookmarks, answer.answerId]);
+            refreshBookmarks(userObj, [...userObj.bookmarks, answer.answerId]);
           })  
         }
-    
+        console.log(userObj);
       }
     
       const onDeleteBookmark = async (e) => {
+        console.log(userObj);
         e.preventDefault();
         window.confirm('책갈피를 빼시겠어요?') &&
         await dbService.collection('users')
@@ -70,7 +71,7 @@ const BookmarkBtn = ({answer, userObj, refreshBookmarks}) => {
               bookmarkCount: firebaseInstance.firestore.FieldValue.increment(-1)
             })
     
-          refreshBookmarks([...userObj.bookmarks.filter((el) => el !== answer.answerId)]);
+          refreshBookmarks(userObj, [...userObj.bookmarks.filter((el) => el !== answer.answerId)]);
         })       
       }
 

@@ -6,8 +6,10 @@ const LoadingBox = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 100vw;
+    height: 100vh;
     color: white;
+    margin: 0 auto;
 `;
 
 const Blink = keyframes`
@@ -124,11 +126,11 @@ const Loading = () => {
 
     return (
        <LoadingBox>
-           <Bulb className="loading__bulb" src="https://cdn.jsdelivr.net/gh/vangona/answer_community/src/img/loading_bulb.png" alt="" />
+           <Bulb className="loading__bulb" src="https://cdn.jsdelivr.net/gh/vangona/answer_community/src/assets/img/loading_bulb.png" alt="" />
            <Title>
                {comment[num]}<Dot>.</Dot><Dot>.</Dot><Dot>.</Dot>
             </Title>
-           <Drawer className="loading__drawer" src="https://cdn.jsdelivr.net/gh/vangona/answer_community/src/img/loading_drawer.png" alt="" />
+           <Drawer className="loading__drawer" src="https://cdn.jsdelivr.net/gh/vangona/answer_community/src/assets/img/loading_drawer.png" alt="" />
            <AnswerCount>지금까지 {answerCount}칸의 서랍장이 정리되었습니다.</AnswerCount>
        </LoadingBox>
     )
