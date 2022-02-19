@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 
 const LoadingBox = styled.div`
+    position: fixed;
+    top: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
