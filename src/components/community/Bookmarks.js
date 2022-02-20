@@ -21,33 +21,23 @@ const Title = styled.h1`
 const Bookmarks = ({ userObj, refreshFriends, refreshBookmarks, bookmarksLoading, setBookmarksLoading }) => {
     const [someoneAnswers, setSomeoneAnswers] = useState([]);
 
-    const getSomeoneAnswers = async () => {
-        if (userObj.bookmarks && userObj.bookmarks.length !== 0) {
-            let someoneAnswerArray = [];
-            await userObj.bookmarks.forEach(async (element) => {
-                await dbService.collection("answers").where("answerId", "==", element)
-                .get()
+    const getBookmarks = async () => {
+        if(userObj.bookmarks && userObj.bookmarks.length !== 0) {
+            let bookmarksArray = [];
+            await userObj.bookmarks.forEach(async (bookmark) => {
+                await dbService.collection("answers")
+                    .where("answerId", "==", bookmark)
+                    .get()
                 .then(snapshot => {
-                    someoneAnswerArray.push(...snapshot.docs
-                        .map(
-                            doc => ({
-                                id: doc.answerId,
-                                ...doc.data()    
-                            })
-                        )
-                    )
-            
-                    someoneAnswerArray.sort((a, b) => {
-                        return b.createdAt - a.createdAt;
-                    });
+                    const data = snapshot.docs[0].data();
+                    bookmarksArray.push(data);
 
-                }).catch((e) => {
-                    throw new Error('책갈피 로딩 에러');
-                })
+                    if (bookmarksArray.length === userObj.friends.length) {
+                        setSomeoneAnswers(bookmarksArray);
+                        setBookmarksLoading(false);
+                    }
+                });
             })
-
-            setSomeoneAnswers(someoneAnswerArray);
-            setBookmarksLoading(false);
         } else {
             setSomeoneAnswers([]);
             setBookmarksLoading(false);
@@ -55,7 +45,7 @@ const Bookmarks = ({ userObj, refreshFriends, refreshBookmarks, bookmarksLoading
     }
 
     useEffect(()=>{
-        getSomeoneAnswers();
+        getBookmarks();
     }, [])
 
     return (
