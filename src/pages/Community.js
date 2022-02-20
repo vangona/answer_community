@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Answer from "components/answer/Answer";
 import Friends from "components/community/Friends";
 import Loading from "components/loading/Loading";
-import { dbService } from "utils/fBase";
 import Bookmarks from "components/community/Bookmarks";
 
 const Container = styled.div`

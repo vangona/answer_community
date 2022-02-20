@@ -24,7 +24,7 @@ const Bookmarks = ({ userObj, refreshFriends, refreshBookmarks, bookmarksLoading
     const getSomeoneAnswers = async () => {
         if (userObj.bookmarks && userObj.bookmarks.length !== 0) {
             let someoneAnswerArray = [];
-            userObj.bookmarks.forEach(async (element) => {
+            await userObj.bookmarks.forEach(async (element) => {
                 await dbService.collection("answers").where("answerId", "==", element)
                 .get()
                 .then(snapshot => {
@@ -41,12 +41,13 @@ const Bookmarks = ({ userObj, refreshFriends, refreshBookmarks, bookmarksLoading
                         return b.createdAt - a.createdAt;
                     });
 
-                    setSomeoneAnswers(someoneAnswerArray);
-                    setBookmarksLoading(false);
                 }).catch((e) => {
                     throw new Error('책갈피 로딩 에러');
                 })
             })
+
+            setSomeoneAnswers(someoneAnswerArray);
+            setBookmarksLoading(false);
         } else {
             setSomeoneAnswers([]);
             setBookmarksLoading(false);

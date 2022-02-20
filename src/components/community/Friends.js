@@ -82,26 +82,37 @@ const Friends = ({ userObj, refreshFriends, friendsLoading, setFriendsLoading })
     const [friends, setFriends] = useState([]);
     const history = useHistory();
 
+    const getFriend = async (friendId) => {
+        let data;
+        await dbService.collection("users")
+            .where("uid", "==", friendId)
+            .get()
+        .then(snapshot => {
+            data = snapshot.docs[0].data()
+        });
+
+        console.log(data);
+
+        return data;
+    }
+
     const getFriends = async () => {
         if(userObj.friends && userObj.friends.length !== 0) {
             let friendsArray = [];
-            userObj.friends.forEach(async (friend) => {
-                await dbService.collection("users").where("uid", "==", friend)
-                .get()
+            await userObj.friends.forEach(async (friend) => {
+                await dbService.collection("users")
+                    .where("uid", "==", friend)
+                    .get()
                 .then(snapshot => {
-                        friendsArray.push(
-                            ...snapshot.docs
-                                .map((doc) => 
-                                    ({
-                                        ...doc.data()
-                                    })
-                        ));
-                    }
-                )
-            })
+                    const data = snapshot.docs[0].data();
+                    friendsArray.push(data);
 
-            setFriends(friendsArray);
-            setFriendsLoading(false);
+                    if (friendsArray.length === userObj.friends.length) {
+                        setFriends(friendsArray);
+                        setFriendsLoading(false);
+                    }
+                });
+            })
         } else {
             setFriends([]);
             setFriendsLoading(false);
@@ -131,41 +142,41 @@ const Friends = ({ userObj, refreshFriends, friendsLoading, setFriendsLoading })
 
     return (
         <>
-        {friendsLoading 
-        ? null
-        :
-        <Container>
-            <Title>내가 아끼는 누군가들</Title>
-            <hr />
-            <FriendList>
-                {friends.length !== 0 
-                ? friends.map(friend => (
-                    <Friend key={friend.uid}>
-                        <FriendName id={friend.uid} onClick={onClickUser}>
-                            {friend.displayName}
-                        </FriendName>
-                        <FriendRight>                        
-                            <FriendCode>
-                            #{friend.uid.slice(-4).toLowerCase()}
-                            </FriendCode>
-                            <FriendIcon>
-                                <FontAwesomeIcon onClick={() => {
-                                    if (window.confirm(`${friend.displayName}님을 목록에서 삭제하시겠어요?`)) {
-                                        onDeleteFriend(friend)
-                                    }}
-                                    } icon={faTrashAlt} size="sm" />
-                            </FriendIcon>
-                        </FriendRight>
-                    </Friend>
-                ))
-                : 
-                    <Notice>
-                        다른 사람의 답변을 통해 <br /> 다른 누군가의 서랍장을 추가 할 수 있어요.
-                    </Notice>
-                }
-            </FriendList>
-        </Container>
-        }
+            { friendsLoading 
+                ? null
+                :
+                <Container>
+                    <Title>내가 아끼는 누군가들</Title>
+                    <hr />
+                    <FriendList>
+                        {friends.length !== 0 
+                        ? friends.map(friend => (
+                            <Friend key={friend.uid}>
+                                <FriendName id={friend.uid} onClick={onClickUser}>
+                                    {friend.displayName}
+                                </FriendName>
+                                <FriendRight>                        
+                                    <FriendCode>
+                                    #{friend.uid.slice(-4).toLowerCase()}
+                                    </FriendCode>
+                                    <FriendIcon>
+                                        <FontAwesomeIcon onClick={() => {
+                                            if (window.confirm(`${friend.displayName}님을 목록에서 삭제하시겠어요?`)) {
+                                                onDeleteFriend(friend)
+                                            }}
+                                            } icon={faTrashAlt} size="sm" />
+                                    </FriendIcon>
+                                </FriendRight>
+                            </Friend>
+                        ))
+                        : 
+                            <Notice>
+                                다른 사람의 답변을 통해 <br /> 다른 누군가의 서랍장을 추가 할 수 있어요.
+                            </Notice>
+                        }
+                    </FriendList>
+                </Container>
+            }
         </>
     )
 }
