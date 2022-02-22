@@ -222,43 +222,46 @@ function App() {
     }
     authService.onAuthStateChanged(async (user) => {
       if (user) {
-        if ("serviceWorker" in navigator) {
-            requestToken(user);
-        }
-
-        dbService.collection("main").doc("counts")
-        .onSnapshot((snapshot) => {
-            const countData = snapshot.data();
-            setAnswerCount(countData.answers);
-            localStorage.setItem("drawerAnswers", JSON.stringify(countData.answers));
-        });
-
-        await dbService.collection('profiles').doc(`${user.uid}`).get()
-        .then((snapshot) => {
-            if (snapshot) {
-                const { bio } = snapshot.data();
-                setBioData(bio);
+        if (user.emailVerified === false) {
+            alert('이메일을 인증해주세요.');
+        } else {
+            if ("serviceWorker" in navigator) {
+                requestToken(user);
             }
-        }).catch(() => {
-            setBioData('');
-        });
-
-        await dbService.collection("users").doc(`${user.uid}`).get()
-        .then(snapshot => {
-            const userData = snapshot.data();
-            setUserObj({
-                uid: user.uid,
-                friends : userData.friends,
-                bookmarks : userData.bookmarks,
-                isPassword : userData.isPassword,
-                isFirst: userData.isFirst,
-                bio: bioData,
-                displayName: userData.displayName ? userData.displayName : "익명",
-                updateProfile: (args) => user.updateProfile(args),
-                })
-            setInit(true)
-        })
-        
+    
+            dbService.collection("main").doc("counts")
+            .onSnapshot((snapshot) => {
+                const countData = snapshot.data();
+                setAnswerCount(countData.answers);
+                localStorage.setItem("drawerAnswers", JSON.stringify(countData.answers));
+            });
+    
+            await dbService.collection('profiles').doc(`${user.uid}`).get()
+            .then((snapshot) => {
+                if (snapshot) {
+                    const { bio } = snapshot.data();
+                    setBioData(bio);
+                }
+            }).catch(() => {
+                setBioData('');
+            });
+    
+            await dbService.collection("users").doc(`${user.uid}`).get()
+            .then(snapshot => {
+                const userData = snapshot.data();
+                setUserObj({
+                    uid: user.uid,
+                    friends : userData.friends,
+                    bookmarks : userData.bookmarks,
+                    isPassword : userData.isPassword,
+                    isFirst: userData.isFirst,
+                    bio: bioData,
+                    displayName: userData.displayName ? userData.displayName : "익명",
+                    updateProfile: (args) => user.updateProfile(args),
+                    })
+                setInit(true)
+            })
+        }        
       } else {
         setUserObj(null)
         setInit(true)

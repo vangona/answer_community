@@ -82,20 +82,6 @@ const Friends = ({ userObj, refreshFriends, friendsLoading, setFriendsLoading })
     const [friends, setFriends] = useState([]);
     const history = useHistory();
 
-    const getFriend = async (friendId) => {
-        let data;
-        await dbService.collection("users")
-            .where("uid", "==", friendId)
-            .get()
-        .then(snapshot => {
-            data = snapshot.docs[0].data()
-        });
-
-        console.log(data);
-
-        return data;
-    }
-
     const getFriends = async () => {
         if(userObj.friends && userObj.friends.length !== 0) {
             let friendsArray = [];

@@ -208,6 +208,7 @@ const Error = styled.span`
 const Settings = ({ refreshUser, userObj, refreshBio }) => {
     const history = useHistory();
     const [displayName, setDisplayName] = useState("");
+    const [prevEmail, setPrevEmail] = useState('');
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [report, setReport] = useState('');
@@ -265,14 +266,18 @@ const Settings = ({ refreshUser, userObj, refreshBio }) => {
     const onSubmitEmail = async (e) => {
         e.preventDefault();
         if (window.confirm(`${email}로 로그인 코드를 변경할까요?`)) {
-        await authService.currentUser.updateEmail(email).then(()=>{
-                alert("코드 변경에 성공했습니다.", email)
-                refreshUser();
-                setEmail("");
+        await dbService.collection('users').doc(authService.currentUser.uid).update({
+            email,
+        });
+        await authService.currentUser.verifyBeforeUpdateEmail(email)
+          .then(() => {
+            alert('해당 이메일로 가셔서 변경을 승인해주시면, 변경이 완료됩니다.')
+            setEmailState(false);
+            setEmail("");
         }).catch((e) => {
             setError(e.message);
         })
-    }
+      }
     }
 
     const onSubmitPassword = async (e) => {
@@ -359,7 +364,7 @@ const Settings = ({ refreshUser, userObj, refreshBio }) => {
                 {emailState &&
                 <ProfileForm onSubmit={onSubmitEmail}>
                     <ProfileInput required name="email" onChange={onChange} value={email} type="email" />
-                    <ProfileLabel style={{marginTop: "5px", fontSize:"10px"}}>접속코드는 이메일 형태여야 합니다.</ProfileLabel>
+                    <ProfileLabel style={{marginTop: "5px", fontSize:"10px"}}>접속코드는 이메일이어야 합니다.</ProfileLabel>
                     <ProfileSubmitBtn value="변경하기" type="submit" name="email" />
                     <Error>{error}</Error>
                 </ProfileForm>
