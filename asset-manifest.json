@@ -1,21 +1,21 @@
 {
   "files": {
     "main.css": "/static/css/main.50ecf79a.chunk.css",
-    "main.js": "/static/js/main.5f27f48d.chunk.js",
-    "main.js.map": "/static/js/main.5f27f48d.chunk.js.map",
+    "main.js": "/static/js/main.b00a9faf.chunk.js",
+    "main.js.map": "/static/js/main.b00a9faf.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.b0034109.js",
     "runtime-main.js.map": "/static/js/runtime-main.b0034109.js.map",
-    "static/js/2.28f01c29.chunk.js": "/static/js/2.28f01c29.chunk.js",
-    "static/js/2.28f01c29.chunk.js.map": "/static/js/2.28f01c29.chunk.js.map",
+    "static/js/2.e17d782d.chunk.js": "/static/js/2.e17d782d.chunk.js",
+    "static/js/2.e17d782d.chunk.js.map": "/static/js/2.e17d782d.chunk.js.map",
     "index.html": "/index.html",
     "static/css/main.50ecf79a.chunk.css.map": "/static/css/main.50ecf79a.chunk.css.map",
-    "static/js/2.28f01c29.chunk.js.LICENSE.txt": "/static/js/2.28f01c29.chunk.js.LICENSE.txt",
+    "static/js/2.e17d782d.chunk.js.LICENSE.txt": "/static/js/2.e17d782d.chunk.js.LICENSE.txt",
     "static/media/Soul and Mind - E's Jammy Jams.43e78e83.mp3": "/static/media/Soul and Mind - E's Jammy Jams.43e78e83.mp3"
   },
   "entrypoints": [
     "static/js/runtime-main.b0034109.js",
-    "static/js/2.28f01c29.chunk.js",
+    "static/js/2.e17d782d.chunk.js",
     "static/css/main.50ecf79a.chunk.css",
-    "static/js/main.5f27f48d.chunk.js"
+    "static/js/main.b00a9faf.chunk.js"
   ]
 }
