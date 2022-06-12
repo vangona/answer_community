@@ -102,11 +102,14 @@ const Dot = styled.div`
 `;
 
 const Home = ({ userObj, refreshFriends, refreshBookmarks, answerCount }) => {
+  const prevAnswers = JSON.parse(sessionStorage.getItem("drawer_prevData"));
+  const prevPage = sessionStorage.getItem("drawer_prevPage");
+
   const history = useHistory();
   const match = useRouteMatch();
   const [isLoading, setISLoading] = useState(true);
-  const [answers, setAnswers] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [answers, setAnswers] = useState(prevAnswers ? prevAnswers : []);
+  const [currentPage, setCurrentPage] = useState(prevPage ? prevPage : 1);
   const [diceState, setDiceState] = useState(false);
   const [randomState, setRandomState] = useState(false);
 
@@ -176,6 +179,7 @@ const Home = ({ userObj, refreshFriends, refreshBookmarks, answerCount }) => {
             if (a.createdAt === b.createdAt) return 0;
             if (a.createdAt < b.createdAt) return 1;
           });
+          sessionStorage.setItem("drawer_prevData", JSON.stringify(answerArray));
           setAnswers(answerArray);
           if (isLoading) {
             setISLoading(false);
@@ -188,11 +192,16 @@ const Home = ({ userObj, refreshFriends, refreshBookmarks, answerCount }) => {
   };
 
   const onClickAddBtn = () => {
+    // 페이지가 바로 로딩될 수 있도록,
+    // 미리 10개씩 불러두었다가, 사용함.
+    // 비축분이 적어지면, 그때 getData를 통해서 Data를 불러옴.
     if ((currentPage * 5 >= answers.length) | randomState) {
       getData();
     }
+
     if (!randomState) {
       setCurrentPage(currentPage + 1);
+      sessionStorage.setItem("drawer_prevPage", currentPage * 1 + 1);
     }
   };
 
@@ -200,28 +209,17 @@ const Home = ({ userObj, refreshFriends, refreshBookmarks, answerCount }) => {
     setRandomState(!randomState);
   };
 
-  // const onSearch = async (e) => {
-  //   await dbService.collection("answers").where("isPrivate", "==", false).where("answer", "array-contains", searchWord).get()
-  //   .then(snapshot => {
-  //     console.log(snapshot.docs)
-  //     const answerArray = snapshot.docs.map(doc => ({
-  //       id:doc.answerId,
-  //       ...doc.data(),
-  //     }));
-  //     answerArray.sort((a, b) => {
-  //       if(a.createdAt > b.createdAt) return -1;
-  //       if(a.createdAt === b.createdAt) return 0;
-  //       if(a.createdAt < b.createdAt) return 1;
-  //     });
-  //     setAnswers(answerArray)
-  //   });
-  // }
-
   useEffect(() => {
     if (userObj.isFirst) {
       history.push("/manual");
     }
-    getData();
+
+    if (prevAnswers) {
+      setISLoading(false);
+    } else {
+      getData();
+    }
+
     if (scrollInfos && match?.isExact) {
       window.scrollTo(0, scrollInfos);
       const scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
