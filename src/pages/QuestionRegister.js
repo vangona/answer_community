@@ -138,7 +138,7 @@ const QuestionRegister = ({userObj}) => {
                 const rnum = Math.floor(Math.random() * chars.length)
                 randomstring += chars.substring(rnum, rnum + 1)
             }
-        };
+        }
 
         await authService.createUserWithEmailAndPassword(
             `${randomstring}@drawer.book`, 
@@ -170,7 +170,7 @@ const QuestionRegister = ({userObj}) => {
     useEffect(() => {
         if (userObj.uid !== "oaQ2Ruq5mVZbFDb9t5E2fukKhox2") {
             authService.signOut();
-        };
+        }
     }, []);
 
     return (
